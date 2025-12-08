@@ -47,3 +47,15 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Ignore Folders
+R/**/*.png
+R/**/*.pdf
+R/**/*.jpeg
+R/**/*.RData
+R/**/*.html
+R/**/*.DS_Store
+R/**/*.pptx
+R/**/*.docx
+R/ModelB_Specific_Functions/*
+*.Rproj
