@@ -207,10 +207,10 @@ HBEST_fast = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_tau, 
     ebr_samps[g,,] <- ebr
     ab_samps[g,] <- ab
   }
-  return(list("ebr_samps" = ebr_samps[-(1:burnin),,],
-              "ab_samps" = ab_samps[-(1:burnin),],
-              "zetasquared_samps" = zetasquared_samps[-(1:burnin),],
-              "tausquared_samps" = tausquared_samps[-(1:burnin),],
+  return(list("beta_loc_est" = ebr_samps[-(1:burnin),,],
+              "beta_glob_est" = ab_samps[-(1:burnin),],
+              "zetasquared_est" = zetasquared_samps[-(1:burnin),],
+              "tausquared_est" = tausquared_samps[-(1:burnin),],
               "perio_list" = perio_list,
               "omega" = omega,
               "D" = D))
