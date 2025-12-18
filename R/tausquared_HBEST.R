@@ -1,7 +1,7 @@
 #' Griddy Gibbs update for global smoothing parameter (`tausquared`)
 #' 
 #' @description
-#' A function which samples values for the `tausquared` update as specified in model A.
+#' A function which samples values for the `tausquared` update as specified in HBEST.
 #' 
 #' @param num_gpts 
 #' @param D 
@@ -18,7 +18,7 @@
 #' @export
 #'
 #' @examples
-GG_tausquared_modelA = function(ebr, ab, B, D, R, cur_zetasquared, nu_tau, tau_min, tau_max, num_gpts){
+tausquared_HBEST = function(ebr, ab, B, D, R, cur_zetasquared, nu_tau, tau_min, tau_max, num_gpts){
   p_min = pt(q = tau_min, df = nu_tau)
   p_max = pt(q = tau_max, df = nu_tau)
   p_grid = seq(from = p_min, to = p_max,length.out = num_gpts)
