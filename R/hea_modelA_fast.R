@@ -10,10 +10,8 @@
 #' @description
 #' `hea_modelA` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for model A.
 #'
-#'
 #' @return
-#'
-#' @examples
+#' @noRd
 hea_modelA_fast <- function(ab, Psi_list, y_list, ebr, Sigma_a, R, Psi_ebr_list) {
   ha = diag(-1/Sigma_a)
   for(r in 1:R){
