@@ -1,7 +1,7 @@
 #' Calculate the gradient of the conditional log posterior distribution of the \eqn{\pmb{e}^{(r)}} from Model A.
 #' 
 #' @description
-#' `gradiente_modelA` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under Model B.
+#' `grad_loc_HBEST` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under Model B.
 #' 
 #' @param sumPsi  The `r`th column of the column sum across `Psi`.
 #' @param Psi The `r`th `Psi` matrix.
@@ -14,6 +14,6 @@
 #' @export
 #'
 #' @examples
-gradiente_modelA <- function(er, ab, sumPsi, Psi, y, Sigma_e) {
+grad_loc_HBEST <- function(er, ab, sumPsi, Psi, y, Sigma_e) {
   -sumPsi - (er / Sigma_e) + colSums(Psi * c(y / exp(Psi %*% (ab + er))))
 }
