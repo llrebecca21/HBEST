@@ -8,19 +8,109 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r knitr-options, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+knitr::opts_chunk$set(
+  fig.align = "center",
+  out.width = "70%",
+  fig.width = 6, fig.height = 5.5
+)
 ```
-
-This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `Sampler_HBEST` which implements the sampling scheme laid out in @lee_hierarchical_2025.
-
 
 ```{r setup}
 library(HBEST)
 ```
+
+```{r load-setting9, include = FALSE}
+s <- system.file("private", "Vignette.Rda", package = "HBEST")
+if (file.exists(s)) load(s)
+```
+
+# Introduction
+
+This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `Sampler_HBEST` which implements the sampling scheme laid out in @lee_hierarchical_2025. A faster version of the `Sampler_HBEST` function is also available through the `Sampler_HBEST_fast` function. These two functions are the main functions of this package. 
+
+The `gen_data` function is a supplemental function that allows the user to pick a method of time-series data generation for simulation uses.
+
+# Walkthrough of Examples
+
+To illustrate the functionality of `Sampler_HBEST` we generate time series from a few data generating processes using `gen_data` to highlight the flexibility of the model.
+
+## Generating Time-Series Data (Mixture AR(2))
+
+Include section on how the Mixture AR(2) data is generated.
+
+Let us generate $R = 20$ many conditionally independent time series. In this example we set $80\%$ of the `R`-many time series to be of length $600$; and the remaining $20\%$ to be of length $1200$. 
+
+```{r, eval = FALSE}
+set.seed(101)
+R <- 15
+# Create what percent will be "small" lengths
+sm_per <- .80
+lg_per <- 1 - .80
+# Create the lengths for small and large
+sm_length <- 600
+lg_length <- 1200
+
+n_vary <- c(
+  rep(sm_length, round(sm_per * R)),
+  rep(lg_length, round(lg_per * R))
+)
+
+# Generate peaks and bandwidths
+peaks1 <- runif(R, min = 0.2, max = 0.23)
+bandwidths1 <- runif(R, min = .1, max = .2)
+peaks2 <- runif(R, min = (pi * (2 / 5)) - 0.1, max = (pi * (2 / 5)) + 0.1)
+bandwidths2 <- rep(0.15, R)
+peaks <- rbind(peaks1, peaks2)
+bandwidths <- rbind(bandwidths1, bandwidths2)
+
+# Generate data from the AR2mix option.
+out <- gen_data(
+  gen_method = "AR2mix",
+  peaks = peaks,
+  bandwidths = bandwidths,
+  n_vary = n_vary
+)
+
+# Create a blank plot
+plot(x = c(), y = c(), xlim = c(0, 1200), ylim = c(-25, 25), xlab = "Time", ylab = "")
+# Plot each of the raw generated time series
+for (r in 1:R) {
+  lines(out$ts_list[[r]][, 1])
+}
+
+# Plot individual views
+par(mfrow = c(5,2), mar = c(1.75,2,2,0.2))
+# plot first 5
+for(r in 1:5){
+  plot(out$ts_list[[r]][,1], type = "l",
+       )
+}
+# plot last 5
+for(r in 16:R){
+  plot(out$ts_list[[r]][,1], type = "l",
+       )
+}
+
+```
+
+
+### Using `Sampler_HBEST` or `Sampler_HBEST_fast`
+
+In this section we walkthrough how to use the `Sampler_HBEST` function with the generated data above; how to calculate the estimate(s) of $\beta_{rb}$ using the samples for $\beta^{glob}_{b}$ and $\beta^{loc}_{rb}$; and how to calculate the estimates for $g^{glob}(\omega), g^{loc}_{r}(\omega), g_{rb}(\omega)$.
+
+`Sampler_HBEST` and `Sampler_HBEST_fast` both take in the same arguments. Either method will produce the same results, the `Sampler_HBEST_fast` method has slight computational improvements.
+
+The arguments required to run either function are:
+
+* 
+
+
+
 
 
 
