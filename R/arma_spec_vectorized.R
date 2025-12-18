@@ -1,4 +1,4 @@
-#' A vectorized version of [bayestime::arma_spec()]
+#' A vectorized version of [HBEST::arma_spec()]
 #'
 #' @description
 #' Gives the spectral density across a given set of omegas for a known ARMA process.

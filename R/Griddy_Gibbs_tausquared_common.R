@@ -13,7 +13,6 @@
 #' @param B        : The number of basis functions.
 #'
 #' @return
-#' @export
 #'
 #' @examples
 Griddy_Gibbs_tausquared_common = function(b, B, D, nu_tau, tau_min, tau_max, num_gpts){
