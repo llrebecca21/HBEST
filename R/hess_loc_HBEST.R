@@ -1,7 +1,7 @@
-#' Hessian function for conditional log posterior of \eqn{\pmb{e}^{(r)}}  from Model A
+#' Hessian function for conditional log posterior of \eqn{\pmb{e}^{(r)}}  from HBESt
 #'
 #' @description
-#' `hess_loc_HBEST` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for model A.
+#' `hess_loc_HBEST` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for HBEST.
 #'
 #'
 #' @inheritParams gradiente_modelA
