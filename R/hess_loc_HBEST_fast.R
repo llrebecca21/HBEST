@@ -3,12 +3,13 @@
 #' @description
 #' `hess_loc_HBEST_fast` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for model A.
 #'
-#'
+#' 
 #' @param Psi
+#' @param loc 
+#' @param glob 
+#' @param Sigma_loc 
+#' @param Psi_glob 
 #' @param y
-#' @param br
-#' @param Sigma
-#' @param zetasquared_r
 #'
 #' @return
 #' @noRd
