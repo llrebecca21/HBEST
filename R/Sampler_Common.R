@@ -1,5 +1,6 @@
 #' Sampler to run the Common method
-#'
+#' 
+#' 
 #' @param ts_list 
 #' @param B 
 #' @param iter 
