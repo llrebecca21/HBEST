@@ -1,17 +1,16 @@
 #' Generate a varying AR(2) with angle representation
 #'
 #' @description
-#' Generates R many slightly varying AR(2) time series given a R long vector of peak locations and and R long vector of bandwidths
-#'
+#' Generates `R` many slightly varying AR(2) time series given a `R` long vector of peak locations and and `R` long vector of bandwidths
 #'
 #' @param peaks a vector of length `R` with peak locations of each spectrum
 #' @param bandwidths a vector of length `n` with the bandwidths of each spectrum
 #' @param variances an optional vector (default is `NULL`) of length `n` with the variances of the innovations
-#' @param n a numeric strictly positive scalar that determines the length of the time series generated.
+#' @param n_vary a numeric strictly positive scalar that determines the length of the time series generated.
 #'
 #' @return a list object that contains the following fields:
 #'
-#' * `matrix_timeseries`: a `(n x R)` matrix that contains the slightly varying AR(1) time series.
+#' * `matrix_timeseries`: a `(n x R)` matrix that contains the slightly varying AR(2) time series.
 #'
 #' * `phi`: a `(2 x R)` matrix object that contains the AR(2) coefficients generated for each time series.
 #'

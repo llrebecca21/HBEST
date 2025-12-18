@@ -3,7 +3,6 @@
 #' @description
 #' `generate_AR` creates `R` copies of an AR(p) process from `arima.sim()`.
 #'
-#'
 #' @param phi A vector that contains the AR(p) coefficients. Same syntax used in `arima.sim()`, e.g. `c(ar1coefficient, ar2coefficient)`.
 #' @param n An optional numeric scalar (default `1000`) that determines the length of the time series generated.
 #' @param R An optional numeric scalar (default `1`) that determines how many time series to generate. Each time series is stored column wise in output.

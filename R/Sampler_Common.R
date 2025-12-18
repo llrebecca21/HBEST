@@ -13,9 +13,7 @@
 #' @param tausquared 
 #'
 #' @return
-#' @export
-#'
-#' @examples
+#' @noRd
 Sampler_Common = function(ts_list, B, iter, nu_tau, sigmasquared, tausquared, tau_min, tau_max, num_gpts, burnin){
   
   

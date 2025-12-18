@@ -9,7 +9,7 @@
 #' @param B        : The number of basis functions.
 #'
 #' @return
-#'
+#' @noRd
 tausquared_common = function(b, B, D, nu_tau, tau_min, tau_max, num_gpts){
   # zeta_grid = seq(zeta_min,zeta_max,length.out=num_gpts) for equi-spaced grid points
   p_min = pt(q = tau_min, df = nu_tau)
