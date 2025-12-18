@@ -108,7 +108,7 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
     ###############################################
     # Sample tausquared with Griddy Gibbs Step
     ###############################################
-    tausquared = GG_tausquared_modelA(ebr = ebr[-1, , drop = FALSE],
+    tausquared = tausquared_HBEST(ebr = ebr[-1, , drop = FALSE],
                                       ab = ab[-1],
                                       B = B,
                                       D = D,
@@ -126,9 +126,8 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
     ###########################################
     # Update zetasquared using Griddy Gibbs
     ###########################################
-    # Update zetasquared with the Griddy Gibbs sampler:
     for (r in 1:R){
-      zetasquared[r] = GG_zetasquared_modelA(er = ebr[-1,r, drop = FALSE],
+      zetasquared[r] = zetasquared_HBEST(er = ebr[-1,r, drop = FALSE],
                                              B = B,
                                              D = D,
                                              tausquared = tausquared,
@@ -147,15 +146,15 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
     for(r in 1:R){
       # Update Sigma_e with new rth zetasquared value
       Sigma_e = c(sigmasquared_e/2, D * tausquared * (zetasquared[r] - 1))
-      map = optim(par = ebr[,r], fn = logposteriore_modelA, gr = gradiente_modelA, method = "BFGS", control = list(fnscale = -1),
+      map = optim(par = ebr[,r], fn = logpost_loc_HBEST, gr = grad_loc_HBEST, method = "BFGS", control = list(fnscale = -1),
                   ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e)$par
-      # Call the Hessian function for model A
-      precisione_modelA = hee_modelA(er = map, Psi = Psi_list[[r]], y = perio_list[[r]], ab = ab, Sigma_e = Sigma_e) * -1
-      # Calculate the er proposal, using Cholesky Sampling
-      erprop = Chol_sampling(Lt = chol(precisione_modelA), d = B + 1, beta_c = map)
+      # Call the Hessian function for HBEST
+      precision_loc = hess_loc_HBEST(er = map, Psi = Psi_list[[r]], y = perio_list[[r]], ab = ab, Sigma_e = Sigma_e) * -1
+      # Calculate the beta^loc_r proposal, using Cholesky Sampling
+      erprop = chol_sampling(Lt = chol(precision_loc), d = B + 1, beta_c = map)
       # Calculate acceptance ratio
-      erprop_ratio = min(1, exp(logposteriore_modelA(er = erprop, ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e) -
-                                logposteriore_modelA(er = ebr[,r], ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e)))
+      erprop_ratio = min(1, exp(logpost_loc_HBEST(er = erprop, ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e) -
+                                logpost_loc_HBEST(er = ebr[,r], ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e)))
       # Create acceptance decision
       accept <- runif(1)
       if(accept < erprop_ratio){
@@ -169,15 +168,15 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
     ######################
     # ab update : MH
     ######################
-    map = optim(par = ab, fn = logposteriora_modelA, gr = gradienta_modelA, method = "BFGS", control = list(fnscale = -1),
+    map = optim(par = ab, fn = logpost_glob_HBEST, gr = grad_glob_HBEST, method = "BFGS", control = list(fnscale = -1),
                 ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R)$par
     # Call the Hessian function for model A for update ab
-    precisiona_modelA = hea_modelA(ab = map, Psi_list = Psi_list, y_list = perio_list, ebr = ebr, Sigma_a = Sigma_a, R = R) * -1
+    precision_glob = hess_glob_HBEST(ab = map, Psi_list = Psi_list, y_list = perio_list, ebr = ebr, Sigma_a = Sigma_a, R = R) * -1
     # Calculate the ab proposal, using Cholesky Sampling
-    abprop = Chol_sampling(Lt = chol(precisiona_modelA), d = B + 1, beta_c = map)
+    abprop = chol_sampling(Lt = chol(precision_glob), d = B + 1, beta_c = map)
     # Calculate acceptance ratio
-    abprop_ratio = min(1, exp(logposteriora_modelA(ab = abprop, ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R) -
-                              logposteriora_modelA(ab = ab, ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R)))
+    abprop_ratio = min(1, exp(logpost_glob_HBEST(ab = abprop, ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R) -
+                              logpost_glob_HBEST(ab = ab, ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R)))
     # Create acceptance decision
     accept <- runif(1)
     if(accept < abprop_ratio){

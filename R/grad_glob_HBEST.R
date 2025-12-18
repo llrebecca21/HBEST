@@ -1,7 +1,7 @@
-#' Calculate the gradient of the conditional log posterior distribution of \eqn{\pmb{a}} from Model A.
+#' Calculate the gradient of the conditional log posterior distribution of \eqn{\pmb{a}} from HBEST.
 #' 
 #' @description
-#' `grad_glob_HBEST` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under Model B.
+#' `grad_glob_HBEST` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under HBEST.
 #' 
 #' @param sumPsi  ((B+1) x R) The `r`th column of the column sum across `Psi`.
 #' @param ebr 
