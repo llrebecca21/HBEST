@@ -1,4 +1,4 @@
-#' Old Sampler for Single with different lengths
+#' Sampler to run the Common method
 #'
 #' @param ts_list 
 #' @param B 
@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-Sampler_Common_griddy_list = function(ts_list, B, iter, nu_tau, sigmasquared, tausquared, tau_min, tau_max, num_gpts, burnin){
+Sampler_Common = function(ts_list, B, iter, nu_tau, sigmasquared, tausquared, tau_min, tau_max, num_gpts, burnin){
   
   
   # extract n and R from timeseries
