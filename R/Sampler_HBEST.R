@@ -56,7 +56,7 @@ Sampler_HBEST <- function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc,
   # Define periodogram and Psi
   for (r in 1:R) {
     # Define y_n(\omega_j) for the posterior function below
-    perio_list[[r]] <- (abs(fft(ts_list[[r]]))^2 / n_len[r])
+    perio_list[[r]] <- (abs(stats::fft(ts_list[[r]]))^2 / n_len[r])
     # subset perio for unique values, J = floor(n/2)
     perio_list[[r]] <- perio_list[[r]][(1:J[r]) + 1, , drop = FALSE]
 
@@ -150,7 +150,7 @@ Sampler_HBEST <- function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc,
     for (r in 1:R) {
       # Update Sigma_loc with new rth zetasquared value
       Sigma_loc <- c(sigmasquared_loc / 2, D * tausquared * (zetasquared[r] - 1))
-      map <- optim(
+      map <- stats::optim(
         par = loc[, r], fn = logpost_loc_HBEST, gr = grad_loc_HBEST, method = "BFGS", control = list(fnscale = -1),
         glob = glob, Psi = Psi_list[[r]], sumPsi = sumPsi[, r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc
       )$par
@@ -162,7 +162,7 @@ Sampler_HBEST <- function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc,
       locprop_ratio <- min(1, exp(logpost_loc_HBEST(loc = locprop, glob = glob, Psi = Psi_list[[r]], sumPsi = sumPsi[, r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc) -
         logpost_loc_HBEST(loc = loc[, r], glob = glob, Psi = Psi_list[[r]], sumPsi = sumPsi[, r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc)))
       # Create acceptance decision
-      accept <- runif(1)
+      accept <- stats::runif(1)
       if (accept < locprop_ratio) {
         # Accept locprop as new beta^loc_r
         loc[, r] <- locprop
@@ -186,7 +186,7 @@ Sampler_HBEST <- function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc,
     globprop_ratio <- min(1, exp(logpost_glob_HBEST(glob = globprop, loc = loc, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R) -
       logpost_glob_HBEST(glob = glob, loc = loc, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R)))
     # Create acceptance decision
-    accept <- runif(1)
+    accept <- stats::runif(1)
     if (accept < globprop_ratio) {
       # Accept globprop as new beta^glob
       glob <- globprop
