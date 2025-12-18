@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @examples
-GG_zetasquared_modelA = function(er, B, D, tausquared, nu_zeta, zeta_min, zeta_max, num_gpts){
+zetasquared_HBEST = function(er, B, D, tausquared, nu_zeta, zeta_min, zeta_max, num_gpts){
   p_min = pt(q = zeta_min, df = nu_zeta)
   p_max = pt(q = zeta_max, df = nu_zeta)
   p_grid = seq(from = p_min, to = p_max,length.out = num_gpts)
