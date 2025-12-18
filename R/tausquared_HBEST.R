@@ -3,7 +3,6 @@
 #' @description
 #' A function which samples values for the `tausquared` update as specified in HBEST.
 #' 
-#' @inheritParams Sampler_HBEST
 #' @param num_gpts 
 #' @param D 
 #' @param R 

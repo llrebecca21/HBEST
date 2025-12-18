@@ -1,20 +1,19 @@
-#' Function that calculates the conditional log posterior distribution of \eqn{\pmb{e}^{(r)}} from HBEST.
+#' Function that calculates the conditional log posterior distribution of \eqn{\pmb{\beta}_{(r)}} from HBEST.
 #'
 #' @description
 #' `logpost_loc_HBEST` calculates the conditional posterior distribution for HBEST
 #'
-#' @inheritParams gradient_modelB 
 #' @param sumPsi 
-#' @param br 
 #' @param Psi 
+#' @param loc 
+#' @param glob 
+#' @param Sigma_loc 
 #' @param y 
-#' @param Sigma 
-#' @param zetasquared_r 
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
 #' @export
 #'
 #' @examples
-logpost_loc_HBEST = function(sumPsi, er, ab, Psi, y, Sigma_e){
-  -crossprod(sumPsi, er) - sum(y / exp(Psi %*% (ab + er))) - sum(er^2/Sigma_e) / 2
+logpost_loc_HBEST = function(sumPsi, loc, glob, Psi, y, Sigma_loc){
+  -crossprod(sumPsi, loc) - sum(y / exp(Psi %*% (glob + loc))) - sum(loc^2/Sigma_loc) / 2
 }

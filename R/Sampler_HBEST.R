@@ -7,7 +7,6 @@
 #' @param ts_list A list `R` long containing the vectors of the stationary time series of potentially different lengths.
 #' @param B       An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0})
 #' @param iter    An integer specifying the number of iterations for the MCMC algorithm embedded in this function.
-#' @param sigmasquared A scalar specifying the variance of the prior (N(0,`sigmasquared`)) intercept term for \eqn{\beta_0}. (default is `100` to ensure a diffuse prior).
 #' @param tausquared A scalar which is used as the initial value of `tausquared` that controls the global smoothing effect.
 #' @param burnin     An integer specifying the burn-in to be removed at the end of the sampling algorithm.
 #' @param zeta_min   A scalar controlling the smallest value \eqn{\zeta} can take. So, `zeta_min`^2 is the smallest value `zetasquared` can take.
@@ -17,12 +16,14 @@
 #' @param num_gpts   A scalar controlling the denseness of the grid during the sampling of both `tausquared` and `zetasquared`.
 #' @param nu_tau     A scalar indicating the degrees of freedom for the prior on \eqn{\tau}.
 #' @param nu_zeta    A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}.
+#' @param sigmasquared_glob A scalar...
+#' @param sigmasquared_loc A scalar...
 #'
 #' @return
 #' @export
 #'
 #' @examples
-Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_tau, tausquared, nu_zeta, burnin, zeta_min, zeta_max, tau_min, tau_max, num_gpts){
+Sampler_HBEST = function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc, nu_tau, tausquared, nu_zeta, burnin, zeta_min, zeta_max, tau_min, tau_max, num_gpts){
   # Extract length of each time series (n_len) and the number of time series (R) from time series input (ts_list)
   n_len = sapply(ts_list, nrow)
   R = length(n_len)
@@ -37,9 +38,9 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
   # Create matrix to store estimated samples row-wise for \tau^2 for each iteration
   tausquared_samps = matrix(NA, nrow = iter, ncol = 1)
   # Create array to store estimated samples row-wise for e^(r)_b for each iteration
-  ebr_samps = array(data = NA, dim = c(iter, B+1, R))
-  # Create matrix to store estimated samples row-wise for a_b for each iteration
-  ab_samps = matrix(data = NA, nrow = iter, ncol = B+1)
+  loc_samps = array(data = NA, dim = c(iter, B+1, R))
+  # Create matrix to store estimated samples row-wise for beta^glob_b for each iteration
+  glob_samps = matrix(data = NA, nrow = iter, ncol = B+1)
   
   # Initialize perio as a list
   perio_list = vector(mode = "list", length = R)
@@ -49,21 +50,20 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
   sumPsi = matrix(data = NA, nrow = B + 1, ncol = R)
   # initialize omega as a list
   omega = vector(mode = "list", length = R)
-  # initialize beta_values to help initialize erb and ab
+  # initialize beta_values to help initialize beta^loc_{rb} and beta^glob_{b}
   betavalues = matrix(data = NA, nrow = B + 1, ncol = R)
   
-  # Define periodogram and \Psi
+  # Define periodogram and Psi
   for(r in 1:R){
     # Define y_n(\omega_j) for the posterior function below
     perio_list[[r]] = (abs(fft(ts_list[[r]]))^ 2 / n_len[r])
-    
     # subset perio for unique values, J = floor(n/2)
     perio_list[[r]] = perio_list[[r]][(1:J[r]) + 1, , drop = FALSE]
     
     ##########
     # Set Psi
     ##########
-    # Create matrix of the basis functions with the fourier frequencies
+    # Create matrix of the basis functions with the Fourier frequencies
     Psi_list[[r]] = outer(X = (2 * pi * (1:J[r])) / n_len[r], Y = 0:B, FUN = function(x,y){sqrt(2)* cos(y * x)})
     # Redefine the first column of Psi to be 1's
     Psi_list[[r]][,1] = 1
@@ -80,12 +80,12 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
   ########################
   # Initialize Parameters
   ########################
-  # Initialize ab: the row means of the betavalues.
-  ab = rowMeans(betavalues)
-  ab_samps[1,] = ab
-  # Initialize erb: the residuals. 
-  ebr = betavalues - ab_samps[1, ]
-  ebr_samps[1,,] = ebr
+  # Initialize beta^glob: the row means of the betavalues.
+  glob = rowMeans(betavalues)
+  glob_samps[1,] = glob
+  # Initialize beta^loc_{rb}: the residuals. 
+  loc = betavalues - glob_samps[1, ]
+  loc_samps[1,,] = loc
   # Initialize first row of tausquared_samps with the argument tausquared
   tausquared_samps[1,] = c(tausquared)
   # Initialize starting value of zetasquared. 
@@ -94,103 +94,101 @@ Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_ta
   zetasquared_samps = array(data = NA, dim = c(iter,R))
   # Initialize zetasquared values
   zetasquared_samps[1,] = zetasquared
-  # The Sigma_a matrix houses the prior variance of the a_b terms across b = 0,1,...,B terms
-  Sigma_a = c(sigmasquared_a/2, D * tausquared)
+  # The Sigma_glob matrix houses the prior variance of the beta^glob_b terms across b = 0,1,...,B terms
+  Sigma_glob = c(sigmasquared_glob/2, D * tausquared)
   #####################
   # MCMC Algorithm
   #####################
-  # Need to update erb, ab, zetasquared, and tausquared
   # begin counter:
   pb = progress_bar$new(total = iter-1)
   for (g in 2:iter) {
     pb$tick()
-    # g = 2
     ###############################################
     # Sample tausquared with Griddy Gibbs Step
     ###############################################
-    tausquared = tausquared_HBEST(ebr = ebr[-1, , drop = FALSE],
-                                      ab = ab[-1],
-                                      B = B,
-                                      D = D,
-                                      R = R,
-                                      cur_zetasquared = zetasquared,
-                                      nu_tau = nu_tau,
-                                      tau_min = tau_min,
-                                      tau_max = tau_max,
-                                      num_gpts = num_gpts)
+    tausquared = tausquared_HBEST(loc = loc[-1, , drop = FALSE],
+                                  glob = glob[-1],
+                                  B = B,
+                                  D = D,
+                                  R = R,
+                                  cur_zetasquared = zetasquared,
+                                  nu_tau = nu_tau,
+                                  tau_min = tau_min,
+                                  tau_max = tau_max,
+                                  num_gpts = num_gpts)
     
     # Update tausquared_samps matrix with new tausquared value
     tausquared_samps[g,] = tausquared
     # Update Sigma_a with new tausquared value
-    Sigma_a = c(sigmasquared_a/2, D * tausquared)
+    Sigma_glob = c(sigmasquared_glob/2, D * tausquared)
     ###########################################
     # Update zetasquared using Griddy Gibbs
     ###########################################
     for (r in 1:R){
-      zetasquared[r] = zetasquared_HBEST(er = ebr[-1,r, drop = FALSE],
-                                             B = B,
-                                             D = D,
-                                             tausquared = tausquared,
-                                             nu_zeta = nu_zeta,
-                                             zeta_min = zeta_min,
-                                             zeta_max = zeta_max,
-                                             num_gpts = num_gpts)
+      zetasquared[r] = zetasquared_HBEST(loc = loc[-1,r, drop = FALSE],
+                                         B = B,
+                                         D = D,
+                                         tausquared = tausquared,
+                                         nu_zeta = nu_zeta,
+                                         zeta_min = zeta_min,
+                                         zeta_max = zeta_max,
+                                         num_gpts = num_gpts)
     }
     
     # put zetasquared into array for storage
     zetasquared_samps[g,] = zetasquared
     
     ######################
-    # ebr update : MH
+    # beta^loc update : MH
     ######################
     for(r in 1:R){
-      # Update Sigma_e with new rth zetasquared value
-      Sigma_e = c(sigmasquared_e/2, D * tausquared * (zetasquared[r] - 1))
-      map = optim(par = ebr[,r], fn = logpost_loc_HBEST, gr = grad_loc_HBEST, method = "BFGS", control = list(fnscale = -1),
-                  ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e)$par
+      # Update Sigma_loc with new rth zetasquared value
+      Sigma_loc = c(sigmasquared_loc/2, D * tausquared * (zetasquared[r] - 1))
+      map = optim(par = loc[,r], fn = logpost_loc_HBEST, gr = grad_loc_HBEST, method = "BFGS", control = list(fnscale = -1),
+                  glob = glob, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc)$par
       # Call the Hessian function for HBEST
-      precision_loc = hess_loc_HBEST(er = map, Psi = Psi_list[[r]], y = perio_list[[r]], ab = ab, Sigma_e = Sigma_e) * -1
+      precision_loc = hess_loc_HBEST(loc = map, Psi = Psi_list[[r]], y = perio_list[[r]], glob = glob, Sigma_loc = Sigma_loc) * -1
       # Calculate the beta^loc_r proposal, using Cholesky Sampling
-      erprop = chol_sampling(Lt = chol(precision_loc), d = B + 1, beta_c = map)
+      locprop = chol_sampling(Lt = chol(precision_loc), d = B + 1, beta_c = map)
       # Calculate acceptance ratio
-      erprop_ratio = min(1, exp(logpost_loc_HBEST(er = erprop, ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e) -
-                                logpost_loc_HBEST(er = ebr[,r], ab = ab, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_e = Sigma_e)))
+      locprop_ratio = min(1, exp(logpost_loc_HBEST(loc = locprop, glob = glob, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc) -
+                                logpost_loc_HBEST(loc = loc[,r], glob = glob, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc)))
       # Create acceptance decision
       accept <- runif(1)
-      if(accept < erprop_ratio){
-        # Accept erprop as new e^(r)
-        ebr[ ,r] <- erprop
+      if(accept < locprop_ratio){
+        # Accept locprop as new beta^loc_r
+        loc[ ,r] <- locprop
       }else{
-        # Reject erprop as new e^(r)
-        ebr[ ,r] <- ebr[,r]
+        # Reject locprop as new beta^loc_r
+        loc[ ,r] <- loc[,r]
       }
     }
     ######################
-    # ab update : MH
+    # beta^glob update : MH
     ######################
-    map = optim(par = ab, fn = logpost_glob_HBEST, gr = grad_glob_HBEST, method = "BFGS", control = list(fnscale = -1),
-                ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R)$par
-    # Call the Hessian function for model A for update ab
-    precision_glob = hess_glob_HBEST(ab = map, Psi_list = Psi_list, y_list = perio_list, ebr = ebr, Sigma_a = Sigma_a, R = R) * -1
-    # Calculate the ab proposal, using Cholesky Sampling
-    abprop = chol_sampling(Lt = chol(precision_glob), d = B + 1, beta_c = map)
+    map = optim(par = glob, fn = logpost_glob_HBEST, gr = grad_glob_HBEST, method = "BFGS", control = list(fnscale = -1),
+                loc = loc, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R)$par
+    # Call the Hessian function
+    precision_glob = hess_glob_HBEST(glob = map, Psi_list = Psi_list, y_list = perio_list, loc = loc, Sigma_glob = Sigma_glob, R = R) * -1
+    # Calculate the beta^glob proposal, using Cholesky Sampling
+    globprop = chol_sampling(Lt = chol(precision_glob), d = B + 1, beta_c = map)
     # Calculate acceptance ratio
-    abprop_ratio = min(1, exp(logpost_glob_HBEST(ab = abprop, ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R) -
-                              logpost_glob_HBEST(ab = ab, ebr = ebr, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_a = Sigma_a, R = R)))
+    globprop_ratio = min(1, exp(logpost_glob_HBEST(glob = globprop, loc = loc, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R) -
+                              logpost_glob_HBEST(glob = glob, loc = loc, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R)))
     # Create acceptance decision
     accept <- runif(1)
-    if(accept < abprop_ratio){
-      # Accept abprop as new ab
-      ab <- abprop
+    if(accept < globprop_ratio){
+      # Accept globprop as new beta^glob
+      glob <- globprop
     }else{
-      # Reject abprop as new ab
-      ab <- ab
+      # Reject globprop as new beta^glob
+      glob <- glob
     }
-    ebr_samps[g,,] <- ebr
-    ab_samps[g,] <- ab
+    loc_samps[g,,] <- loc
+    glob_samps[g,] <- glob
   }
-  return(list("ebr_samps" = ebr_samps[-(1:burnin),,],
-              "ab_samps" = ab_samps[-(1:burnin),],
+  return(list("loc_samps" = loc_samps[-(1:burnin),,],
+              "glob_samps" = glob_samps[-(1:burnin),],
               "zetasquared_samps" = zetasquared_samps[-(1:burnin),],
               "tausquared_samps" = tausquared_samps[-(1:burnin),],
               "perio_list" = perio_list,

@@ -3,21 +3,22 @@
 #' @description
 #' `logpost_glob_HBEST` calculates the conditional posterior distribution for model B
 #'
-#' @param ab 
-#' @param ebr 
-#' @param Sigma_a 
 #' @param y_list 
 #' @param Psi_list 
 #' @param sumPsi 
+#' @param glob 
+#' @param loc 
+#' @param Sigma_glob 
+#' @param R 
 #'
-#' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
+#' @return A vector that contains the `r`th posterior conditional for \eqn{\beta_{(r)}}.
 #' @export
 #'
 #' @examples
-logpost_glob_HBEST = function(ab, ebr, Sigma_a, y_list, sumPsi, Psi_list, R){
-  k = -c(crossprod(rowSums(sumPsi), ab)) - sum(ab^2 / (Sigma_a * 2))
+logpost_glob_HBEST = function(glob, loc, Sigma_glob, y_list, sumPsi, Psi_list, R){
+  k = -c(crossprod(rowSums(sumPsi), glob)) - sum(glob^2 / (Sigma_glob * 2))
   for(r in 1:R){
-    k = k-sum(y_list[[r]] / exp(Psi_list[[r]] %*% (ab + ebr[,r])))
+    k = k-sum(y_list[[r]] / exp(Psi_list[[r]] %*% (glob + loc[,r])))
   }
   return(k)
 }

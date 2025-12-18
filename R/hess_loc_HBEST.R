@@ -1,22 +1,21 @@
-#' Hessian function for conditional log posterior of \eqn{\pmb{e}^{(r)}}  from HBESt
+#' Hessian function for conditional log posterior of \eqn{\pmb{beta}_{(r)}}  from HBESt
 #'
 #' @description
 #' `hess_loc_HBEST` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for HBEST.
 #'
 #'
-#' @inheritParams gradiente_modelA
 #' @param Psi
+#' @param loc 
+#' @param glob 
+#' @param Sigma_loc 
 #' @param y
-#' @param br
-#' @param Sigma
-#' @param zetasquared_r
 #'
 #' @return
 #' @export
 #'
 #' @examples
-hess_loc_HBEST <- function(Psi, y, er, ab, Sigma_e) {
-  he = -crossprod(Psi, Psi * c(y / exp(Psi %*% (er + ab))))
-  diag(he) = diag(he) - 1/Sigma_e
+hess_loc_HBEST <- function(Psi, y, loc, glob, Sigma_loc) {
+  he = -crossprod(Psi, Psi * c(y / exp(Psi %*% (loc + glob))))
+  diag(he) = diag(he) - 1/Sigma_loc
   return(he)
 }
