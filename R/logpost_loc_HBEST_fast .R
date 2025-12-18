@@ -4,11 +4,11 @@
 #' `logpost_loc_HBEST_fast` calculates the conditional posterior distribution for model B
 #'
 #' @param sumPsi 
-#' @param br 
 #' @param Psi 
+#' @param loc 
+#' @param Sigma_loc 
+#' @param Psi_glob 
 #' @param y 
-#' @param Sigma 
-#' @param zetasquared_r 
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
 #' @noRd
