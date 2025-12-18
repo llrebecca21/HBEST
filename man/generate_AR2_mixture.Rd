@@ -11,19 +11,19 @@ generate_AR2_mixture(peaks, bandwidths, n_vary, variances = NULL)
 
 \item{bandwidths}{a vector of length \code{n} with the bandwidths of each spectrum}
 
-\item{variances}{an optional vector (default is \code{NULL}) of length \code{n} with the variances of the innovations}
+\item{n_vary}{a numeric strictly positive scalar that determines the length of the time series generated.}
 
-\item{n}{a numeric strictly positive scalar that determines the length of the time series generated.}
+\item{variances}{an optional vector (default is \code{NULL}) of length \code{n} with the variances of the innovations}
 }
 \value{
 a list object that contains the following fields:
 \itemize{
-\item \code{matrix_timeseries}: a \verb{(n x R)} matrix that contains the slightly varying AR(1) time series.
+\item \code{matrix_timeseries}: a \verb{(n x R)} matrix that contains the slightly varying AR(2) time series.
 \item \code{phi}: a \verb{(2 x R)} matrix object that contains the AR(2) coefficients generated for each time series.
 }
 }
 \description{
-Generates R many slightly varying AR(2) time series given a R long vector of peak locations and and R long vector of bandwidths
+Generates \code{R} many slightly varying AR(2) time series given a \code{R} long vector of peak locations and and \code{R} long vector of bandwidths
 }
 \examples{
 R <- 20
