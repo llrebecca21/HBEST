@@ -15,8 +15,7 @@
 #' @param glob 
 #'
 #' @return
-#'
-#' @examples
+#' @noRd
 tausquared_HBEST = function(loc, glob, B, D, R, cur_zetasquared, nu_tau, tau_min, tau_max, num_gpts){
   p_min = pt(q = tau_min, df = nu_tau)
   p_max = pt(q = tau_max, df = nu_tau)

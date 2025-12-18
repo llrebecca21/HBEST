@@ -9,7 +9,7 @@
 #' @param D A vector of length B with strictly positive entries.
 #'
 #' @return A scalar of the value of the conditional posterior at the given value
-#'
+#' @noRd
 whittle_post <- function(ab, X, sumX, tsq, perio, sigmasalpha, D) {
   # extract the intercept term
   a <- ab[1]

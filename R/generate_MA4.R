@@ -1,3 +1,13 @@
+#' Title
+#'
+#' @param n 
+#' @param R 
+#' @param burn 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 generate_MA4 = function(n = 1000, R = 1, burn = 50){
   # create matrix to store the time series
   ts_list <- vector(mode = "list", length = R)

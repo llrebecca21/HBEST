@@ -12,8 +12,7 @@
 #' @param zetasquared_r
 #'
 #' @return
-#'
-#' @examples
+#' @noRd
 hee_modelA_fast <- function(Psi, y, er, ab, Sigma_e, Psi_ab) {
   he = -crossprod(Psi, Psi * c(y / exp(Psi %*% er +  Psi_ab)))
   diag(he) = diag(he) - 1/Sigma_e

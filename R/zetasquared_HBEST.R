@@ -13,8 +13,7 @@
 #' @param nu_zeta   A scalar that controls the degrees of freedom for the `zeta` prior.
 #'
 #' @return A vector containing the sampled zeta values.
-#'
-#' @examples
+#' @noRd
 zetasquared_HBEST = function(loc, B, D, tausquared, nu_zeta, zeta_min, zeta_max, num_gpts){
   p_min = pt(q = zeta_min, df = nu_zeta)
   p_max = pt(q = zeta_max, df = nu_zeta)

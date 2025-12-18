@@ -12,9 +12,7 @@
 #' @param zetasquared_r 
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
-#' @export
-#'
-#' @examples
+#' @noRd
 logposteriore_modelA_fast = function(sumPsi, er, Psi, y, Sigma_e, Psi_ab){
   # -crossprod(sumPsi, er) - sum(y / exp(Psi %*% (ab + er))) - sum(er^2/Sigma_e) / 2
   -crossprod(sumPsi, er) - sum(y / exp(Psi_ab + Psi %*% er)) - sum(er^2/Sigma_e) / 2

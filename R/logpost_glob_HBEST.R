@@ -12,8 +12,7 @@
 #' @param R 
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta_{(r)}}.
-#'
-#' @examples
+#' @noRd
 logpost_glob_HBEST = function(glob, loc, Sigma_glob, y_list, sumPsi, Psi_list, R){
   k = -c(crossprod(rowSums(sumPsi), glob)) - sum(glob^2 / (Sigma_glob * 2))
   for(r in 1:R){

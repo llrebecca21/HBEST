@@ -11,9 +11,7 @@
 #' @param sumPsi 
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
-#' @export
-#'
-#' @examples
+#' @noRd
 logposteriora_modelA_fast = function(ab, Sigma_a, y_list, sumPsi, Psi_list, R, sumsumPsi, Psi_ebr_list){
  #k = -c(crossprod(sumsumPsi, ab)) - sum(ab^2 / (Sigma_a * 2))
   k = -sum(sumsumPsi * ab) - sum(ab^2 / (Sigma_a * 2))

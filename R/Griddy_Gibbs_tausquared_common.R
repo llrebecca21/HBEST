@@ -1,7 +1,3 @@
-# Griddy Gibbs update for global parameter (tau^2)
-# Main Author: Dr. Bhattacharya
-# Updated By: Rebecca Lee
-
 #' Griddy Gibbs Update
 #'
 #' @param num_gpts : number of grid points controls how dense the grid is.
@@ -14,7 +10,6 @@
 #'
 #' @return
 #'
-#' @examples
 Griddy_Gibbs_tausquared_common = function(b, B, D, nu_tau, tau_min, tau_max, num_gpts){
   # zeta_grid = seq(zeta_min,zeta_max,length.out=num_gpts) for equi-spaced grid points
   p_min = pt(q = tau_min, df = nu_tau)

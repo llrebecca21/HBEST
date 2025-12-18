@@ -13,8 +13,7 @@
 #'
 #'
 #' @return
-#'
-#' @examples
+#' @noRd
 hess_glob_HBEST <- function(glob, Psi_list, y_list, loc, Sigma_glob, R) {
   ha = diag(-1/Sigma_glob)
   for(r in 1:R){

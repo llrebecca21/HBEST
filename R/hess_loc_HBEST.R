@@ -11,8 +11,7 @@
 #' @param y
 #'
 #' @return
-#'
-#' @examples
+#' @noRd
 hess_loc_HBEST <- function(Psi, y, loc, glob, Sigma_loc) {
   he = -crossprod(Psi, Psi * c(y / exp(Psi %*% (loc + glob))))
   diag(he) = diag(he) - 1/Sigma_loc

@@ -11,9 +11,7 @@
 #' @param y   The `r`th periodogram sub-setted for the Fourier frequencies for the `r`th time series.
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#' @export
 #'
-#' @examples
 gradiente_modelA_fast <- function(er, sumPsi, Psi, y, Sigma_e, Psi_ab) {
   -sumPsi - (er / Sigma_e) + colSums(Psi * c(y / exp(Psi_ab + Psi %*% er)))
 }

@@ -12,9 +12,7 @@
 #' @param R 
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#' @export
 #'
-#' @examples
 gradienta_modelA_fast <- function(ab, sumPsi, Psi_list, y_list, Sigma_a, R, sumsumPsi, Psi_ebr_list) {
   k = -sumsumPsi - (ab / Sigma_a) 
   for(r in 1:R){

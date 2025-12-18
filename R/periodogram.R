@@ -1,3 +1,11 @@
+#' Function to calculate the periodogram
+#'
+#' @param ts_list 
+#' @param n_len 
+#' @param J 
+#'
+#' @returns
+#' @noRd
 periodogram <- function(ts_list, n_len, J){
     # Define y_n(\omega_j) for the posterior function below
     perio_list = (abs(fft(ts_list))^ 2 / n_len)

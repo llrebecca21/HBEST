@@ -13,7 +13,6 @@
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
 #'
-#' @examples
 grad_glob_HBEST <- function(ebr, ab, sumPsi, Psi_list, y_list, Sigma_a, R) {
   k = -rowSums(sumPsi) - (ab / Sigma_a) 
   for(r in 1:R){

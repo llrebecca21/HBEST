@@ -12,7 +12,6 @@
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
 #'
-#' @examples
 grad_loc_HBEST <- function(er, ab, sumPsi, Psi, y, Sigma_e) {
   -sumPsi - (er / Sigma_e) + colSums(Psi * c(y / exp(Psi %*% (ab + er))))
 }

@@ -1,3 +1,12 @@
+#' Function to call different data generation methods for simulations.
+#'
+#' @param gen_method 
+#' @param ... 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 gen_data = function(gen_method, ...){
   gen_method = match.arg(gen_method, c("ARp", "AR1vary", "AR2mix", "MA4","MA4vary","MA4varyType2"))
   # Extract call parameters:
