@@ -1,4 +1,4 @@
-#' Griddy Gibbs Update
+#' Griddy Gibbs Update for Common and Independent Method.
 #'
 #' @param num_gpts : number of grid points controls how dense the grid is.
 #' @param b        : 
@@ -10,7 +10,7 @@
 #'
 #' @return
 #'
-Griddy_Gibbs_tausquared_common = function(b, B, D, nu_tau, tau_min, tau_max, num_gpts){
+tausquared_common = function(b, B, D, nu_tau, tau_min, tau_max, num_gpts){
   # zeta_grid = seq(zeta_min,zeta_max,length.out=num_gpts) for equi-spaced grid points
   p_min = pt(q = tau_min, df = nu_tau)
   p_max = pt(q = tau_max, df = nu_tau)
