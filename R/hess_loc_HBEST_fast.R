@@ -4,7 +4,6 @@
 #' `hess_loc_HBEST_fast` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for model A.
 #'
 #'
-#' @inheritParams gradiente_modelA
 #' @param Psi
 #' @param y
 #' @param br
