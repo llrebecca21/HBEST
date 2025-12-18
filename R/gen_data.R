@@ -1,6 +1,6 @@
 #' Function to call different data generation methods for simulations.
 #'
-#' @param gen_method 
+#' @param gen_method Which method of data generation to use. Options include `ARp`, `AR1vary`, `AR2mix`, `MA4`, `MA4vary`, and `MA4varyType2`.
 #' @param ... 
 #'
 #' @returns
