@@ -1,0 +1,32 @@
+---
+title: "HBEST Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{HBEST Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `Sampler_HBEST` which implements the sampling scheme laid out in 
+
+
+```{r setup}
+library(HBEST)
+```
+
+
+
+
+
+
+
+
+
+
