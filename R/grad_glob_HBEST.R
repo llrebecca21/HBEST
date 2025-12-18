@@ -12,7 +12,6 @@
 #' @param R 
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#' @export
 #'
 #' @examples
 grad_glob_HBEST <- function(ebr, ab, sumPsi, Psi_list, y_list, Sigma_a, R) {

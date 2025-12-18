@@ -12,7 +12,6 @@
 #' @param zetasquared_r
 #'
 #' @return
-#' @export
 #'
 #' @examples
 hee_modelA_fast <- function(Psi, y, er, ab, Sigma_e, Psi_ab) {

@@ -11,7 +11,6 @@
 #' @param y   The `r`th periodogram sub-setted for the Fourier frequencies for the `r`th time series.
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#' @export
 #'
 #' @examples
 grad_loc_HBEST <- function(er, ab, sumPsi, Psi, y, Sigma_e) {
