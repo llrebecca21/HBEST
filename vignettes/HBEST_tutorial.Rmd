@@ -1,6 +1,7 @@
 ---
 title: "HBEST Tutorial"
 output: rmarkdown::html_vignette
+bibliography: '`r system.file("REFERENCES.bib", package="HBEST")`'
 vignette: >
   %\VignetteIndexEntry{HBEST Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `Sampler_HBEST` which implements the sampling scheme laid out in 
+This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `Sampler_HBEST` which implements the sampling scheme laid out in @lee_hierarchical_2025.
 
 
 ```{r setup}
