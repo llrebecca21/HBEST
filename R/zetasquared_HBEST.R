@@ -13,7 +13,6 @@
 #' @param nu_zeta   A scalar that controls the degrees of freedom for the `zeta` prior.
 #'
 #' @return A vector containing the sampled zeta values.
-#' @export
 #'
 #' @examples
 zetasquared_HBEST = function(loc, B, D, tausquared, nu_zeta, zeta_min, zeta_max, num_gpts){
@@ -25,7 +24,7 @@ zetasquared_HBEST = function(loc, B, D, tausquared, nu_zeta, zeta_min, zeta_max,
   # non-linear transformation of the grid
   zeta_squared_grid = zeta_grid^2
   # compute log posterior-probability at each grid point (marginal)
-  lgprob = -(nu_zeta + 1 / 2) * log(1 + (zeta_grid / nu_zeta)) -B/2 * log(zeta_squared_grid - 1) - sum(locr^2 / D) / (2*tausquared*(zeta_squared_grid - 1))
+  lgprob = -(nu_zeta + 1 / 2) * log(1 + (zeta_grid / nu_zeta)) -B/2 * log(zeta_squared_grid - 1) - sum(loc^2 / D) / (2*tausquared*(zeta_squared_grid - 1))
   # Caps lgprob at 1 or lower
   lgprob = lgprob - max(lgprob)
   # Get back into probability scale (softmax)

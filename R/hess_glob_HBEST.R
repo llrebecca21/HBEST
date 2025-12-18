@@ -13,7 +13,6 @@
 #'
 #'
 #' @return
-#' @export
 #'
 #' @examples
 hess_glob_HBEST <- function(glob, Psi_list, y_list, loc, Sigma_glob, R) {

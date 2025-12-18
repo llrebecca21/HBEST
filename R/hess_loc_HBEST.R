@@ -11,7 +11,6 @@
 #' @param y
 #'
 #' @return
-#' @export
 #'
 #' @examples
 hess_loc_HBEST <- function(Psi, y, loc, glob, Sigma_loc) {

@@ -15,7 +15,6 @@
 #' @param glob 
 #'
 #' @return
-#' @export
 #'
 #' @examples
 tausquared_HBEST = function(loc, glob, B, D, R, cur_zetasquared, nu_tau, tau_min, tau_max, num_gpts){

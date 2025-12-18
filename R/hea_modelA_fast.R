@@ -12,7 +12,6 @@
 #'
 #'
 #' @return
-#' @export
 #'
 #' @examples
 hea_modelA_fast <- function( ab, Psi_list, y_list, ebr, Sigma_a, R, Psi_ebr_list) {

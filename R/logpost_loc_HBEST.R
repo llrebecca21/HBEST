@@ -11,7 +11,6 @@
 #' @param y 
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
-#' @export
 #'
 #' @examples
 logpost_loc_HBEST = function(sumPsi, loc, glob, Psi, y, Sigma_loc){
