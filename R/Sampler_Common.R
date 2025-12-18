@@ -3,11 +3,13 @@
 #' @param ts_list 
 #' @param B 
 #' @param iter 
-#' @param nu 
-#' @param etasq 
-#' @param sigmasquare 
+#' @param nu_tau 
+#' @param sigmasquared 
+#' @param tau_min 
+#' @param tau_max 
+#' @param num_gpts 
+#' @param burnin 
 #' @param tausquared 
-#' @param lambda 
 #'
 #' @return
 #' @export
