@@ -24,15 +24,19 @@ Sampler_Common(
 
 \item{iter}{}
 
+\item{nu_tau}{}
+
+\item{sigmasquared}{}
+
 \item{tausquared}{}
 
-\item{nu}{}
+\item{tau_min}{}
 
-\item{etasq}{}
+\item{tau_max}{}
 
-\item{sigmasquare}{}
+\item{num_gpts}{}
 
-\item{lambda}{}
+\item{burnin}{}
 }
 \description{
 Sampler to run the Common method

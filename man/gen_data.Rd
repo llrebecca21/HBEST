@@ -7,7 +7,7 @@
 gen_data(gen_method, ...)
 }
 \arguments{
-\item{gen_method}{}
+\item{gen_method}{Which method of data generation to use. Options include \code{ARp}, \code{AR1vary}, \code{AR2mix}, \code{MA4}, \code{MA4vary}, and \code{MA4varyType2}.}
 
 \item{...}{}
 }
