@@ -1,7 +1,7 @@
-#' A Sampling Algorithm for Model A
+#' A Sampling Algorithm for HBEST
 #' 
 #' @description
-#' `Sampler_modelA_griddy` is an MCMC algorithm that samples parameter values for Model A.
+#' `Sampler_HBEST` is an MCMC algorithm that samples parameter values for HBEST.
 #' 
 #'
 #' @param ts_list A list `R` long containing the vectors of the stationary time series of potentially different lengths.
@@ -22,7 +22,7 @@
 #' @export
 #'
 #' @examples
-Sampler_modelA_griddy = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_tau, tausquared, nu_zeta, burnin, zeta_min, zeta_max, tau_min, tau_max, num_gpts){
+Sampler_HBEST = function(ts_list, B, iter, sigmasquared_a, sigmasquared_e, nu_tau, tausquared, nu_zeta, burnin, zeta_min, zeta_max, tau_min, tau_max, num_gpts){
   # Extract length of each time series (n_len) and the number of time series (R) from time series input (ts_list)
   n_len = sapply(ts_list, nrow)
   R = length(n_len)
@@ -32,7 +32,6 @@ Sampler_modelA_griddy = function(ts_list, B, iter, sigmasquared_a, sigmasquared_
   
   # Define D's main diagonal : 
   # D is a measure of prior variance for \beta_1 through \beta_B
-  # Rebecca's D
   D = 1 / (4 * pi * (1:B)^2)
 
   # Create matrix to store estimated samples row-wise for \tau^2 for each iteration
