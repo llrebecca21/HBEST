@@ -1,7 +1,7 @@
 #' Function that calculates the conditional log posterior distribution of the vector \eqn{\pmb{a}} for Model A.
 #'
 #' @description
-#' `logposteriora_modelA` calculates the conditional posterior distribution for model B
+#' `logpost_glob_HBEST` calculates the conditional posterior distribution for model B
 #'
 #' @param ab 
 #' @param ebr 
@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-logposteriora_modelA = function(ab, ebr, Sigma_a, y_list, sumPsi, Psi_list, R){
+logpost_glob_HBEST = function(ab, ebr, Sigma_a, y_list, sumPsi, Psi_list, R){
   k = -c(crossprod(rowSums(sumPsi), ab)) - sum(ab^2 / (Sigma_a * 2))
   for(r in 1:R){
     k = k-sum(y_list[[r]] / exp(Psi_list[[r]] %*% (ab + ebr[,r])))
