@@ -2,7 +2,7 @@
 % Please edit documentation in R/hea_modelA_fast.R
 \name{hea_modelA_fast}
 \alias{hea_modelA_fast}
-\title{Hessian function for conditional log posterior of \eqn{\pmb{a}} from Model A}
+\title{Hessian function for conditional log posterior of \eqn{\pmb{glob}} from HBEST}
 \usage{
 hea_modelA_fast(ab, Psi_list, y_list, ebr, Sigma_a, R, Psi_ebr_list)
 }
