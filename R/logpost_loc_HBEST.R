@@ -1,9 +1,9 @@
-#' Function that calculates the conditional log posterior distribution of \eqn{\pmb{e}^{(r)}} from Model A.
+#' Function that calculates the conditional log posterior distribution of \eqn{\pmb{e}^{(r)}} from HBEST.
 #'
 #' @description
-#' `logposteriore_modelA` calculates the conditional posterior distribution for model B
+#' `logpost_loc_HBEST` calculates the conditional posterior distribution for HBEST
 #'
-#' @inheritParams gradient_modelB
+#' @inheritParams gradient_modelB 
 #' @param sumPsi 
 #' @param br 
 #' @param Psi 
@@ -15,6 +15,6 @@
 #' @export
 #'
 #' @examples
-logposteriore_modelA = function(sumPsi, er, ab, Psi, y, Sigma_e){
+logpost_loc_HBEST = function(sumPsi, er, ab, Psi, y, Sigma_e){
   -crossprod(sumPsi, er) - sum(y / exp(Psi %*% (ab + er))) - sum(er^2/Sigma_e) / 2
 }
