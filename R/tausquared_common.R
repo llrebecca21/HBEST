@@ -4,8 +4,8 @@
 #' @param b        : 
 #' @param D        : 
 #' @param nu_tau   : Degrees of freedom used for the t-distribution CDF and quantile functions.
-#' @param tau_min  : The minimum value for the creation of the uniform grid of \tau values.
-#' @param tau_max  : The maximum value for the creation of the uniform grid of \tau values.
+#' @param tau_min  : The minimum value for the creation of the uniform grid of \eqn{\tau} values.
+#' @param tau_max  : The maximum value for the creation of the uniform grid of \eqn{\tau} values.
 #' @param B        : The number of basis functions.
 #'
 #' @return
