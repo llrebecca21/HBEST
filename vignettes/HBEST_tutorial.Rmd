@@ -25,19 +25,19 @@ library(HBEST)
 ```
 
 ```{r load-setting9, include = FALSE}
-s <- system.file("private", "Vignette.Rda", package = "HBEST")
+s <- system.file("private", "results.Rda", package = "HBEST")
 if (file.exists(s)) load(s)
 ```
 
 # Introduction
 
-This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `Sampler_HBEST` which implements the sampling scheme laid out in @lee_hierarchical_2025. A faster version of the `Sampler_HBEST` function is also available through the `Sampler_HBEST_fast` function. These two functions are the main functions of this package. 
+This vignette walks through a simple tutorial on the basics of how to use the `HBEST` package. The package contains a function `HBEST()` which implements the sampling scheme laid out in @lee_hierarchical_2025. A faster version of the `HBEST()` function is also available through the `HBEST_fast()` function. These two functions are the main functions of this package. 
 
-The `gen_data` function is a supplemental function that allows the user to pick a method of time-series data generation for simulation uses.
+The `gen_data()` function is a supplemental function that allows the user to pick a method of time-series data generation for simulation uses.
 
 # Walkthrough of Examples
 
-To illustrate the functionality of `Sampler_HBEST` we generate time series from a few data generating processes using `gen_data` to highlight the flexibility of the model.
+To illustrate the functionality of `HBEST()` we generate time series from a few data generating processes using `gen_data()` to highlight the flexibility of the model.
 
 ## Generating Time-Series Data (Mixture AR(2))
 
@@ -45,9 +45,9 @@ Include section on how the Mixture AR(2) data is generated.
 
 Let us generate $R = 20$ many conditionally independent time series. In this example we set $80\%$ of the `R`-many time series to be of length $600$; and the remaining $20\%$ to be of length $1200$. 
 
-```{r, eval = FALSE}
+```{r}
 set.seed(101)
-R <- 15
+R <- 20
 # Create what percent will be "small" lengths
 sm_per <- .80
 lg_per <- 1 - .80
@@ -76,48 +76,157 @@ out <- gen_data(
   n_vary = n_vary
 )
 
+ts_list = out$ts_list
+
 # Create a blank plot
 plot(x = c(), y = c(), xlim = c(0, 1200), ylim = c(-25, 25), xlab = "Time", ylab = "")
 # Plot each of the raw generated time series
 for (r in 1:R) {
-  lines(out$ts_list[[r]][, 1])
+  lines(ts_list[[r]][, 1])
 }
 
 # Plot individual views
 par(mfrow = c(5,2), mar = c(1.75,2,2,0.2))
 # plot first 5
 for(r in 1:5){
-  plot(out$ts_list[[r]][,1], type = "l",
+  plot(ts_list[[r]][,1], type = "l",
        )
 }
 # plot last 5
 for(r in 16:R){
-  plot(out$ts_list[[r]][,1], type = "l",
+  plot(ts_list[[r]][,1], type = "l",
        )
 }
 
 ```
 
 
-### Using `Sampler_HBEST` or `Sampler_HBEST_fast`
+### Using `HBEST()` or `HBEST_fast()`
 
-In this section we walkthrough how to use the `Sampler_HBEST` function with the generated data above; how to calculate the estimate(s) of $\beta_{rb}$ using the samples for $\beta^{glob}_{b}$ and $\beta^{loc}_{rb}$; and how to calculate the estimates for $g^{glob}(\omega), g^{loc}_{r}(\omega), g_{rb}(\omega)$.
+In this section we walkthrough how to use the `HBEST()` function with the generated data above; how to calculate the estimate(s) of $\beta_{rb}$ using the samples for $\beta^{glob}_{b}$ and $\beta^{loc}_{rb}$; and how to calculate the estimates for $g^{glob}(\omega), g^{loc}_{r}(\omega), g_{rb}(\omega)$.
 
-`Sampler_HBEST` and `Sampler_HBEST_fast` both take in the same arguments. Either method will produce the same results, the `Sampler_HBEST_fast` method has slight computational improvements.
+`HBEST()` and `HBEST_fast()` both take in the same arguments. Either method will produce the same results, the `HBEST_fast()` method has slight computational improvements.
 
 The arguments required to run either function are:
 
-* 
+* `ts_list` A list `R` long containing the vectors of the stationary time series of potentially different lengths.
+* `B`       An integer specifying the number of basis coefficients (not including the intercept basis coefficient.
+* `iter`    An integer specifying the number of iterations for the MCMC algorithm embedded in this function.
+* `tausquared` A scalar which is used as the initial value of `tausquared` that controls the global smoothing effect.
+* `burnin`     An integer specifying the burn-in to be removed at the end of the sampling algorithm.
+* `zeta_min`   A scalar controlling the smallest value $\zeta$ can take. So, `zeta_min`^2 is the smallest value `zetasquared` can take.
+* `zeta_max`   A scalar controlling the largest value $\zeta$ can take. So, `zeta_max`^2 is the largest value that `zetasquared` can take.
+* `tau_min`    A scalar controlling the smallest value $\tau$ can take. So, `tau_min`^2 is the smallest value `tausquared` can take.
+* `tau_max`    A scalar controlling the largest value $\tau$ can take. So, `tau_max`^2 is the largest value `tausquared` can take.
+* `num_gpts`   A scalar controlling the denseness of the grid during the sampling of both `tausquared` and `zetasquared`.
+* `nu_tau`    A scalar indicating the degrees of freedom for the prior on $\tau$.
+* `nu_zeta`    A scalar indicating the degrees of freedom for the prior on $\zeta$.
+* `sigmasquared_glob` A scalar...
+* `sigmasquared_loc` A scalar...
+
+
+```{r}
+
+iter = 5000
+burnin = 500
+B = 15
+# Set/initialize hyper-parameters:
+nu_tau = 2
+sigmasquared_glob = 100
+sigmasquared_loc = 0.1
+tausquared = 10
+nu_zeta = 5
+# Set hyper-parameters for update on zeta and tausquared (Griddy):
+zeta_min = 1.001
+zeta_max = 15
+tau_min = 0.001
+tau_max = 100
+num_gpts = 1000
+
+```
 
 
 
+```{r, eval = FALSE}
+
+results <- HBEST::HBEST(
+  ts_list = ts_list,
+  B = B,
+  iter = iter,
+  sigmasquared_glob = sigmasquared_glob,
+  sigmasquared_loc = sigmasquared_loc,
+  nu_tau = nu_tau,
+  tausquared = tausquared,
+  nu_zeta = nu_zeta,
+  burnin = burnin,
+  zeta_min = zeta_min,
+  zeta_max = zeta_max,
+  tau_min = tau_min,
+  tau_max = tau_max,
+  num_gpts = num_gpts
+)
+
+
+```
+
+To construct the estimates of $\beta_{rb}$:
+
+```{r}
+full_omega = seq(0, pi, length.out = 1000)
+full_Psi =  outer(X = full_omega, Y = 0:B, FUN = function(x,y){sqrt(2)* cos(y * x)})
+# Redefine the first column of Psi
+full_Psi[,1] = 1
+
+# create a storage
+beta_array = array(data = NA, dim = c(iter-burnin, B+1, R))
+mean_sdf = array(NA, c(length(full_omega),R))
+mean_logsdf = array(NA, c(length(full_omega),R))
+
+# Extract out glob samples ("mean" coefficients)
+glob_samps = results$glob_samps
+loc_samps = results$loc_samps
+# loop over R and extract outputs from sampler
+for(r in 1:R){
+# extract/calculate beta from loc and glob
+beta_array[,,r] = loc_samps[,,r] + glob_samps
+est_sdf = (full_Psi %*% t(beta_array[,,r]))
+mean_sdf[,r] = rowMeans(exp(est_sdf))
+mean_logsdf[,r] = rowMeans(est_sdf)
+}
+```
 
 
 
+```{r}
+
+par(mfrow = c(1,3), bg = "white", mar = c(2,2,1,1))
+  for(r in 1:R){
+    # plot(x= full_omega,
+    #      # 16 15 30
+    #      y = exp(c(full_Psi %*% true_Beta[,r,plotSim])),
+    #      col = "dodgerblue",
+    #      lwd = 2,
+    #      ylab = "",
+    #      xlab = "",
+    #      type = "l",
+    #      lty = 1,
+    #      ylim = c(0,12)) 
+    plot(x = full_omega,
+          # 4500   16   15    1   30
+         y = rowMeans((tcrossprod(full_Psi,beta_array[,,r]))),
+         col = "dodgerblue",
+         lwd = 2,
+         ylab = "",
+         xlab = "",
+         type = "l",
+         lty = 1,
+         ylim = c(-2,6))
+    legend("topright", legend = c("HBEST"),
+           col = "dodgerblue",
+           lwd = 2)
+
+  
+}
 
 
-
-
-
-
-
+```
