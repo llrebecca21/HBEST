@@ -102,7 +102,7 @@ HBEST <- function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc, nu_tau,
   # MCMC Algorithm
   #####################
   # begin counter:
-  pb <- progress_bar$new(total = iter - 1)
+  pb <- progress::progress_bar$new(total = iter - 1)
   for (g in 2:iter) {
     pb$tick()
     ###############################################
