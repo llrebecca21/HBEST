@@ -12,7 +12,8 @@ RoxygenNote: 7.3.2
 RdMacros: Rdpack
 Imports: 
     stats,
-    Rdpack
+    Rdpack,
+    progress
 Suggests: 
     knitr,
     rmarkdown
