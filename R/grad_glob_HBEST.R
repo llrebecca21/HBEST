@@ -4,19 +4,19 @@
 #' `grad_glob_HBEST` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under HBEST.
 #' 
 #' @param sumPsi  ((B+1) x R) The `r`th column of the column sum across `Psi`.
-#' @param ebr 
 #' @param Psi_list 
 #' @param y_list 
-#' @param Sigma_a 
-#' @param ab 
 #' @param R 
+#' @param loc 
+#' @param glob 
+#' @param Sigma_glob 
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#'
-grad_glob_HBEST <- function(ebr, ab, sumPsi, Psi_list, y_list, Sigma_a, R) {
-  k = -rowSums(sumPsi) - (ab / Sigma_a) 
+#' @noRd
+grad_glob_HBEST <- function(loc, glob, sumPsi, Psi_list, y_list, Sigma_glob, R) {
+  k = -rowSums(sumPsi) - (glob / Sigma_glob) 
   for(r in 1:R){
-    k = k + colSums(Psi_list[[r]] * c(y_list[[r]] / exp(Psi_list[[r]] %*% (ab + ebr[,r]))))
+    k = k + colSums(Psi_list[[r]] * c(y_list[[r]] / exp(Psi_list[[r]] %*% (glob + loc[,r]))))
   }
   return(k)
 }

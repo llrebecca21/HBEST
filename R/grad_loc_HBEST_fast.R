@@ -11,7 +11,7 @@
 #' @param Psi_glob 
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#'
+#' @noRd
 grad_loc_HBEST_fast <- function(loc, sumPsi, Psi, y, Sigma_loc, Psi_glob) {
   -sumPsi - (loc / Sigma_loc) + colSums(Psi * c(y / exp(Psi_glob + Psi %*% loc)))
 }

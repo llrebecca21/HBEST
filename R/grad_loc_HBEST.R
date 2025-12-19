@@ -5,13 +5,13 @@
 #' 
 #' @param sumPsi  The `r`th column of the column sum across `Psi`.
 #' @param Psi The `r`th `Psi` matrix.
-#' @param er 
-#' @param ab 
-#' @param Sigma_e 
 #' @param y   The `r`th periodogram sub-setted for the Fourier frequencies for the `r`th time series.
+#' @param loc 
+#' @param glob 
+#' @param Sigma_loc 
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
-#'
-grad_loc_HBEST <- function(er, ab, sumPsi, Psi, y, Sigma_e) {
-  -sumPsi - (er / Sigma_e) + colSums(Psi * c(y / exp(Psi %*% (ab + er))))
+#' @noRd
+grad_loc_HBEST <- function(loc, glob, sumPsi, Psi, y, Sigma_loc) {
+  -sumPsi - (loc / Sigma_loc) + colSums(Psi * c(y / exp(Psi %*% (glob + loc))))
 }
