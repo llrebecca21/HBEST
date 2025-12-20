@@ -26,6 +26,14 @@ pak::pak("llrebecca21/HBEST")
 library(HBEST)
 ```
 
+## Functions
+
+This package contains user functions `HBEST()` and `HBEST_fast()`. Both
+functions implement the same method, but the `HBEST_fast()` function has
+slightly faster implementation. The data generation functions are also
+available to users and details of these functions can be found in the
+vignette.
+
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">
 
