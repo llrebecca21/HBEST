@@ -13,7 +13,8 @@ RdMacros: Rdpack
 Imports: 
     stats,
     Rdpack,
-    progress
+    progress,
+    wesanderson
 Suggests: 
     knitr,
     rmarkdown
