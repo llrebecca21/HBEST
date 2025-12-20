@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 knitr::opts_chunk$set(
   fig.align = "center",
   out.width = "70%",
-  fig.width = 6, fig.height = 5.5
+  fig.width = 8, fig.height = 5.5
 )
 ```
 
@@ -76,7 +76,25 @@ out <- gen_data(
   n_vary = n_vary
 )
 
+# extract out the time-series
 ts_list = out$ts_list
+# extract out the phi1
+phi1_true = out$phi1_true
+# extract out the phi2
+phi2_true = out$phi2_true
+# Create storage for true SDF 
+full_spec = matrix(data = NA, nrow = 1000, ncol = R)
+# Create a dense grid of omegas to plot over
+full_omega = seq(0, pi, length.out = 1000)
+
+# Calculate the SDF for generated data:
+for(r in 1:R){
+  g = rep(0, length(full_omega))
+  for(p in 1:nrow(phi1_true)){
+    g = g + arma_spec(full_omega, phi = c(phi1_true[p,r], phi2_true[p,r]))
+  }
+  full_spec[,r] = g
+}
 
 # Create a blank plot
 plot(x = c(), y = c(), xlim = c(0, 1200), ylim = c(-25, 25), xlab = "Time", ylab = "")
@@ -101,7 +119,7 @@ for(r in 16:R){
 ```
 
 
-### Using `HBEST()` or `HBEST_fast()`
+## Using `HBEST()` or `HBEST_fast()`
 
 In this section we walkthrough how to use the `HBEST()` function with the generated data above; how to calculate the estimate(s) of $\beta_{rb}$ using the samples for $\beta^{glob}_{b}$ and $\beta^{loc}_{rb}$; and how to calculate the estimates for $g^{glob}(\omega), g^{loc}_{r}(\omega), g_{rb}(\omega)$.
 
@@ -123,6 +141,9 @@ The arguments required to run either function are:
 * `nu_zeta`    A scalar indicating the degrees of freedom for the prior on $\zeta$.
 * `sigmasquared_glob` A scalar...
 * `sigmasquared_loc` A scalar...
+
+
+For this example, we choose the following settings for hyperparameters and initialization of $\tau^2$. 
 
 
 ```{r}
@@ -166,67 +187,178 @@ results <- HBEST::HBEST(
   num_gpts = num_gpts
 )
 
-
 ```
 
-To construct the estimates of $\beta_{rb}$:
+
+### Calculate Estimates of log-SDF
+
+To construct the estimates of $\beta_{rb}$ and $g_{rb}(\omega)$:
 
 ```{r}
-full_omega = seq(0, pi, length.out = 1000)
+
+# Construct an omega and Psi that is used for plotting.
 full_Psi =  outer(X = full_omega, Y = 0:B, FUN = function(x,y){sqrt(2)* cos(y * x)})
-# Redefine the first column of Psi
+# Redefine the first column of full_Psi
 full_Psi[,1] = 1
 
-# create a storage
+# Create storage
 beta_array = array(data = NA, dim = c(iter-burnin, B+1, R))
 mean_sdf = array(NA, c(length(full_omega),R))
 mean_logsdf = array(NA, c(length(full_omega),R))
 
-# Extract out glob samples ("mean" coefficients)
+# Extract out the loc and glob samples
 glob_samps = results$glob_samps
 loc_samps = results$loc_samps
-# loop over R and extract outputs from sampler
+
 for(r in 1:R){
-# extract/calculate beta from loc and glob
+# Calculate beta from loc and glob
 beta_array[,,r] = loc_samps[,,r] + glob_samps
+# Calculate the estimate of the SDF
 est_sdf = (full_Psi %*% t(beta_array[,,r]))
+# Calculate posterior mean estimates of the SDF
 mean_sdf[,r] = rowMeans(exp(est_sdf))
+# Calculate posterior mean estimates of the log-SDF
 mean_logsdf[,r] = rowMeans(est_sdf)
 }
 ```
 
 
+The first three log-SDF estimates (red) against the true log-SDF calculated using the generated data (blue).
 
 ```{r}
-
-par(mfrow = c(1,3), bg = "white", mar = c(2,2,1,1))
-  for(r in 1:R){
-    # plot(x= full_omega,
-    #      # 16 15 30
-    #      y = exp(c(full_Psi %*% true_Beta[,r,plotSim])),
-    #      col = "dodgerblue",
-    #      lwd = 2,
-    #      ylab = "",
-    #      xlab = "",
-    #      type = "l",
-    #      lty = 1,
-    #      ylim = c(0,12)) 
-    plot(x = full_omega,
-          # 4500   16   15    1   30
-         y = rowMeans((tcrossprod(full_Psi,beta_array[,,r]))),
+par(mfrow = c(1,3), bg = "white", mar = c(3.5,3.5,1,1))
+  for(r in 1:3){
+    # plot the true log-SDF
+    plot(x= full_omega,
+         y = log(full_spec[,r]),
          col = "dodgerblue",
          lwd = 2,
          ylab = "",
          xlab = "",
          type = "l",
          lty = 1,
-         ylim = c(-2,6))
-    legend("topright", legend = c("HBEST"),
-           col = "dodgerblue",
+         ylim = c(-1.5,6.25))
+    # Plot the estimated log-SDF
+    lines(x = full_omega,
+         y = rowMeans((tcrossprod(full_Psi,beta_array[,,r]))),
+         col = "red",
+         lwd = 2,
+         ylab = "",
+         xlab = "",
+         type = "l",
+         lty = 1)
+    legend("topright", legend = c(bquote("HBEST: "*hat(g)(omega)), bquote("True: "*g(omega))),
+           col = c("red", "dodgerblue"),
            lwd = 2)
+    mtext(side = 1,
+          text = bquote(omega),
+          line = 2.5,
+          cex = 1.2)
+    mtext(side = 2,
+          text = bquote(g(omega)),
+          line = 2,
+          cex = 1.2) 
+  }
+```
 
-  
+
+The last three log-SDF estimates (red) against the true log-SDF calculated using the generated data (blue). The code is similar to the code in the previous section.
+
+```{r, echo = FALSE}
+par(mfrow = c(1,3), bg = "white", mar = c(3.5,3.5,1,1))
+  for(r in 18:R){
+    plot(x= full_omega,
+         y = log(full_spec[,r]),
+         col = "dodgerblue",
+         lwd = 2,
+         ylab = "",
+         xlab = "",
+         type = "l",
+         lty = 1,
+         ylim = c(-1.5,6.25))
+    lines(x = full_omega,
+         y = rowMeans((tcrossprod(full_Psi,beta_array[,,r]))),
+         col = "red",
+         lwd = 2,
+         ylab = "",
+         xlab = "",
+         type = "l",
+         lty = 1)
+    legend("topright", legend = c(bquote("HBEST: "*hat(g)(omega)), bquote("True: "*g(omega))),
+           col = c("red", "dodgerblue"),
+           lwd = 2)
+    mtext(side = 1,
+          text = bquote(omega),
+          line = 2.5,
+          cex = 1.2)
+    mtext(side = 2,
+          text = bquote(g(omega)),
+          line = 2,
+          cex = 1.2) 
 }
 
+```
+
+
+### Calculate Estimates of the global log-SDF components
+
+```{r}
+
+par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
+# Create empty plot
+  plot(x = c(), y = c(),
+          ylim = c(-2,6.25),
+          xlim = c(0,pi),
+          main = "",
+          ylab = "",
+          xlab = "",
+          las = 1)
+  mtext(side = 2,
+        text = bquote(hat(g)*"("*omega*")"),
+        line = 2.25,
+        cex = 1.2)
+  mtext(side = 1,
+        text = bquote(omega),
+        line = 2.5,
+        cex = 1.2)
+  text(x = 0, y = par("usr")[4]-0.1*diff(par("usr")[3:4]),
+       labels = "", pos = 4, cex = 1.5)
+  
+  matlines(x = full_omega,
+        y = mean_logsdf,
+        col = wesanderson::wes_palette("FantasticFox1")[3],
+        lty = 1,
+        lwd = 2)
+  lines(x = full_omega,
+        y = rowMeans(tcrossprod(full_Psi, glob_samps)),
+        col = wesanderson::wes_palette("FantasticFox1")[5],
+        lwd = 3)
+  # point-wise credible interval of global log-SDF component
+  lines(x = full_omega,
+        y = apply(tcrossprod(full_Psi, glob_samps), 1, FUN = function(x){quantile(x, 0.025)}),
+        col = "black",
+        lwd = 1,
+        lty = 2)
+  lines(x = full_omega,
+        y = apply(tcrossprod(full_Psi, glob_samps), 1, FUN = function(x){quantile(x, 0.975)}),
+        col = "black",
+        lwd = 1,
+        lty = 2)
+
+  legend("topright",
+         legend = c(bquote(hat(g)*"("*omega*")"), bquote(hat(g)^"glob"*"("*omega*")"), "95% C.I."),
+         col = c(wesanderson::wes_palette("FantasticFox1")[3], wesanderson::wes_palette("FantasticFox1")[5],
+                 "black"),
+         lty = c(1,1,2),
+         bg = "white",
+         lwd = 2,
+         bty = "n")
 
 ```
+
+
+
+
+
+
+
