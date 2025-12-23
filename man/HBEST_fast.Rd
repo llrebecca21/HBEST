@@ -2,7 +2,7 @@
 % Please edit documentation in R/HBEST_fast.R
 \name{HBEST_fast}
 \alias{HBEST_fast}
-\title{A Sampling Algorithm for HBEST (fast version)}
+\title{A sampling algorithm for HBEST (fast version)}
 \usage{
 HBEST_fast(
   ts_list,
@@ -63,10 +63,12 @@ A list object with components:
 }
 }
 \description{
-\code{HBEST_fast} is an MCMC algorithm that samples parameter values for HBEST (fast). This is a faster version of \code{\link[=HBEST]{HBEST()}}.
+\code{HBEST_fast} is an MCMC algorithm that samples parameter values for HBEST (fast). This is a computationally faster version of \code{\link[=HBEST]{HBEST()}}.
 }
 \examples{
-See `HBEST_tutorial` vignette.
+# To view the full explanation and examples, run:
+\dontrun{
+vignette("HBEST_tutorial", package = "HBEST")}
 }
 \references{
 \insertRef{lee_hierarchical_2025}{HBEST}

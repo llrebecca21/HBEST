@@ -2,7 +2,7 @@
 % Please edit documentation in R/HBEST.R
 \name{HBEST}
 \alias{HBEST}
-\title{A Sampling Algorithm for HBEST}
+\title{A sampling algorithm for HBEST}
 \usage{
 HBEST(
   ts_list,

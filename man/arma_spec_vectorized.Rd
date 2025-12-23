@@ -2,7 +2,7 @@
 % Please edit documentation in R/arma_spec_vectorized.R
 \name{arma_spec_vectorized}
 \alias{arma_spec_vectorized}
-\title{A vectorized version of \code{\link[=arma_spec]{arma_spec()}}}
+\title{\code{arma_spec_vectorized}: A vectorized version of \code{\link[=arma_spec]{arma_spec()}}}
 \usage{
 arma_spec_vectorized(omega, phi = 0, theta = 0)
 }
@@ -17,7 +17,7 @@ arma_spec_vectorized(omega, phi = 0, theta = 0)
 A vector as long as the \code{omega} vector containing the calculated spectral density.
 }
 \description{
-Gives the spectral density across a given set of omegas for a known ARMA process.
+Gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
 This function is vectorized for faster computation.
 }
 \examples{
