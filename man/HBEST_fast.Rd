@@ -65,6 +65,9 @@ A list object with components:
 \description{
 \code{HBEST_fast} is an MCMC algorithm that samples parameter values for HBEST (fast). This is a faster version of \code{\link[=HBEST]{HBEST()}}.
 }
+\examples{
+See `HBEST_tutorial` vignette.
+}
 \references{
 \insertRef{lee_hierarchical_2025}{HBEST}
 }
