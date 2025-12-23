@@ -1,9 +1,19 @@
-#' Function to call different data generation methods for simulations.
+#' `gen_data`: Wrapper function to call various data generation methods.
 #'
-#' @param gen_method Which method of data generation to use. Options include `ARp`, `AR1vary`, `AR2mix`, `MA4`, `MA4vary`, and `MA4varyType2`.
-#' @param ... 
+#' @param gen_method Method of data generation to use. Options include `ARp`, `AR1vary`, `AR2mix`, `MA4`, `MA4vary`, and `MA4varyType2`.
+#' @param ... further arguments, passed to chosen method. See details below.
 #'
-#' @returns
+#' @details Available data generation methods include:
+#' \tabular{ll}{
+#'   `ARp` \tab calls the [HBEST::generate_AR()] function which is based on [stats::arima.sim]. \cr
+#'   `AR1vary` \tab calls the [HBEST::generate_AR1_vary()] function which is based on [stats::arima.sim]. \cr
+#'   `AR2mix` \tab calls the [HBEST::generate_AR2_mixture()] function which is based on [stats::arima.sim] and \insertCite{granados-garcia_brain_2022}{HBEST}. \cr
+#'   `MA4` \tab calls the [HBEST::generate_MA4()] function which is based on [stats::arima.sim]. \cr
+#'   `MA4vary` \tab calls the [HBEST::generate_MA4_vary()] function which is based on [stats::arima.sim]. \cr
+#'   `MA4varyType2` \tab calls the [HBEST::generate_MA4_varyType2()] function which is based on [stats::arima.sim]. \cr
+#' }
+#' 
+#' @returns The `gen_data()` function returns the appropriate objects based on the method chosen. See help pages for each function for more details.
 #' @export
 #'
 #' @examples
