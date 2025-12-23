@@ -19,9 +19,9 @@
 #' @export
 #'
 #' @examples
-#' R <- 20
-#' n <- 500
-#' burn <- 50
+#' R = 20
+#' n = rep(500, R)
+#' burn = 50
 #' ts = generate_MA4(n = n, R = R, burn = burn)$ts_list
 #' ## Returns an R-long list object each with a (500 x 1) matrix object,
 #' ## and a (4 x 20) matrix of true MA(4) coefficients - all the same value.
@@ -39,18 +39,14 @@ generate_MA4 = function(n = 1000, R = 1, burn = 50){
     # store MA(1) coefficient generated
     theta_true[,r] <- theta
     # generate data
-    ts_list[[r]] <- matrix(stats::arima.sim(model = list(ar = phi, ma = theta), n = n, sd = 1, n.start = burn), ncol = 1)
+    ts_list[[r]] <- matrix(stats::arima.sim(model = list(ar = phi, ma = theta),
+                                            n = n[r],
+                                            sd = 1,
+                                            n.start = burn),
+                           ncol = 1)
   }
   return(list(
     "ts_list" = ts_list,
     "theta_true" = theta_true
   ))
-  
-  
-  
-  
-  # S=arima.sim(n = size, list(ma=c(-.3,-.6,-.3,.6)  ), sd = 1, n.start = 10000)
-  #standarized serie
-  # S=(S-mean(S))/sd(S)
-  
 }

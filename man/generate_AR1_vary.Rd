@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_AR1_vary.R
 \name{generate_AR1_vary}
 \alias{generate_AR1_vary}
-\title{Generate multiple AR(1) varying time series}
+\title{Generate \code{R}-Many Conditionally Independent AR(1) Varying Time Series}
 \usage{
 generate_AR1_vary(n, R = 1, min = 0.45, max = 0.6, burn = 50)
 }

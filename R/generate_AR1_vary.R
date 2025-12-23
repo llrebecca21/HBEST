@@ -1,4 +1,4 @@
-#' Generate multiple AR(1) varying time series
+#' Generate `R`-Many Conditionally Independent AR(1) Varying Time Series
 #'
 #' @description
 #' Generates `R` time series from an AR(1) varying processes.

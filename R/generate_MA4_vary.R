@@ -1,4 +1,4 @@
-#' Generate Conditionally Independent `R`-Many MA(4) Varying Time Series of the Same Length
+#' Generate Conditionally Independent `R`-Many MA(4) Varying Time Series
 #'
 #' @description
 #' The MA(4) that is used as the base coefficients for the variation is `(-.3,-.6,-.3,.6)`. This is based on the MA(4) used in \insertCite{granados-garcia_brain_2022;textual}{HBEST}.
@@ -10,7 +10,7 @@
 #' 3. Generate: A new time-series using the new `theta` value from step 2.
 #' 4. Repeat steps 1-3 `R`-many times.
 #'
-#' @param n A scalar indicating the length of all `R` time series. (default is `1000`).
+#' @param n A scalar indicating the length of all `R` time series.
 #' @param R A scalar indicating the number of conditionally independent time series to be generated. (default is `1`).
 #' @param burn A scalar indicating the amount of burn-in to be used with [stats::arima.sim()].  (default is `50`).
 #' @param alpha A scalar specifying the variation wanted from the base coefficients. (default is `0.05`).
@@ -27,7 +27,8 @@
 #'
 #' @examples
 #' R <- 20
-#' n <- 500
+#' ## For time series of the same length:
+#' n <- rep(500, R)
 #' burn <- 50
 #' alpha <- 0.05
 #' ts = generate_MA4_vary(n = n, R = R, burn = burn, alpha = alpha)
@@ -37,7 +38,7 @@
 #' ## and a (4 x 20) matrix of the standard normal values generated for each R.
 #' 
 #' 
-generate_MA4_vary = function(n = 1000, R = 1, burn = 50, alpha = 0.05){
+generate_MA4_vary = function(n, R = 1, burn = 50, alpha = 0.05){
   # create list to store the time series
   ts_list <- vector(mode = "list", length = R)
   # create matrix to store "true" theta values
@@ -59,7 +60,7 @@ generate_MA4_vary = function(n = 1000, R = 1, burn = 50, alpha = 0.05){
     # store mu_r
     mu_r_gen[,r] <- mu_r
     # generate data
-    ts_list[[r]] <- matrix(stats::arima.sim(model = list(ar = phi, ma = theta), n = n_vary[r], sd = 1, n.start = burn), ncol = 1)
+    ts_list[[r]] <- matrix(stats::arima.sim(model = list(ar = phi, ma = theta), n = n[r], sd = 1, n.start = burn), ncol = 1)
   }
   return(list(
     "ts_list" = ts_list,
@@ -67,12 +68,4 @@ generate_MA4_vary = function(n = 1000, R = 1, burn = 50, alpha = 0.05){
     "alpha" = alpha,
     "mu_r_gen" = mu_r_gen
   ))
-  
-  
-  
-  
-  # S=arima.sim(n = size, list(ma=c(-.3,-.6,-.3,.6)  ), sd = 1, n.start = 10000)
-  #standarized serie
-  # S=(S-mean(S))/sd(S)
-  
 }

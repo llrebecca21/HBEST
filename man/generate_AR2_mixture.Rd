@@ -2,18 +2,18 @@
 % Please edit documentation in R/generate_AR2_mixture.R
 \name{generate_AR2_mixture}
 \alias{generate_AR2_mixture}
-\title{Generate a varying AR(2) with angle representation}
+\title{Generate \code{R}-Many Conditionally Independent Varying AR(2) Time Series with Angle Representation}
 \usage{
 generate_AR2_mixture(peaks, bandwidths, n_vary, variances = NULL)
 }
 \arguments{
-\item{peaks}{a vector of length \code{R} with peak locations of each spectrum}
+\item{peaks}{a vector of length \code{R} with peak locations of each spectrum.}
 
-\item{bandwidths}{a vector of length \code{n} with the bandwidths of each spectrum}
+\item{bandwidths}{a vector of length \code{n} with the bandwidths of each spectrum.}
 
 \item{n_vary}{a numeric strictly positive scalar that determines the length of the time series generated.}
 
-\item{variances}{an optional vector (default is \code{NULL}) of length \code{n} with the variances of the innovations}
+\item{variances}{an optional vector (default is \code{NULL}) of length \code{n} with the variances of the innovations.}
 }
 \value{
 a list object that contains the following fields:
@@ -26,11 +26,11 @@ a list object that contains the following fields:
 Generates \code{R} many slightly varying AR(2) time series given a \code{R} long vector of peak locations and and \code{R} long vector of bandwidths
 }
 \examples{
-R <- 20
-peaks <- runif(R, min = 0.2, max = 0.23)
-bandwidth <- runif(R, min = .1, max = .2)
-generate_AR2_mixture(peaks = peaks, bandwidth = bandwidth, n = 1000)
-## Returns a list object with a (1000 x 20) matrix object,
+R = 20
+peaks = runif(R, min = 0.2, max = 0.23)
+bandwidth = runif(R, min = .1, max = .2)
+ts = generate_AR2_mixture(peaks = peaks, bandwidth = bandwidth, n_vary = c(rep(300, 10), rep(800, 10)))
+## Returns an R-long list object each with a (n_vary[r] x 1) matrix object,
 ## and a (2 x 20) matrix of AR(2) coefficients
 
 }

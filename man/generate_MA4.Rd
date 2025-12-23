@@ -27,9 +27,9 @@ The MA(4) coefficients used in the data generation are \verb{(-.3,-.6,-.3,.6)}. 
 No variation around the base coefficients is used in this data generation function.
 }
 \examples{
-R <- 20
-n <- 500
-burn <- 50
+R = 20
+n = rep(500, R)
+burn = 50
 ts = generate_MA4(n = n, R = R, burn = burn)$ts_list
 ## Returns an R-long list object each with a (500 x 1) matrix object,
 ## and a (4 x 20) matrix of true MA(4) coefficients - all the same value.

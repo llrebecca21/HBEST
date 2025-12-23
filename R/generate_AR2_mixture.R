@@ -1,12 +1,12 @@
-#' Generate a varying AR(2) with angle representation
+#' Generate `R`-Many Conditionally Independent Varying AR(2) Time Series with Angle Representation
 #'
 #' @description
 #' Generates `R` many slightly varying AR(2) time series given a `R` long vector of peak locations and and `R` long vector of bandwidths
 #'
-#' @param peaks a vector of length `R` with peak locations of each spectrum
-#' @param bandwidths a vector of length `n` with the bandwidths of each spectrum
-#' @param variances an optional vector (default is `NULL`) of length `n` with the variances of the innovations
+#' @param peaks a vector of length `R` with peak locations of each spectrum.
+#' @param bandwidths a vector of length `n` with the bandwidths of each spectrum.
 #' @param n_vary a numeric strictly positive scalar that determines the length of the time series generated.
+#' @param variances an optional vector (default is `NULL`) of length `n` with the variances of the innovations.
 #'
 #' @return a list object that contains the following fields:
 #'
@@ -17,11 +17,11 @@
 #' @export
 #'
 #' @examples
-#' R <- 20
-#' peaks <- runif(R, min = 0.2, max = 0.23)
-#' bandwidth <- runif(R, min = .1, max = .2)
-#' generate_AR2_mixture(peaks = peaks, bandwidth = bandwidth, n = 1000)
-#' ## Returns a list object with a (1000 x 20) matrix object,
+#' R = 20
+#' peaks = runif(R, min = 0.2, max = 0.23)
+#' bandwidth = runif(R, min = .1, max = .2)
+#' ts = generate_AR2_mixture(peaks = peaks, bandwidth = bandwidth, n_vary = c(rep(300, 10), rep(800, 10)))
+#' ## Returns an R-long list object each with a (n_vary[r] x 1) matrix object,
 #' ## and a (2 x 20) matrix of AR(2) coefficients
 #'
 generate_AR2_mixture <- function(peaks, bandwidths, n_vary, variances = NULL) {
