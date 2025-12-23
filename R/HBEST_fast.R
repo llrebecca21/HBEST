@@ -36,7 +36,9 @@
 #' @export
 #'
 #' @examples
-#' See `HBEST_tutorial` vignette.
+#' # To view the full explanation and examples, run:
+#' \dontrun{
+#' vignette("HBEST_tutorial", package = "HBEST")}
 HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasquared_loc = 0.1, nu_tau = 2, tausquared = 10, nu_zeta = 5, zeta_min = 1.001, zeta_max = 15, tau_min = 0.001, tau_max = 100, num_gpts = 1000){
   # Extract length of each time series (n_len) and the number of time series (R) from time series input (ts_list)
   n_len = sapply(ts_list, nrow)
