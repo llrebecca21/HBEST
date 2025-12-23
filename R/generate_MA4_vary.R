@@ -8,6 +8,7 @@
 #' 1. Sample 4 values from a \eqn{N(0,1)} to use as a "mean".
 #' 2. Calculate: `basetheta + alpha * mu_r * abs(basetheta)` where `basetheta` is the original coefficients; `mu_r` is the 4 sampled values from the \eqn{N(0,1)}; and `alpha` is the user-specified scalar that controls the variation around the base coefficients. 
 #' 3. Generate: A new time-series using the new `theta` value from step 2.
+#' 4. Repeat steps 1-3 `R`-many times.
 #'
 #' @param n A scalar indicating the length of all `R` time series.
 #' @param R A scalar indicating the number of conditionally independent time series to be generated.
