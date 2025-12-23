@@ -26,10 +26,10 @@
 #' @export
 #'
 #' @examples
-#' R <- 20
-#' n <- 500
-#' burn <- 50
-#' alpha <- 0.05
+#' R = 20
+#' n = 500
+#' burn = 50
+#' alpha = 0.05
 #' ts = generate_MA4_varyType2(n = n, R = R, burn = burn, alpha = alpha)
 #' ## Returns an R-long list object each with a (500 x 1) matrix object,
 #' ## a (4 x 20) matrix of true MA(4) coefficients,
