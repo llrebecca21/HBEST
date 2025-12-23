@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_data.R
 \name{gen_data}
 \alias{gen_data}
-\title{Time-series Data Generation Wrapper Function.}
+\title{Time-series Data Generation Wrapper Function}
 \usage{
 gen_data(gen_method, ...)
 }

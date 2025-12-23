@@ -1,16 +1,6 @@
 #' Sampler to run the Common method
 #' 
-#' 
-#' @param ts_list 
-#' @param B 
-#' @param iter 
-#' @param nu_tau 
-#' @param sigmasquared 
-#' @param tau_min 
-#' @param tau_max 
-#' @param num_gpts 
-#' @param burnin 
-#' @param tausquared 
+#' @inheritParams HBEST
 #'
 #' @return
 #' @noRd
