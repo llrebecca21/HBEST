@@ -1,8 +1,7 @@
-#' Calculate the spectral density for a known ARMA process
+#' `arma_spec`: Calculate the spectral density for a known ARMA process
 #'
 #' @description
 #' Gives the spectral density across a given set of omegas for a known ARMA process.
-#'
 #'
 #' @param omega  A vector containing a set of frequencies the spectral density is to be calculated over.
 #' @param phi The vector of AR coefficient(s).
