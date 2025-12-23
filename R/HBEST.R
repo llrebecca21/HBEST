@@ -3,26 +3,40 @@
 #' @description
 #' `HBEST` is an MCMC algorithm that samples parameter values for HBEST.
 #'
-#'
 #' @param ts_list A list `R` long containing the vectors of the stationary time series of potentially different lengths.
-#' @param B       An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0})
+#' @param B       An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).
 #' @param iter    An integer specifying the number of iterations for the MCMC algorithm embedded in this function.
-#' @param tausquared A scalar which is used as the initial value of `tausquared` that controls the global smoothing effect.
 #' @param burnin     An integer specifying the burn-in to be removed at the end of the sampling algorithm.
-#' @param zeta_min   A scalar controlling the smallest value \eqn{\zeta} can take. So, `zeta_min`^2 is the smallest value `zetasquared` can take.
-#' @param zeta_max   A scalar controlling the largest value \eqn{\zeta} can take. So, `zeta_max`^2 is the largest value that `zetasquared` can take.
-#' @param tau_min    A scalar controlling the smallest value \eqn{\tau} can take. So, `tau_min`^2 is the smallest value `tausquared` can take.
-#' @param tau_max    A scalar controlling the largest value \eqn{\tau} can take. So, `tau_max`^2 is the largest value `tausquared` can take.
-#' @param num_gpts   A scalar controlling the denseness of the grid during the sampling of both `tausquared` and `zetasquared`.
-#' @param nu_tau     A scalar indicating the degrees of freedom for the prior on \eqn{\tau}.
-#' @param nu_zeta    A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}.
-#' @param sigmasquared_glob A scalar...
-#' @param sigmasquared_loc A scalar...
+#' @param sigmasquared_glob A scalar specifying the variance of the prior (N(0,`sigmasquared_glob`)) intercept term for \eqn{\beta^{glob}_0}. (default is `100` to ensure a diffuse prior).
+#' @param sigmasquared_loc A scalar specifying the variance of the prior (N(0,`sigmasquared_loc`)) intercept term for \eqn{\beta^{loc}_0}. (default is `0.1`).
+#' @param nu_tau     A scalar indicating the degrees of freedom for the prior on \eqn{\tau}. (default is `2`).
+#' @param tausquared A scalar used as the initial value of `tausquared` that controls the global smoothing effect. (default is `10`).
+#' @param nu_zeta    A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}. (default is `5`).
+#' @param zeta_min   A scalar controlling the smallest value \eqn{\zeta} can take. So, `zeta_min`^2 is the smallest value `zetasquared` can take. (default is `1.001`).
+#' @param zeta_max   A scalar controlling the largest value \eqn{\zeta} can take. So, `zeta_max`^2 is the largest value that `zetasquared` can take. (default is `15`).
+#' @param tau_min    A scalar controlling the smallest value \eqn{\tau} can take. So, `tau_min`^2 is the smallest value `tausquared` can take. (default is `0.001`).
+#' @param tau_max    A scalar controlling the largest value \eqn{\tau} can take. So, `tau_max`^2 is the largest value `tausquared` can take. (default is `100`).
+#' @param num_gpts   A scalar controlling the denseness of the grid during the sampling of both `tausquared` and `zetasquared`. (default is `1000`).
+#' 
 #'
-#' @return
+#' @return A list object with components:
+#' \tabular{ll}{
+#'   `beta_loc_est` \tab returns a `(iter - burnin` \eqn{\times} `B+1` \eqn{\times} `R)` array of \eqn{\beta^{loc}_{br}} estimates. \cr
+#'   `beta_glob_est` \tab returns a `(iter - burnin` \eqn{\times} `B+1)` array of \eqn{\beta^{glob}_{b}} estimates. \cr
+#'   `zetasquared_est` \tab returns a `(iter - burnin` \eqn{\times} `R)` array of \eqn{\zeta^{2}_{r}} estimates. \cr
+#'   `tausquared_est` \tab returns a `(iter - burnin` \eqn{\times} `1)` array of \eqn{\tau^{2}} estimates. \cr
+#'   `perio_list` \tab returns an `R` list of column matrices each storing a truncated/half periodogram. \cr
+#'   `omega` \tab returns an `R` list of column matrices each storing \eqn{\omega_{j}} see paper in references for details. \cr
+#'   `D` \tab returns a `B` vector that stores the prior variance for \eqn{\beta_{1}} through \eqn{\beta_{B}}. \cr
+#' }
+#' 
+#' @references
+#' \insertRef{lee_hierarchical_2025}{HBEST}
+#' 
 #' @export
 #'
 #' @examples
+#' See `HBEST_tutorial` vignette.
 HBEST <- function(ts_list, B, iter, sigmasquared_glob, sigmasquared_loc, nu_tau, tausquared, nu_zeta, burnin, zeta_min, zeta_max, tau_min, tau_max, num_gpts) {
   # Extract length of each time series (n_len) and the number of time series (R) from time series input (ts_list)
   n_len <- sapply(ts_list, nrow)
