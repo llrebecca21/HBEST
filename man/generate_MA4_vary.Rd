@@ -41,10 +41,11 @@ R <- 20
 n <- 500
 burn <- 50
 alpha <- 0.05
-generate_MA4_vary(n = n, R = R, burn = burn, alpha = alpha)
+ts = generate_MA4_vary(n = n, R = R, burn = burn, alpha = alpha)
 ## Returns an R-long list object each with a (500 x 1) matrix object,
 ## a (4 x 20) matrix of true MA(4) coefficients,
 ## a scalar returning the alpha provided,
 ## and a (4 x 20) matrix of the standard normal values generated for each R.
+
 
 }
