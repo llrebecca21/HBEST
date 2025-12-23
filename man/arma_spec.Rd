@@ -2,7 +2,7 @@
 % Please edit documentation in R/arma_spec.R
 \name{arma_spec}
 \alias{arma_spec}
-\title{Calculate the spectral density for a known ARMA process}
+\title{\code{arma_spec}: Calculate the spectral density for a known ARMA process}
 \usage{
 arma_spec(omega, phi = 0, theta = 0)
 }
@@ -17,7 +17,7 @@ arma_spec(omega, phi = 0, theta = 0)
 A vector as long as the \code{omega} vector containing the calculated spectral density
 }
 \description{
-Gives the spectral density across a given set of omegas for a known ARMA process.
+Gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
 }
 \examples{
 omega <- seq(0, pi, length.out = 1000)

@@ -2,15 +2,29 @@
 % Please edit documentation in R/gen_data.R
 \name{gen_data}
 \alias{gen_data}
-\title{Function to call different data generation methods for simulations.}
+\title{\code{gen_data}: Wrapper function to call various data generation methods.}
 \usage{
 gen_data(gen_method, ...)
 }
 \arguments{
-\item{gen_method}{Which method of data generation to use. Options include \code{ARp}, \code{AR1vary}, \code{AR2mix}, \code{MA4}, \code{MA4vary}, and \code{MA4varyType2}.}
+\item{gen_method}{Method of data generation to use. Options include \code{ARp}, \code{AR1vary}, \code{AR2mix}, \code{MA4}, \code{MA4vary}, and \code{MA4varyType2}.}
 
-\item{...}{}
+\item{...}{further arguments, passed to chosen method. See details below.}
+}
+\value{
+The \code{gen_data()} function returns the appropriate objects based on the method chosen. See help pages for each function for more details.
 }
 \description{
-Function to call different data generation methods for simulations.
+\code{gen_data}: Wrapper function to call various data generation methods.
+}
+\details{
+Available data generation methods include:
+\tabular{ll}{
+\code{ARp} \tab calls the \code{\link[=generate_AR]{generate_AR()}} function which is based on \link[stats:arima.sim]{stats::arima.sim}. \cr
+\code{AR1vary} \tab calls the \code{\link[=generate_AR1_vary]{generate_AR1_vary()}} function which is based on \link[stats:arima.sim]{stats::arima.sim}. \cr
+\code{AR2mix} \tab calls the \code{\link[=generate_AR2_mixture]{generate_AR2_mixture()}} function which is based on \link[stats:arima.sim]{stats::arima.sim} and \insertCite{granados-garcia_brain_2022}{HBEST}. \cr
+\code{MA4} \tab calls the \code{\link[=generate_MA4]{generate_MA4()}} function which is based on \link[stats:arima.sim]{stats::arima.sim}. \cr
+\code{MA4vary} \tab calls the \code{\link[=generate_MA4_vary]{generate_MA4_vary()}} function which is based on \link[stats:arima.sim]{stats::arima.sim}. \cr
+\code{MA4varyType2} \tab calls the \code{\link[=generate_MA4_varyType2]{generate_MA4_varyType2()}} function which is based on \link[stats:arima.sim]{stats::arima.sim}. \cr
+}
 }
