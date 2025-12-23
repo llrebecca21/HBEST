@@ -39,8 +39,7 @@
 #' bandwidths2 = rep(0.15, R)
 #' peaks = rbind(peaks1, peaks2)
 #' bandwidths = rbind(bandwidths1, bandwidths2)
-#' ts = generate_AR2_mixture(peaks = peaks, bandwidth = bandwidth, n_vary = c(rep(300, 10), rep(800, 10)))
-#' ts = gen_data(gen_method = "AR2mix", peaks = peaks, bandwidth = bandwidth, n_vary = c(rep(300, 10), rep(800, 10)))
+#' ts = gen_data(gen_method = "AR2mix", peaks = peaks, bandwidths = bandwidths, n_vary = c(rep(300, 10), rep(800, 10)))
 #' 
 #' ## `MA4` method:
 #' n = rep(500, R)
