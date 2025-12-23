@@ -42,6 +42,13 @@ n = 500
 burn = 50
 alpha = 0.05
 ts = generate_MA4_varyType2(n = n, R = R, burn = burn, alpha = alpha)
+
+# plot the time series generated:
+# create an empty plot
+plot(x = c(), y = c(), xlim = c(0,n), ylim = range(ts$ts_list), main = "Example", ylab = "", xlab = "time")
+for(r in 1:R){
+lines(ts$ts_list[[r]][,1])
+}
 ## Returns an R-long list object each with a (500 x 1) matrix object,
 ## a (4 x 20) matrix of true MA(4) coefficients,
 ## a scalar returning the alpha provided,
