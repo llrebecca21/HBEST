@@ -43,6 +43,10 @@
 #' n = rep(500, R)
 #' ts = gen_data(gen_method = "MA4vary", n = n, R = R, burn = burn, alpha = alpha)
 #' 
+#' ## `MA4varyType2` method:
+#' n = rep(500, R)
+#' ts = gen_data(gen_method = "MA4varyType2", n = n, R = R, burn = burn, alpha = alpha)
+#' 
 gen_data = function(gen_method, ...){
   gen_method = match.arg(gen_method, c("ARp", "AR1vary", "AR2mix", "MA4","MA4vary","MA4varyType2"))
   # Extract call parameters:
