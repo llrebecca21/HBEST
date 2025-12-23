@@ -8,46 +8,63 @@ HBEST_fast(
   ts_list,
   B,
   iter,
-  sigmasquared_a,
-  sigmasquared_e,
-  nu_tau,
-  tausquared,
-  nu_zeta,
   burnin,
-  zeta_min,
-  zeta_max,
-  tau_min,
-  tau_max,
-  num_gpts
+  sigmasquared_glob = 100,
+  sigmasquared_loc = 0.1,
+  nu_tau = 2,
+  tausquared = 10,
+  nu_zeta = 5,
+  zeta_min = 1.001,
+  zeta_max = 15,
+  tau_min = 0.001,
+  tau_max = 100,
+  num_gpts = 1000
 )
 }
 \arguments{
 \item{ts_list}{A list \code{R} long containing the vectors of the stationary time series of potentially different lengths.}
 
-\item{B}{An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0})}
+\item{B}{An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).}
 
 \item{iter}{An integer specifying the number of iterations for the MCMC algorithm embedded in this function.}
 
-\item{nu_tau}{A scalar indicating the degrees of freedom for the prior on \eqn{\tau}.}
-
-\item{tausquared}{A scalar which is used as the initial value of \code{tausquared} that controls the global smoothing effect.}
-
-\item{nu_zeta}{A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}.}
-
 \item{burnin}{An integer specifying the burn-in to be removed at the end of the sampling algorithm.}
 
-\item{zeta_min}{A scalar controlling the smallest value \eqn{\zeta} can take. So, \code{zeta_min}^2 is the smallest value \code{zetasquared} can take.}
+\item{sigmasquared_glob}{A scalar specifying the variance of the prior (N(0,\code{sigmasquared_glob})) intercept term for \eqn{\beta^{glob}_0}. (default is \code{100} to ensure a diffuse prior).}
 
-\item{zeta_max}{A scalar controlling the largest value \eqn{\zeta} can take. So, \code{zeta_max}^2 is the largest value that \code{zetasquared} can take.}
+\item{sigmasquared_loc}{A scalar specifying the variance of the prior (N(0,\code{sigmasquared_loc})) intercept term for \eqn{\beta^{loc}_0}. (default is \code{0.1}).}
 
-\item{tau_min}{A scalar controlling the smallest value \eqn{\tau} can take. So, \code{tau_min}^2 is the smallest value \code{tausquared} can take.}
+\item{nu_tau}{A scalar indicating the degrees of freedom for the prior on \eqn{\tau}. (default is \code{2}).}
 
-\item{tau_max}{A scalar controlling the largest value \eqn{\tau} can take. So, \code{tau_max}^2 is the largest value \code{tausquared} can take.}
+\item{tausquared}{A scalar used as the initial value of \code{tausquared} that controls the global smoothing effect. (default is \code{10}).}
 
-\item{num_gpts}{A scalar controlling the denseness of the grid during the sampling of both \code{tausquared} and \code{zetasquared}.}
+\item{nu_zeta}{A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}. (default is \code{5}).}
 
-\item{sigmasquared}{A scalar specifying the variance of the prior (N(0,\code{sigmasquared})) intercept term for \eqn{\beta_0}. (default is \code{100} to ensure a diffuse prior).}
+\item{zeta_min}{A scalar controlling the smallest value \eqn{\zeta} can take. So, \code{zeta_min}^2 is the smallest value \code{zetasquared} can take. (default is \code{1.001}).}
+
+\item{zeta_max}{A scalar controlling the largest value \eqn{\zeta} can take. So, \code{zeta_max}^2 is the largest value that \code{zetasquared} can take. (default is \code{15}).}
+
+\item{tau_min}{A scalar controlling the smallest value \eqn{\tau} can take. So, \code{tau_min}^2 is the smallest value \code{tausquared} can take. (default is \code{0.001}).}
+
+\item{tau_max}{A scalar controlling the largest value \eqn{\tau} can take. So, \code{tau_max}^2 is the largest value \code{tausquared} can take. (default is \code{100}).}
+
+\item{num_gpts}{A scalar controlling the denseness of the grid during the sampling of both \code{tausquared} and \code{zetasquared}. (default is \code{1000}).}
+}
+\value{
+A list object with components:
+\tabular{ll}{
+\code{beta_loc_est} \tab returns a \verb{(iter - burnin} \eqn{\times} \code{B+1} \eqn{\times} \verb{R)} array of \eqn{\beta^{loc}_{br}} estimates. \cr
+\code{beta_glob_est} \tab returns a \verb{(iter - burnin} \eqn{\times} \verb{B+1)} array of \eqn{\beta^{glob}_{b}} estimates. \cr
+\code{zetasquared_est} \tab returns a \verb{(iter - burnin} \eqn{\times} \verb{R)} array of \eqn{\zeta^{2}_{r}} estimates. \cr
+\code{tausquared_est} \tab returns a \verb{(iter - burnin} \eqn{\times} \verb{1)} array of \eqn{\tau^{2}} estimates. \cr
+\code{perio_list} \tab returns an \code{R} list of column matrices each storing a truncated/half periodogram. \cr
+\code{omega} \tab returns an \code{R} list of column matrices each storing \eqn{\omega_{j}} see paper in references for details. \cr
+\code{D} \tab returns a \code{B} vector that stores the prior variance for \eqn{\beta_{1}} through \eqn{\beta_{B}}. \cr
+}
 }
 \description{
-\code{HBEST_fast} is an MCMC algorithm that samples parameter values for HBEST (fast).
+\code{HBEST_fast} is an MCMC algorithm that samples parameter values for HBEST (fast). This is a faster version of \code{\link[=HBEST]{HBEST()}}.
+}
+\references{
+\insertRef{lee_hierarchical_2025}{HBEST}
 }
