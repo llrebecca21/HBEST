@@ -66,7 +66,10 @@ A list object with components:
 \code{HBEST} is an MCMC algorithm that samples parameter values for HBEST.
 }
 \examples{
-See `HBEST_tutorial` vignette.
+# To view the full explanation and examples, run:
+\dontrun{
+vignette("HBEST_tutorial", package = "HBEST")
+}
 }
 \references{
 \insertRef{lee_hierarchical_2025}{HBEST}
