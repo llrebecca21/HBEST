@@ -32,15 +32,23 @@
 #' ts = gen_data(gen_method = "AR1vary", n = n, R = 5, min = 0.45, max = 0.6, burn = burn)
 #' 
 #' ## `AR2mix` method:
-#' peaks <- runif(R, min = 0.2, max = 0.23)
-#' bandwidth <- runif(R, min = .1, max = .2)
+#' R = 20
+#' peaks1 = runif(R, min = 0.2, max = 0.23)
+#' bandwidths1 = runif(R, min = .1, max = .2)
+#' peaks2 = runif(R, min = (pi * (2/5)) - 0.1, max = (pi * (2/5)) + 0.1)
+#' bandwidths2 = rep(0.15, R)
+#' peaks = rbind(peaks1, peaks2)
+#' bandwidths = rbind(bandwidths1, bandwidths2)
+#' ts = generate_AR2_mixture(peaks = peaks, bandwidth = bandwidth, n_vary = c(rep(300, 10), rep(800, 10)))
 #' ts = gen_data(gen_method = "AR2mix", peaks = peaks, bandwidth = bandwidth, n_vary = c(rep(300, 10), rep(800, 10)))
 #' 
 #' ## `MA4` method:
+#' n = rep(500, R)
 #' ts = gen_data(gen_method = "MA4", n = n, R = R, burn = burn)
 #' 
 #' ## `MA4vary` method:
 #' n = rep(500, R)
+#' alpha = 0.05
 #' ts = gen_data(gen_method = "MA4vary", n = n, R = R, burn = burn, alpha = alpha)
 #' 
 #' ## `MA4varyType2` method:
