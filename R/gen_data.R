@@ -1,5 +1,9 @@
-#' `gen_data`: Wrapper function to call various data generation methods.
-#'
+#' Time-series data generation wrapper function.
+#' 
+#' @description
+#' This function is a wrapper function for various time-series data generation methods.
+#' This is used to call one of six methods that generates data in the structure used for simulations for [HBEST::HBEST()] or [HBEST::HBEST_fast()].
+#' 
 #' @param gen_method Method of data generation to use. Options include `ARp`, `AR1vary`, `AR2mix`, `MA4`, `MA4vary`, and `MA4varyType2`.
 #' @param ... further arguments, passed to chosen method. See details below.
 #'
