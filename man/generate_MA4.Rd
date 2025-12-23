@@ -2,17 +2,36 @@
 % Please edit documentation in R/generate_MA4.R
 \name{generate_MA4}
 \alias{generate_MA4}
-\title{Title}
+\title{Generate Conditionally Independent \code{R}-Many MA(4) Time Series of the Same Length}
 \usage{
 generate_MA4(n = 1000, R = 1, burn = 50)
 }
 \arguments{
-\item{n}{}
+\item{n}{A scalar indicating the length of all \code{R} time series. (default is \code{1000}).}
 
-\item{R}{}
+\item{R}{A scalar indicating the number of conditionally independent time series to be generated. (default is \code{1}).}
 
-\item{burn}{}
+\item{burn}{A scalar indicating the amount of burn-in to be used with \code{\link[stats:arima.sim]{stats::arima.sim()}}.  (default is \code{50}).}
+}
+\value{
+The function returns a list containing:
+\tabular{ll}{
+\code{ts_list} \tab returns an \code{R}-long list each containing an \verb{(n} \eqn{\times} \verb{1)} matrix of the generated time series. \cr
+\code{theta_true} \tab returns a \verb{(4} \eqn{\times} \verb{R)} matrix of true generated MA(4) coefficients. \cr
+}
 }
 \description{
-Title
+The MA(4) coefficients used in the data generation are \verb{(-.3,-.6,-.3,.6)}. This is based on the MA(4) used in \insertCite{granados-garcia_brain_2022;textual}{HBEST}.
+}
+\details{
+No variation around the base coefficients is used in this data generation function.
+}
+\examples{
+R <- 20
+n <- 500
+burn <- 50
+ts = generate_MA4(n = n, R = R, burn = burn)$ts_list
+## Returns an R-long list object each with a (500 x 1) matrix object,
+## and a (4 x 20) matrix of true MA(4) coefficients - all the same value.
+
 }
