@@ -68,8 +68,7 @@ A list object with components:
 \examples{
 # To view the full explanation and examples, run:
 \dontrun{
-vignette("HBEST_tutorial", package = "HBEST")
-}
+vignette("HBEST_tutorial", package = "HBEST")}
 }
 \references{
 \insertRef{lee_hierarchical_2025}{HBEST}
