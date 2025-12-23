@@ -1,7 +1,7 @@
 #' A Sampling Algorithm for HBEST (fast version)
 #' 
 #' @description
-#' `HBEST_fast` is an MCMC algorithm that samples parameter values for HBEST (fast). This is a faster version of [HBEST::HBEST()].
+#' `HBEST_fast` is an MCMC algorithm that samples parameter values for HBEST (fast). This is a computationally faster version of [HBEST::HBEST()].
 #' 
 #' @param ts_list A list `R` long containing the vectors of the stationary time series of potentially different lengths.
 #' @param B       An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).
