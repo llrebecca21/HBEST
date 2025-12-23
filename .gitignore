@@ -60,3 +60,5 @@ R/**/*.docx
 R/ModelB_Specific_Functions/*
 *.Rproj
 inst/doc
+/doc/
+/Meta/
