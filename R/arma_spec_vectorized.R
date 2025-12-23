@@ -1,7 +1,7 @@
-#' A vectorized version of [HBEST::arma_spec()]
+#' `arma_spec_vectorized`: A vectorized version of [HBEST::arma_spec()]
 #'
 #' @description
-#' Gives the spectral density across a given set of omegas for a known ARMA process.
+#' Gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
 #' This function is vectorized for faster computation.
 #'
 #' @inheritParams arma_spec
