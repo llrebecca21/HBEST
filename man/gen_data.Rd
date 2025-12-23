@@ -52,4 +52,8 @@ ts = gen_data(gen_method = "MA4", n = n, R = R, burn = burn)
 n = rep(500, R)
 ts = gen_data(gen_method = "MA4vary", n = n, R = R, burn = burn, alpha = alpha)
 
+## `MA4varyType2` method:
+n = rep(500, R)
+ts = gen_data(gen_method = "MA4varyType2", n = n, R = R, burn = burn, alpha = alpha)
+
 }
