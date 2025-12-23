@@ -1,4 +1,4 @@
-#' A Sampling Algorithm for HBEST (fast version)
+#' A sampling algorithm for HBEST (fast version)
 #' 
 #' @description
 #' `HBEST_fast` is an MCMC algorithm that samples parameter values for HBEST (fast). This is a computationally faster version of [HBEST::HBEST()].

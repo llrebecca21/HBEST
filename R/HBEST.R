@@ -1,4 +1,4 @@
-#' A Sampling Algorithm for HBEST
+#' A sampling algorithm for HBEST
 #'
 #' @description
 #' `HBEST` is an MCMC algorithm that samples parameter values for HBEST.
