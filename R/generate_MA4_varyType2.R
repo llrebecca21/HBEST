@@ -59,7 +59,7 @@ generate_MA4_varyType2 = function(n, R = 1, burn = 50, alpha){
     mu_r_gen[r] <- mu_r
     # generate data
     ts_list[[r]] <- matrix(stats::arima.sim(model = list(ar = phi, ma = theta_true[,r]),
-                                            n = n[r],
+                                            n = n,
                                             sd = 1,
                                             n.start = burn),
                            ncol = 1)
