@@ -1,11 +1,26 @@
-#' Sampler to run the Common method
+#' Sampler Used to Run the Common method and the Independent Method
 #' 
-#' @inheritParams HBEST
+#' @details
+#' To run the Common method, feed the sampler all time series at once. To run the Independent method, feed the sampler one time series at a time.
+#' 
+#' @param ts_list A list `R` long containing the vectors of the stationary time series of potentially different lengths.
+#' @param B An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).
+#' @param iter An integer specifying the number of iterations for the MCMC algorithm embedded in this function.
+#' @param nu_tau A scalar indicating the degrees of freedom for the prior on \eqn{\tau}. (default is `2`).
+#' @param sigmasquared A scalar that is ideally the addition of `sigmasquared_glob` and `sigma_squared_loc` from the [HBEST::HBEST()] function. (default is `100.1`)
+#' @param tausquared A scalar used as the initial value of `tausquared` that controls the global smoothing effect. (default is `10`).
+#' @param tau_min A scalar controlling the smallest value \eqn{\tau} can take. So, `tau_min`^2 is the smallest value `tausquared` can take. (default is `0.001`).
+#' @param tau_max A scalar controlling the largest value \eqn{\tau} can take. So, `tau_max`^2 is the largest value `tausquared` can take. (default is `100`).
+#' @param num_gpts A scalar controlling the denseness of the grid during the sampling of both `tausquared` and `zetasquared`. (default is `1000`).
+#' @param burnin An integer specifying the burn-in to be removed at the end of the sampling algorithm.
 #'
-#' @return
+#' @return A list object with components:
+#' \tabular{ll}{
+#'   `Theta` \tab returns an `( (iter - burnin)` \eqn{\times} `(B+1+1))` matrix that contains that estimates of \eqn{\beta} and the last entry is the estimate of \eqn{\tau^2}. \cr
+#'   `perio` \tab returns an `R` list of column matrices each storing a truncated/half periodogram. \cr
+#' }
 #' @noRd
-Sampler_Common = function(ts_list, B, iter, nu_tau, sigmasquared, tausquared, tau_min, tau_max, num_gpts, burnin){
-  
+Sampler_Common = function(ts_list, B, iter, burnin, nu_tau = 2, sigmasquared = 100.1, tausquared = 10, tau_min = 0.001, tau_max = 100, num_gpts = 1000){
   
   # extract n and R from timeseries
   # extract the length of each replicate timeseries and store as a vector
