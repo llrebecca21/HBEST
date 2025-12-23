@@ -8,17 +8,17 @@ HBEST(
   ts_list,
   B,
   iter,
-  sigmasquared_glob,
-  sigmasquared_loc,
-  nu_tau,
-  tausquared,
-  nu_zeta,
   burnin,
-  zeta_min,
-  zeta_max,
-  tau_min,
-  tau_max,
-  num_gpts
+  sigmasquared_glob = 100,
+  sigmasquared_loc = 0.1,
+  nu_tau = 2,
+  tausquared = 10,
+  nu_zeta = 5,
+  zeta_min = 1.001,
+  zeta_max = 15,
+  tau_min = 0.001,
+  tau_max = 100,
+  num_gpts = 1000
 )
 }
 \arguments{
@@ -27,6 +27,8 @@ HBEST(
 \item{B}{An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).}
 
 \item{iter}{An integer specifying the number of iterations for the MCMC algorithm embedded in this function.}
+
+\item{burnin}{An integer specifying the burn-in to be removed at the end of the sampling algorithm.}
 
 \item{sigmasquared_glob}{A scalar specifying the variance of the prior (N(0,\code{sigmasquared_glob})) intercept term for \eqn{\beta^{glob}_0}. (default is \code{100} to ensure a diffuse prior).}
 
@@ -37,8 +39,6 @@ HBEST(
 \item{tausquared}{A scalar used as the initial value of \code{tausquared} that controls the global smoothing effect. (default is \code{10}).}
 
 \item{nu_zeta}{A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}. (default is \code{5}).}
-
-\item{burnin}{An integer specifying the burn-in to be removed at the end of the sampling algorithm.}
 
 \item{zeta_min}{A scalar controlling the smallest value \eqn{\zeta} can take. So, \code{zeta_min}^2 is the smallest value \code{zetasquared} can take. (default is \code{1.001}).}
 
