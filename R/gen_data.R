@@ -21,6 +21,9 @@
 #' @export
 #'
 #' @examples
+#' ## `ARp` method:
+#' gen_data(gen_method = "ARp", phi = c(0.5), n = n, R = R, burn = 100)
+#' 
 gen_data = function(gen_method, ...){
   gen_method = match.arg(gen_method, c("ARp", "AR1vary", "AR2mix", "MA4","MA4vary","MA4varyType2"))
   # Extract call parameters:

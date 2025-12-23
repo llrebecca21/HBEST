@@ -38,7 +38,7 @@
 #' 
 #' 
 generate_MA4_vary = function(n = 1000, R = 1, burn = 50, alpha = 0.05){
-  # create matrix to store the time series
+  # create list to store the time series
   ts_list <- vector(mode = "list", length = R)
   # create matrix to store "true" theta values
   theta_true <- matrix(NA, nrow = 4, ncol = R)

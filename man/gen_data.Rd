@@ -29,3 +29,8 @@ Available data generation methods include:
 \code{MA4varyType2} \tab calls the \code{\link[=generate_MA4_varyType2]{generate_MA4_varyType2()}} function which is based on \link[stats:arima.sim]{stats::arima.sim}. \cr
 }
 }
+\examples{
+## `ARp` method:
+gen_data(gen_method = "ARp", phi = c(0.5), n = n, R = R, burn = 100)
+
+}
