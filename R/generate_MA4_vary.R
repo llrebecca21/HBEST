@@ -10,15 +10,32 @@
 #' 3. Generate: A new time-series using the new `theta` value from step 2.
 #' 4. Repeat steps 1-3 `R`-many times.
 #'
-#' @param n A scalar indicating the length of all `R` time series.
-#' @param R A scalar indicating the number of conditionally independent time series to be generated.
-#' @param burn A scalar indicating the amount of burn-in to be used with [stats::arima.sim()].
-#' @param alpha A scalar indicating the 
+#' @param n A scalar indicating the length of all `R` time series. (default is `1000`).
+#' @param R A scalar indicating the number of conditionally independent time series to be generated. (default is `1`).
+#' @param burn A scalar indicating the amount of burn-in to be used with [stats::arima.sim()].  (default is `50`).
+#' @param alpha A scalar specifying the variation wanted from the base coefficients. (default is `0.05`).
 #'
-#' @returns
+#' @returns The function returns a list containing:
+#' \tabular{ll}{
+#'   `ts_list` \tab returns an `R`-long list each containing an `(n` \eqn{\times} `1)` matrix of the generated time series. \cr
+#'   `theta_true` \tab returns a `(4` \eqn{\times} `R)` matrix of true generated MA(4) coefficients. \cr
+#'   `alpha` \tab returns the user-provided variation scalar. \cr
+#'   `mu_r_gen` \tab returns the `(4` \eqn{\times} `R)` matrix of the generated standard normal values used to help calculate the new MA(4) coefficients. \cr
+#' }
+#' 
 #' @export
 #'
 #' @examples
+#' R <- 20
+#' n <- 500
+#' burn <- 50
+#' alpha <- 0.05
+#' generate_MA4_vary(n = n, R = R, burn = burn, alpha = alpha)
+#' ## Returns an R-long list object each with a (500 x 1) matrix object,
+#' ## a (4 x 20) matrix of true MA(4) coefficients,
+#' ## a scalar returning the alpha provided,
+#' ## and a (4 x 20) matrix of the standard normal values generated for each R.
+#' 
 generate_MA4_vary = function(n = 1000, R = 1, burn = 50, alpha = 0.05){
   # create matrix to store the time series
   ts_list <- vector(mode = "list", length = R)
