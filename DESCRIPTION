@@ -17,5 +17,6 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    wesanderson
+    wesanderson,
+    ggplot2
 VignetteBuilder: knitr
