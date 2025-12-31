@@ -76,7 +76,7 @@ HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasq
   # Define periodogram and Psi
   for(r in 1:R){
     # Define y_n(\omega_j) for the posterior function below
-    perio_list[[r]] = (abs(fft(ts_list[[r]]))^ 2 / n_len[r])
+    perio_list[[r]] = (abs(stats::fft(ts_list[[r]]))^ 2 / n_len[r])
     
     # subset perio for unique values, J = floor(n/2)
     perio_list[[r]] = perio_list[[r]][(1:J[r]) + 1, , drop = FALSE]
@@ -178,17 +178,17 @@ HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasq
       Psi_glob_list[[r]] = Psi_list[[r]] %*% glob
       # Update Sigma_loc with new rth zetasquared value
       Sigma_loc = c(sigmasquared_loc/2, D * tausquared * (zetasquared[r] - 1))
-      map = optim(par = loc[,r], fn = logpost_loc_HBEST_fast, gr = grad_loc_BEST_fast, method = "BFGS", control = list(fnscale = -1),
+      map = stats::optim(par = loc[,r], fn = logpost_loc_HBEST_fast, gr = grad_loc_HBEST_fast, method = "BFGS", control = list(fnscale = -1),
                   Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc, Psi_glob = Psi_glob_list[[r]])$par
       # Call the Hessian function for HBEST_fast
       precision_loc = hess_loc_HBEST_fast(loc = map, Psi = Psi_list[[r]], y = perio_list[[r]], Sigma_loc = Sigma_loc, Psi_glob = Psi_glob_list[[r]]) * -1
       # Calculate the loc proposal, using Cholesky Sampling
-      locprop = Chol_sampling(Lt = chol(precision_loc), d = B + 1, beta_c = map)
+      locprop = chol_sampling(Lt = chol(precision_loc), d = B + 1, beta_c = map)
       # Calculate acceptance ratio
       locprop_ratio = min(1, exp(logpost_loc_HBEST_fast(loc = locprop, Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc, Psi_glob = Psi_glob_list[[r]]) -
                                  logpost_loc_HBEST_fast(loc = loc[,r], Psi = Psi_list[[r]], sumPsi = sumPsi[,r, drop = FALSE], y = perio_list[[r]], Sigma_loc = Sigma_loc, Psi_glob = Psi_glob_list[[r]])))
       # Create acceptance decision
-      accept <- runif(1)
+      accept <- stats::runif(1)
       if(accept < locprop_ratio){
         # Accept locprop as new beta^loc_r
         loc[ ,r] <- locprop
@@ -203,7 +203,7 @@ HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasq
     ######################
     # beta^glob update : MH
     ######################
-    map = optim(par = glob, fn = logpost_glob_HBEST_fast, gr = grad_glob_HBEST_fast, method = "BFGS", control = list(fnscale = -1),
+    map = stats::optim(par = glob, fn = logpost_glob_HBEST_fast, gr = grad_glob_HBEST_fast, method = "BFGS", control = list(fnscale = -1),
                  Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, sumsumPsi = sumsumPsi, Psi_loc_list = Psi_loc_list)$par
     # Call the Hessian function for HBEST_fast for update glob
     precision_glob = hess_glob_HBEST_fast(glob = map, Psi_list = Psi_list, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, Psi_loc_list = Psi_loc_list) * -1
@@ -213,7 +213,7 @@ HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasq
     globprop_ratio = min(1, exp(logpost_glob_HBEST_fast(glob = globprop, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, sumsumPsi = sumsumPsi, Psi_loc_list = Psi_loc_list) -
                                 logpost_glob_HBEST_fast(glob = glob, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, sumsumPsi = sumsumPsi, Psi_loc_list = Psi_loc_list)))
     # Create acceptance decision
-    accept <- runif(1)
+    accept <- stats::runif(1)
     if(accept < globprop_ratio){
       # Accept globprop as new beta^glob
       glob <- globprop
