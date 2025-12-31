@@ -3,13 +3,13 @@
 #' @description
 #' `grad_glob_HBEST` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under HBEST.
 #' 
-#' @param sumPsi  ((B+1) x R) The `r`th column of the column sum across `Psi`.
-#' @param Psi_list 
-#' @param y_list 
-#' @param R 
-#' @param loc 
-#' @param glob 
-#' @param Sigma_glob 
+#' @param sumPsi  `((B+1) x R)` The `r`th column of the column sum across `Psi`.
+#' @param Psi_list A list of length `R` which stores the `Psi` matrix.
+#' @param y_list An `R` list of column matrices each storing a truncated/half periodogram.
+#' @param R A scalar indicating the number of conditionally independent time series.
+#' @param loc The current \eqn{\beta^{loc}}.
+#' @param glob The current \eqn{\beta^{glob}}.
+#' @param Sigma_glob The current \eqn{\Sigma^{glob}}.
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
 #' @noRd
