@@ -8,8 +8,7 @@
 #' @param y   The `r`th periodogram sub-setted for the Fourier frequencies for the `r`th time series.
 #' @param loc The current \eqn{\beta^{loc}}.
 #' @param Sigma_loc The current \eqn{\Sigma^{loc}}.
-#' @param Psi_glob A list of length `R`; each element is the pre-computed
-#'  \eqn{\Psi_r \beta^{loc}_r} (i.e., \code{Psi_list[[r]] \%*\% loc[, r]}), reused in the exponent.
+#' @param Psi_glob A list of length `R`; each element is the pre-computed \eqn{\Psi_r \beta^{loc}_r}.
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\pmb{\beta}^{loc}}.
 #' @noRd

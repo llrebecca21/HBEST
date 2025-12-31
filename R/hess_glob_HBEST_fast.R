@@ -9,8 +9,7 @@
 #' @param glob The current \eqn{\beta^{glob}}.
 #' @param loc The current \eqn{\beta^{loc}}.
 #' @param Sigma_glob The current \eqn{\Sigma^{glob}}.
-#' @param Psi_loc_list A list of length `R`; each element is the pre-computed
-#'  \eqn{\Psi_r \beta^{loc}_r}
+#' @param Psi_loc_list A list of length `R`; each element is the pre-computed \eqn{\Psi_r \beta^{loc}_r}
 #'
 #' @return A vector containing the hessian for the conditional posterior of \eqn{\pmb{beta}^{glob}}.
 #' @noRd

@@ -3,12 +3,15 @@
 #' @description
 #' `logpost_glob_HBEST_fast` calculates the conditional posterior distribution for model B
 #'
-#' @param ab 
-#' @param ebr 
-#' @param Sigma_a 
-#' @param y_list 
-#' @param Psi_list 
-#' @param sumPsi 
+#' @param y_list An `R` list of column matrices each storing a truncated/half periodogram.
+#' @param Psi_list A list of length `R` which stores the `Psi` matrix.
+#' @param sumPsi `((B+1) x R)` The `r`th column of the column sum across `Psi`.
+#' @param glob The current \eqn{\beta^{glob}}.
+#' @param loc The current \eqn{\beta^{loc}}.
+#' @param Sigma_glob The current \eqn{\Sigma^{glob}}.
+#' @param R A scalar indicating the number of conditionally independent time series.
+#' @param sumsumPsi A numeric vector; the precomputed `rowSums(sumPsi)` for efficiency.
+#' @param Psi_loc_list A list of length `R`; each element is the pre-computed \eqn{\Psi_r \beta^{loc}_r}
 #'
 #' @return A vector that contains the `r`th posterior conditional for \eqn{\beta^{(r)}}.
 #' @noRd

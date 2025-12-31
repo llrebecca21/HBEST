@@ -10,8 +10,7 @@
 #' @param glob The current \eqn{\beta^{glob}}.
 #' @param Sigma_glob The current \eqn{\Sigma^{glob}}.
 #' @param sumsumPsi Numeric vector; the precomputed `rowSums(sumPsi)` for efficiency.
-#' @param Psi_loc_list A list of length `R`; each element is the pre-computed
-#'  \eqn{\Psi_r \beta^{loc}_r} (i.e., \code{Psi_list[[r]] \%*\% loc[, r]}), reused in the exponent.
+#' @param Psi_loc_list A list of length `R`; each element is the pre-computed \eqn{\Psi_r \beta^{loc}_r}
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
 #' @noRd
