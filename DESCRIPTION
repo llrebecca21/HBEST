@@ -2,8 +2,9 @@ Package: HBEST
 Title: Implementation of Hierarchical Bayesian Estimation of Stationary Time-Series (HBEST)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Rebecca", "Lee", , "llrebecca21@tamu.edu", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Rebecca", "Lee", , "llrebecca21@tamu.edu", role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0001-8162-6555"))
+Description: Implements the Hierarchical Bayesian Estimation of Stationary Time-Series (HBEST) for multiple time-series. This package also contains a faster version of the HBEST original code and code to generate time-series with a variety of options.
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -11,10 +12,10 @@ RoxygenNote: 7.3.2
 RdMacros: Rdpack
 Imports: 
     stats,
-    progress
+    progress,
+    Rdpack
 Suggests: 
     knitr,
     rmarkdown,
-    Rdpack,
     wesanderson
 VignetteBuilder: knitr
