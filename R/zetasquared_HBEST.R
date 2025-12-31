@@ -3,16 +3,16 @@
 #' @description
 #' only need to pass beta_cur_sq_norm = (\eqn{\beta' D^{-1} \beta}). \eqn{\zeta} has half-t prior (with df = `nu_eta`)
 #' 
-#' @param zeta_min The smallest value zeta can take (default to `1`).
-#' @param zeta_max The largest value zeta can take (default to `10`).
-#' @param num_gpts A number which controls how dense the grid is.
-#' @param B        An integer specifying the number of basis coefficients.
-#' @param D        The vector of dampening coefficients in the prior.
-#' @param tausquared The current global smoothing parameter `tausquared`.
-#' @param loc
-#' @param nu_zeta   A scalar that controls the degrees of freedom for the `zeta` prior.
+#' @param zeta_min   : A scalar controlling the smallest value \eqn{\zeta} can take. So, `zeta_min`^2 is the smallest value `zetasquared` can take. (default is `1.001`).
+#' @param zeta_max   : A scalar controlling the largest value \eqn{\zeta} can take. So, `zeta_max`^2 is the largest value that `zetasquared` can take. (default is `15`).
+#' @param num_gpts   : A scalar controlling the denseness of the grid during the sampling of both `tausquared`.
+#' @param B          : An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).
+#' @param D          : A vector containing the diagonal elements of \eqn{D} and is a measure of prior variance for \eqn{\beta_1} through \eqn{\beta_B}.
+#' @param tausquared : The current global smoothing parameter `tausquared`.
+#' @param loc        : The current \eqn{\beta^{loc}}.
+#' @param nu_zeta    : A scalar indicating the degrees of freedom for the prior on \eqn{\zeta}.
 #'
-#' @return A vector containing the sampled zeta values.
+#' @return A vector containing the sampled zetasquared values.
 #' @noRd
 zetasquared_HBEST = function(loc, B, D, tausquared, nu_zeta, zeta_min, zeta_max, num_gpts){
   p_min = pt(q = zeta_min, df = nu_zeta)

@@ -1,4 +1,4 @@
-#' Hessian function for conditional log posterior of \eqn{\pmb{\beta}^{glob}} from HBEST
+#' Hessian function for conditional log posterior of \eqn{\pmb{\beta}^{glob}} from HBEST. (internal)
 #'
 #'#' @description
 #' `hess_glob_HBEST_fast` calculates the hessian of the conditional posterior of \eqn{\pmb{\beta}^{glob}} for HBEST.

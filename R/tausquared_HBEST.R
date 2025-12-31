@@ -1,20 +1,20 @@
-#' Griddy Gibbs update for global smoothing parameter (`tausquared`)
+#' Griddy Gibbs update for global smoothing parameter (`tausquared`). (internal)
 #' 
 #' @description
 #' A function which samples values for the `tausquared` update as specified in HBEST.
 #' 
-#' @param num_gpts 
-#' @param D 
-#' @param R 
-#' @param nu_tau 
-#' @param tau_min 
-#' @param tau_max 
-#' @param B 
-#' @param cur_zetasquared 
-#' @param loc 
-#' @param glob 
-#'
-#' @return
+#' @param loc The current \eqn{\beta^{loc}}.
+#' @param glob The current \eqn{\beta^{glob}}.
+#' @param B An integer specifying the number of basis coefficients (not including the intercept basis coefficient \eqn{\beta_0}).
+#' @param D A vector containing the diagonal elements of \eqn{D} and is a measure of prior variance for \eqn{\beta_1} through \eqn{\beta_B}.
+#' @param R A scalar indicating the number of conditionally independent time series.
+#' @param cur_zetasquared The current \eqn{\zeta^{2}_r}.
+#' @param nu_tau A scalar indicating the degrees of freedom for the prior on \eqn{\tau}. (default is `2`).
+#' @param tau_min A scalar controlling the smallest value \eqn{\tau} can take. So, `tau_min`^2 is the smallest value `tausquared` can take.
+#' @param tau_max A scalar controlling the largest value \eqn{\tau} can take. So, `tau_max`^2 is the largest value `tausquared` can take.
+#' @param num_gpts A scalar controlling the denseness of the grid during the sampling of both `tausquared`.
+#' 
+#' @return A scalar containing the sampled tausquared value.
 #' @noRd
 tausquared_HBEST = function(loc, glob, B, D, R, cur_zetasquared, nu_tau, tau_min, tau_max, num_gpts){
   p_min = pt(q = tau_min, df = nu_tau)

@@ -18,7 +18,6 @@
 #' @param tau_max    A scalar controlling the largest value \eqn{\tau} can take. So, `tau_max`^2 is the largest value `tausquared` can take. (default is `100`).
 #' @param num_gpts   A scalar controlling the denseness of the grid during the sampling of both `tausquared` and `zetasquared`. (default is `1000`).
 #' 
-#'
 #' @return A list object with components:
 #' \tabular{ll}{
 #'   `beta_loc_est` \tab returns a `(iter - burnin` \eqn{\times} `B+1` \eqn{\times} `R)` array of \eqn{\beta^{loc}_{br}} estimates. \cr
