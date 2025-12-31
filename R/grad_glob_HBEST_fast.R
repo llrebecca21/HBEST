@@ -1,16 +1,17 @@
-#' Calculate the gradient of the conditional log posterior distribution of \eqn{\pmb{a}} from Model A.
+#' Calculate the gradient of the conditional log posterior distribution of \eqn{\pmb{\beta}^{glob}} from HBEST.
 #' 
 #' @description
-#' `grad_glob_HBEST_fast` function calculates the conditional posterior for the `r`th \eqn{\beta} coefficients under Model B.
+#' `grad_glob_HBEST_fast` function calculates the conditional posterior for the \eqn{\pmb{\beta}^{glob}} coefficients under HBEST.
 #' 
-#' @param sumPsi  ((B+1) x R) The `r`th column of the column sum across `Psi`.
-#' @param Psi_list 
-#' @param y_list 
-#' @param R 
-#' @param glob 
-#' @param Sigma_glob 
-#' @param sumsumPsi 
-#' @param Psi_loc_list 
+#' @param sumPsi `((B+1) x R)` The `r`th column of the column sum across `Psi`.
+#' @param Psi_list A list of length `R` which stores the `Psi` matrix.
+#' @param y_list An `R` list of column matrices each storing a truncated/half periodogram.
+#' @param R A scalar indicating the number of conditionally independent time series.
+#' @param glob The current \eqn{\beta^{glob}}.
+#' @param Sigma_glob The current \eqn{\Sigma^{glob}}.
+#' @param sumsumPsi Numeric vector; the precomputed `rowSums(sumPsi)` for efficiency.
+#' @param Psi_loc_list A list of length `R`; each element is the pre-computed
+#'  \eqn{\Psi_r \beta^{loc}_r} (i.e., \code{Psi_list[[r]] \%*\% loc[, r]}), reused in the exponent.
 #'
 #' @return A vector containing the gradient for the conditional posterior of \eqn{\beta}.
 #' @noRd

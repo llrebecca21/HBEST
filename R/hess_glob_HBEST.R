@@ -1,18 +1,16 @@
-#' Hessian function for conditional log posterior of \eqn{\pmb{a}} from Model A
-#'
-#'
-#' @param Psi_list 
-#' @param y_list 
-#' @param R 
-#' @param glob 
-#' @param loc 
-#' @param Sigma_glob 
+#' Hessian function for conditional log posterior of \eqn{\pmb{\beta}^{glob}} from HBEST
 #'
 #' @description
-#' `hess_glob_HBEST` calculates the hessian of the conditional posterior of the `r`th \eqn{beta} for model A.
+#' `hess_glob_HBEST` calculates the hessian of the conditional posterior of \eqn{\pmb{beta}^{glob}} under HBEST.
 #'
+#' @param Psi_list A list of length `R` which stores the `Psi` matrix.
+#' @param y_list An `R` list of column matrices each storing a truncated/half periodogram.
+#' @param R A scalar indicating the number of conditionally independent time series.
+#' @param glob The current \eqn{\beta^{glob}}.
+#' @param loc The current \eqn{\beta^{loc}}.
+#' @param Sigma_glob The current \eqn{\Sigma^{glob}}.
 #'
-#' @return
+#' @return A vector containing the hessian for the conditional posterior of \eqn{\pmb{beta}^{glob}}.
 #' @noRd
 hess_glob_HBEST <- function(glob, Psi_list, y_list, loc, Sigma_glob, R) {
   ha = diag(-1/Sigma_glob)
