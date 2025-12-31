@@ -11,10 +11,10 @@ RoxygenNote: 7.3.2
 RdMacros: Rdpack
 Imports: 
     stats,
-    Rdpack,
-    progress,
-    wesanderson
+    progress
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    Rdpack,
+    wesanderson
 VignetteBuilder: knitr
