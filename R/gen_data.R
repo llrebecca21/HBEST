@@ -26,10 +26,19 @@
 #' burn = 50
 #' 
 #' ## `ARp` method:
-#' ts = gen_data(gen_method = "ARp", phi = c(0.5), n = n, R = R, burn = burn)
+#' ts = gen_data(gen_method = "ARp",
+#'  phi = c(0.5),
+#'  n = n,
+#'  R = R,
+#'  burn = burn)
 #' 
 #' ## `AR1vary` method:
-#' ts = gen_data(gen_method = "AR1vary", n = n, R = 5, min = 0.45, max = 0.6, burn = burn)
+#' ts = gen_data(gen_method = "AR1vary",
+#'  n = n,
+#'  R = 5,
+#'  min = 0.45,
+#'  max = 0.6,
+#'  burn = burn)
 #' 
 #' ## `AR2mix` method:
 #' R = 20
@@ -39,20 +48,35 @@
 #' bandwidths2 = rep(0.15, R)
 #' peaks = rbind(peaks1, peaks2)
 #' bandwidths = rbind(bandwidths1, bandwidths2)
-#' ts = gen_data(gen_method = "AR2mix", peaks = peaks, bandwidths = bandwidths, n_vary = c(rep(300, 10), rep(800, 10)))
+#' ts = gen_data(gen_method = "AR2mix",
+#'  peaks = peaks,
+#'  bandwidths = bandwidths,
+#'  n_vary = c(rep(300, 10),
+#'  rep(800, 10)))
 #' 
 #' ## `MA4` method:
 #' n = rep(500, R)
-#' ts = gen_data(gen_method = "MA4", n = n, R = R, burn = burn)
+#' ts = gen_data(gen_method = "MA4",
+#'  n = n,
+#'  R = R,
+#'  burn = burn)
 #' 
 #' ## `MA4vary` method:
 #' n = rep(500, R)
 #' alpha = 0.05
-#' ts = gen_data(gen_method = "MA4vary", n = n, R = R, burn = burn, alpha = alpha)
+#' ts = gen_data(gen_method = "MA4vary",
+#'  n = n,
+#'  R = R,
+#'  burn = burn,
+#'  alpha = alpha)
 #' 
 #' ## `MA4varyType2` method:
 #' n = rep(500, R)
-#' ts = gen_data(gen_method = "MA4varyType2", n = n, R = R, burn = burn, alpha = alpha)
+#' ts = gen_data(gen_method = "MA4varyType2",
+#'  n = n,
+#'  R = R,
+#'  burn = burn,
+#'  alpha = alpha)
 #' 
 gen_data = function(gen_method, ...){
   gen_method = match.arg(gen_method, c("ARp", "AR1vary", "AR2mix", "MA4","MA4vary","MA4varyType2"))

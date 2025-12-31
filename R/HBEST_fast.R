@@ -208,7 +208,7 @@ HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasq
     # Call the Hessian function for HBEST_fast for update glob
     precision_glob = hess_glob_HBEST_fast(glob = map, Psi_list = Psi_list, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, Psi_loc_list = Psi_loc_list) * -1
     # Calculate the ab proposal, using Cholesky Sampling
-    globprop = Chol_sampling(Lt = chol(precision_glob), d = B + 1, beta_c = map)
+    globprop = chol_sampling(Lt = chol(precision_glob), d = B + 1, beta_c = map)
     # Calculate acceptance ratio
     globprop_ratio = min(1, exp(logpost_glob_HBEST_fast(glob = globprop, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, sumsumPsi = sumsumPsi, Psi_loc_list = Psi_loc_list) -
                                 logpost_glob_HBEST_fast(glob = glob, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R, sumsumPsi = sumsumPsi, Psi_loc_list = Psi_loc_list)))

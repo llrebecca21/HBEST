@@ -24,7 +24,10 @@
 #' bandwidths2 = rep(0.15, R)
 #' peaks = rbind(peaks1, peaks2)
 #' bandwidths = rbind(bandwidths1, bandwidths2)
-#' ts = generate_AR2_mixture(peaks = peaks, bandwidths = bandwidths, n_vary = c(rep(300, 10), rep(800, 10)))
+#' ts = generate_AR2_mixture(peaks = peaks,
+#'  bandwidths = bandwidths,
+#'  n_vary = c(rep(300, 10),
+#'  rep(800, 10)))
 #' ## Returns an R-long list object each with a (n_vary[r] x 1) matrix object,
 #' ## and a (2 x 20) matrix of AR(2) coefficients
 #'

@@ -24,7 +24,9 @@
 #' max <- 0.6
 #' burn <- 50
 #' generate_AR1_vary(n = 1000, R = 5, min = 0.45, max = 0.6, burn = 50)
-#' ## Output is a list containing a (1000 x 5) matrix and a 5 long vector containing the true phi values randomly generated to create the R many time series.
+#' ## Output is a list containing a (1000 x 5) matrix and a 5 long vector
+#' ## containing the true phi values randomly generated to create the
+#' ## R many time series.
 #'
 generate_AR1_vary <- function(n, R = 1, min = 0.45, max = 0.60, burn = 50) {
   # create matrix to store the time series

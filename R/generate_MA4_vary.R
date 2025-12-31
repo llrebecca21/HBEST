@@ -52,7 +52,7 @@ generate_MA4_vary = function(n, R = 1, burn = 50, alpha = 0.05){
   for (r in 1:R) {
     # Take each theta from the baseline theta
     # sample from a N(0,1) to get a mu_r
-    mu_r = rnorm(n = length(basetheta), mean = 0, sd = 1)
+    mu_r = stats::rnorm(n = length(basetheta), mean = 0, sd = 1)
     # calculate: theta_r + alpha * |theta_r| * mu_r
     theta = basetheta + alpha * mu_r * abs(basetheta)
     # store MA(1) coefficient generated

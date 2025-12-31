@@ -17,11 +17,11 @@
 #' @return A scalar containing the sampled tausquared value.
 #' @noRd
 tausquared_HBEST = function(loc, glob, B, D, R, cur_zetasquared, nu_tau, tau_min, tau_max, num_gpts){
-  p_min = pt(q = tau_min, df = nu_tau)
-  p_max = pt(q = tau_max, df = nu_tau)
+  p_min = stats::pt(q = tau_min, df = nu_tau)
+  p_max = stats::pt(q = tau_max, df = nu_tau)
   p_grid = seq(from = p_min, to = p_max,length.out = num_gpts)
   # inverse cdf (sort of)
-  tau_grid = qt(p = p_grid, df = nu_tau) # equi-probability grid
+  tau_grid = stats::qt(p = p_grid, df = nu_tau) # equi-probability grid
   # non-linear transformation of the grid
   tausquared_grid = tau_grid^2
   # compute log posterior-probability at each grid point

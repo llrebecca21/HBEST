@@ -10,7 +10,7 @@
 #' @return a vector of proposed beta values
 #'
 chol_sampling <- function(Lt, d, beta_c) {
-  u <- solve(Lt, rnorm(n = d))
+  u <- solve(Lt, stats::rnorm(n = d))
   beta_prop <- beta_c + u
   return(beta_prop)
 }

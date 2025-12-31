@@ -15,11 +15,11 @@
 #' @return A vector containing the sampled zetasquared values.
 #' @noRd
 zetasquared_HBEST = function(loc, B, D, tausquared, nu_zeta, zeta_min, zeta_max, num_gpts){
-  p_min = pt(q = zeta_min, df = nu_zeta)
-  p_max = pt(q = zeta_max, df = nu_zeta)
+  p_min = stats::pt(q = zeta_min, df = nu_zeta)
+  p_max = stats::pt(q = zeta_max, df = nu_zeta)
   p_grid = seq(from = p_min, to = p_max,length.out = num_gpts)
   # inverse cdf (sort of)
-  zeta_grid = qt(p = p_grid, df = nu_zeta) # equi-probability grid
+  zeta_grid = stats::qt(p = p_grid, df = nu_zeta) # equi-probability grid
   # non-linear transformation of the grid
   zeta_squared_grid = zeta_grid^2
   # compute log posterior-probability at each grid point (marginal)

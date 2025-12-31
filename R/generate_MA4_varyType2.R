@@ -34,7 +34,12 @@
 #' 
 #' # plot the time series generated:
 #' # create an empty plot
-#' plot(x = c(), y = c(), xlim = c(0,500), ylim = range(ts$ts_list), main = "Example", ylab = "", xlab = "time")
+#' plot(x = c(), y = c(),
+#'  xlim = c(0,500),
+#'  ylim = range(ts$ts_list),
+#'  main = "Example",
+#'  ylab = "",
+#'  xlab = "time")
 #' for(r in 1:R){
 #' lines(ts$ts_list[[r]][,1])
 #' }
@@ -57,7 +62,7 @@ generate_MA4_varyType2 = function(n, R = 1, burn = 50, alpha){
   for (r in 1:R) {
     # Take only the first theta from the baseline theta and vary that theta
     # sample from a N(0,1) to get a mu_r
-    mu_r = rnorm(n = 1, mean = 0, sd = 1)
+    mu_r = stats::rnorm(n = 1, mean = 0, sd = 1)
     # calculate: theta_r + alpha * |theta_r| * mu_r
     theta = basetheta[1] + alpha * mu_r * abs(basetheta[1])
     # store MA(1) coefficient generated
