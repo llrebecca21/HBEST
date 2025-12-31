@@ -1,0 +1,15 @@
+# VCS and IDE
+.git
+.Rproj.user
+.Rhistory
+.RData
+.vscode
+*.Rproj
+
+# Built docs and vignettes (if re-built inside container)
+inst/doc/
+docs/
+
+# Tests and large artifacts (optional)
+tests/*
+data-raw/*

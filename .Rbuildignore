@@ -4,3 +4,5 @@
 ^doc$
 ^Meta$
 ^LICENSE\.md$
+^Dockerfile$
+^\.dockerignore$
