@@ -132,7 +132,7 @@ HBEST_fast = function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasq
   #####################
   # Update loc (local beta), glob (global beta), zetasquared (local smoothing), and tausquared (global smoothing)
   # begin counter:
-  pb = progress_bar$new(total = iter-1)
+  pb = progress::progress_bar$new(total = iter-1)
   for (g in 2:iter) {
     pb$tick()
     ###############################################

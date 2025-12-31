@@ -189,7 +189,7 @@ HBEST <- function(ts_list, B, iter, burnin, sigmasquared_glob = 100, sigmasquare
     ######################
     # beta^glob update : MH
     ######################
-    map <- optim(
+    map <- stats::optim(
       par = glob, fn = logpost_glob_HBEST, gr = grad_glob_HBEST, method = "BFGS", control = list(fnscale = -1),
       loc = loc, Psi_list = Psi_list, sumPsi = sumPsi, y_list = perio_list, Sigma_glob = Sigma_glob, R = R
     )$par
