@@ -335,19 +335,25 @@ par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
         lwd = 3)
   # point-wise credible interval of global log-SDF component
   lines(x = full_omega,
-        y = apply(tcrossprod(full_Psi, glob_samps), 1, FUN = function(x){quantile(x, 0.025)}),
+        y = apply(tcrossprod(full_Psi, glob_samps),
+                  1,
+                  FUN = function(x){quantile(x, 0.025)}),
         col = "black",
         lwd = 1,
         lty = 2)
   lines(x = full_omega,
-        y = apply(tcrossprod(full_Psi, glob_samps), 1, FUN = function(x){quantile(x, 0.975)}),
+        y = apply(tcrossprod(full_Psi, glob_samps),
+                  1,
+                  FUN = function(x){quantile(x, 0.975)}),
         col = "black",
         lwd = 1,
         lty = 2)
 
   legend("topright",
-         legend = c(bquote(hat(g)*"("*omega*")"), bquote(hat(g)^"glob"*"("*omega*")"), "95% C.I."),
-         col = c(wesanderson::wes_palette("FantasticFox1")[3], wesanderson::wes_palette("FantasticFox1")[5],
+         legend = c(bquote(hat(g)*"("*omega*")"),
+                    bquote(hat(g)^"glob"*"("*omega*")"), "95% C.I."),
+         col = c(wesanderson::wes_palette("FantasticFox1")[3],
+                 wesanderson::wes_palette("FantasticFox1")[5],
                  "black"),
          lty = c(1,1,2),
          bg = "white",
@@ -357,6 +363,218 @@ par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
 ```
 
 
+### Calculate Estimates of the local log-SDF components and Calculations of Interest
+
+
+#### Posterior mean (over iterations) of local log-SDF components
+
+
+```{r}
+# calculate beta^local from beta and glob
+# create object to store beta^local values:
+loc_array = array(NA, dim(beta_array))
+# Create storage for the standard deviation calculation:
+sd_loc = array(NA, c(length(full_omega),  R))
+
+for(r in 1:R){
+  loc_array[,,r] = beta_array[,,r] - glob_samps
+  # calculate the estimated local component
+  sd_loc[,r] = apply(tcrossprod(full_Psi, loc_array[,,r]), 1, sd)
+
+}
+```
+
+For simplicity of notation, the $i$th iteration of the estimate: $\pmb{\beta}^{loc}_{r}$ is written as $\pmb{e}_{i}^{(r)}$ in the sections that follow
+
+$$
+h_i^{(r)}(\omega) = \pmb{\psi}(\omega)^T \pmb{e}_i^{(r)}\\
+$$
+
+$$
+\bar{h}^{(r)}(\omega)= \frac{1}{I} \sum_{i=1}^{I} h_i^{(r)}(\omega) = \frac{1}{I} \sum_{i=1}^{I} \pmb{\psi}(\omega)^T \pmb{e}_i^{(r)} = \pmb{\psi}(\omega)^T  \left(\frac{1}{I} \sum_{i=1}^{I} \pmb{e}_i^{(r)}\right) = \pmb{\psi}(\omega)^T \bar{\pmb{e}}^{(r)}\\
+$$
+
+```{r}
+# Calculate the spectral density only using beta^loc_{rb}
+par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
+  plot(x = c(), y = c(),
+          ylim = c(-0.5,0.5),
+          xlim = c(0,pi),
+          main = "",
+          ylab = "",
+          xlab = "",
+          las = 1)
+  mtext(side = 2,
+        text = bquote(hat(g)^(loc)*"("*omega*")"),
+        line = 2.25,
+        cex = 1.2)
+  mtext(side = 1,
+        text = bquote(omega),
+        line = 2.5,
+        cex = 1.2)
+  matlines(x = full_omega,
+        y = full_Psi %*% apply(loc_array, c(2,3), mean),
+        col = wesanderson::wes_palette("FantasticFox1")[5],
+        lwd = 1)
+```
+
+
+#### Per Frequency Replicate Variability of the local log-SDF
+
+$$
+h_i^{(r)}(\omega) = \pmb{\psi}(\omega)^T \pmb{e}_i^{(r)}\\
+$$
+
+$$
+\bar{h}^{(r)}(\omega)= \frac{1}{I} \sum_{i=1}^{I} h_i^{(r)}(\omega) = \frac{1}{I} \sum_{i=1}^{I} \pmb{\psi}(\omega)^T \pmb{e}_i^{(r)} = \pmb{\psi}(\omega)^T  \left(\frac{1}{I} \sum_{i=1}^{I} \pmb{e}_i^{(r)}\right) = \pmb{\psi}(\omega)^T \bar{\pmb{e}}^{(r)}\\
+$$
+
+
+$$
+\bar{\bar{h}}(\omega) = \frac{1}{R}\sum_{r=1}^{R} \bar{h}^{(r)}(\omega)
+$$
+
+Sample standard deviation is over the replicates
+
+$$
+\widehat{\mathcal{s}}_{\text{rep}}(\omega) = \sqrt{\frac{1}{R-1} \sum_{r = 1}^{R} \left( \bar{h}^{(r)}(\omega) - \bar{\bar{h}}(\omega)\right)^2}  
+$$
+
+```{r}
+
+par(mfrow = c(1,1), bg = "white", mar = c(4,5,.5,.5))
+  plot(x = c(), y = c(),
+          ylim = c(0,0.2),
+          xlim = c(0,pi),
+          main = "",
+          ylab = "",
+          xlab = "",
+          las = 1)
+  mtext(side = 2,
+        text = bquote("SD("*hat(g)[r]^"loc"*"("*omega*"))"),
+        line = 3,
+        cex = 1.2)
+  mtext(side = 1,
+        text = bquote(omega),
+        line = 2.5,
+        cex = 1.2)
+  
+  matlines(x = full_omega,
+           y = apply((full_Psi %*% apply(loc_array, c(2,3), mean)),
+                     1,
+                     sd),
+        col = wesanderson::wes_palette("FantasticFox1")[5],
+        lwd = 2)
+
+```
+
+#### Posterior SD of Estimated Local Component of the log-SDF
+
+Sample standard deviation is over the iterations.
+
+$$
+h^{(r)}(\omega) = \pmb{\psi}(\omega)^T \pmb{e}^{(r)}\\
+$$
+
+$$
+\text{Var}(h^{(r)}(\omega)\mid -) = \text{Var}(\pmb{\psi}(\omega)^T \pmb{e}^{(r)} \mid -)\\
+$$
+
+$$
+S^{(r)}(\omega) = \sqrt{\text{Var}(h^{(r)}(\omega)\mid -)}\\
+$$
+
+$$
+\widehat{S}^{(r)}(\omega) = \sqrt{1/(I-1) \sum_{i = 1}^{I} ( h_i^{(r)}(\omega) - \bar{h}^{(r)}(\omega))^2}  
+$$
+
+```{r}
+par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
+  plot(x = c(), y = c(),
+          ylim = c(0,0.2),
+          xlim = c(0,pi),
+          main = "",
+          ylab = "",
+          xlab = "",
+          las = 1)
+  mtext(side = 2,
+        text = "",
+        line = 2.25,
+        cex = 1.2)
+  mtext(side = 1,
+        text = bquote(omega),
+        line = 2.5,
+        cex = 1.2)
+  matlines(x = full_omega,
+        y = sd_loc,
+        col = wesanderson::wes_palette("FantasticFox1")[5],
+        lwd = 1)
+
+```
+
+#### Avgerage Posterior SD of Estimated Local Component of the log-SDF
+
+$$
+\bar{S}(\omega)= \frac{1}{R}\sum_{r=1}^{R}\widehat{S}^{(r)}(\omega) 
+$$
+
+```{r}
+par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
+  plot(x = c(), y = c(),
+          ylim = c(0.04,0.06),
+          xlim = c(0,pi),
+          main = "",
+          ylab = "",
+          xlab = "",
+          las = 1)
+  mtext(side = 2,
+        text = "",
+        line = 2.25,
+        cex = 1.2)
+  mtext(side = 1,
+        text = bquote(omega),
+        line = 2.5,
+        cex = 1.2)
+  lines(x = full_omega,
+        y = rowMeans(sd_loc),
+        col = wesanderson::wes_palette("FantasticFox1")[5],
+        lwd = 1)
+
+```
+
+
+#### Average L2 norm of local log-SDF component
+
+For each iteration calculating what the L2 norm of the $\beta^{loc}_r$ piece is.
+
+$$
+L_i^{(r)} = \sqrt{\frac{1}{2\pi}\int_{0}^{2\pi} (\pmb{\psi}(\omega)^T \pmb{e}_i^{(r)})^2 d\omega}
+$$
+
+```{r}
+g_hat2 = function(omega, e){
+  # omega is a single omega to evaluate over
+  # b is a vector of b's
+  # create psi:
+  psi = outer(X = omega, Y = 0:(length(e)-1), FUN = function(x,y){sqrt(2)* cos(y * x)})
+  psi[,1] = 1
+  # calculate f(\omega):
+  g = (psi %*% e)^2
+  return(g)
+}
+
+locnorm_hat = apply(loc_array , c(1,3), FUN = function(e){integrate(g_hat2, lower = 0, upper = 2*pi, e = e)$value / (2*pi)})
+```
+
+```{r}
+library(ggplot2)
+
+df = data.frame("L" = c(sqrt(locnorm_hat)))
+ggplot2::ggplot(data = df, aes(y = L))+ 
+  ggplot2::geom_boxplot()+
+  ggplot2::ylab(bquote(L[i]^r))
+
+```
 
 
 
