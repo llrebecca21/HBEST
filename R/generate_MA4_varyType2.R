@@ -34,7 +34,7 @@
 #' 
 #' # plot the time series generated:
 #' # create an empty plot
-#' plot(x = c(), y = c(), xlim = c(0,n), ylim = range(ts$ts_list), main = "Example", ylab = "", xlab = "time")
+#' plot(x = c(), y = c(), xlim = c(0,500), ylim = range(ts$ts_list), main = "Example", ylab = "", xlab = "time")
 #' for(r in 1:R){
 #' lines(ts$ts_list[[r]][,1])
 #' }
