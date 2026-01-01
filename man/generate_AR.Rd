@@ -19,7 +19,7 @@ generate_AR(phi, n = 1000, R = 1, burn = 50)
 a list object that contains the \code{R}-long list object \code{ts_list} each containing a matrix of dimension \verb{(n x 1)} and the \code{true_phi} which is the user-specified \code{phi}.
 }
 \description{
-\code{generate_AR} generates \code{R}-many conditionally independent time series from an AR(p) process from \code{arima.sim()}.
+\code{generate_AR} generates \code{R}-many conditionally independent time series from an AR(p) process using \code{arima.sim()}.
 }
 \examples{
 ## An AR(1) process with `\phi = 0.5`
@@ -29,5 +29,4 @@ R <- 5
 burn <- 100
 ts <- generate_AR(phi = c(0.5), n = n, R = R, burn = 100)$ts_list
 ## output generates an R-long list that each contains a (2000 x 1) matrix
-
 }

@@ -1,4 +1,4 @@
-#' Time-series Data Generation Wrapper Function
+#' @title Time-series Data Generation Wrapper Function
 #' 
 #' @description
 #' This function is a wrapper function for various time-series data generation methods.
