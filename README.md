@@ -72,8 +72,11 @@ docker run -d \
     Dockerfile and modify the last line `EXPOSE 8787` to another port
     number.
 
-6.  Login to RStudio with: username: rstudio password: the password you
-    created when running step 4 above.
+6.  Login to RStudio with:
+
+`username: rstudio`
+
+`password: the password you created when running step 4 above.`
 
 7.  Check the package is installed by running:
 

@@ -65,8 +65,10 @@ docker run -d \
 5. Open Docker Desktop and find the container running `hbest-rs`, click the port link `8787:8787`. It is important that you are using a browser that supports http connections. If the port 8787 is already taken on your local computer, you will need to go into the Dockerfile and modify the last line `EXPOSE 8787` to another port number.
 
 6. Login to RStudio with:
-  username: rstudio
-  password: the password you created when running step 4 above.
+
+  `username: rstudio`
+  
+  `password: the password you created when running step 4 above.`
   
 7. Check the package is installed by running: 
 ```{r, eval = FALSE}
