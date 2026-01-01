@@ -1,0 +1,42 @@
+---
+title: "Data Generation Tutorial"
+output: rmarkdown::html_vignette
+bibliography: '`r system.file("REFERENCES.bib", package="HBEST")`'
+vignette: >
+  %\VignetteIndexEntry{Data_generation_tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(HBEST)
+```
+
+This package also contains some exported data generation functions to help users replicate the data generation seen in the paper @lee_hierarchical_2025. The main data generation function is `gen_data()`. This is a wrapper function that easily allows users to choose the data generation they would like and specify any additional required inputs. `gen_data()` calls any of these functions:
+
+  * `generate_AR()`
+  * `generate_AR1_vary()`
+  * `generate_AR2_mixture()`
+  * `generate_MA4()`
+  * `generate_MA4vary()`
+  * `generate_MA4varyType2()`
+
+Details of each of these functions can be found in their respective help page.
+
+
+
+
+
+
+
+
+
+
+
