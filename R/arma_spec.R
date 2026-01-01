@@ -1,7 +1,9 @@
-#' `arma_spec`: Calculate the spectral density for a known ARMA process
+#' @title Calculates the spectral density for a known ARMA process
 #'
 #' @description
-#' Gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
+#' `arma_spec()` gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
+#' This is an extra function to help users compare spectral density estimates obtained from
+#' [HBEST::HBEST()] or [HBEST::HBEST_fast()] against the "truth" when the data generation process is known.
 #'
 #' @param omega  A vector containing a set of frequencies the spectral density is to be calculated over.
 #' @param phi The vector of AR coefficient(s).
