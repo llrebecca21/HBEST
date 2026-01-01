@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_data.R
 \name{gen_data}
 \alias{gen_data}
-\title{Time-series Data Generation Wrapper Function}
+\title{Time-series data generation wrapper function}
 \usage{
 gen_data(gen_method, ...)
 }
@@ -15,8 +15,9 @@ gen_data(gen_method, ...)
 The \code{gen_data()} function returns the appropriate objects based on the method chosen. See help pages for each function for more details.
 }
 \description{
-This function is a wrapper function for various time-series data generation methods.
-This is used to call one of six methods that generates data in the structure used for simulations for \code{\link[=HBEST]{HBEST()}} or \code{\link[=HBEST_fast]{HBEST_fast()}}.
+\code{data_gen()} is a wrapper function for various time-series data generation methods.
+This is used to call one of six methods that generates data in the structure required for
+simulations for \code{\link[=HBEST]{HBEST()}} or \code{\link[=HBEST_fast]{HBEST_fast()}}.
 }
 \details{
 Available data generation methods include:
