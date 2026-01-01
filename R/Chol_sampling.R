@@ -8,7 +8,7 @@
 #' @param beta_c A vector of length `d` of center beta values
 #'
 #' @return a vector of proposed beta values
-#'
+#' @noRd
 chol_sampling <- function(Lt, d, beta_c) {
   u <- solve(Lt, stats::rnorm(n = d))
   beta_prop <- beta_c + u
