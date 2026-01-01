@@ -43,7 +43,7 @@ This package contains user functions `HBEST()` and `HBEST_fast()`. Both function
 
 ## Docker Instructions
 
-Assuming the user as already installed Docker on their local computer, one can follow these steps to run RStudio through a browser with HBEST and other dependent libraries already installed.
+Assuming the user has already installed Docker/Docker Desktop on their local computer, one can follow these steps to build and run a local Docker Container so that RStudio can be run through a browser with HBEST and other dependent libraries already installed.
 
 1. Download the **entire** zipped repository `HBEST` from [https://github.com/llrebecca21/HBEST](https://github.com/llrebecca21/HBEST), i.e., Code > Download Zip. Save the zipped `HBEST` folder to someplace you can navigate to easily with terminal commands. 
 

@@ -41,8 +41,9 @@ to users and details of these functions can be found in the vignette.
 
 ## Docker Instructions
 
-Assuming the user as already installed Docker on their local computer,
-one can follow these steps to run RStudio through a browser with HBEST
+Assuming the user has already installed Docker/Docker Desktop on their
+local computer, one can follow these steps to build and run a local
+Docker Container so that RStudio can be run through a browser with HBEST
 and other dependent libraries already installed.
 
 1.  Download the **entire** zipped repository `HBEST` from
