@@ -12,8 +12,8 @@ Bayesian spectral analysis method known as HBEST. The details of this
 method can be found in Lee et al. (2025). A detailed example using the
 function `HBEST()` can be found in the vignette.
 
-The github repository contains a Dockerfile to allow users to run
-RStudio through a browser with HBEST already installed.
+The GitHub repository contains a Dockerfile to allow users to run
+RStudio in a local browser with `HBEST` already installed.
 
 ## Installation
 
@@ -33,9 +33,11 @@ library(HBEST)
 
 This package contains user functions `HBEST()` and `HBEST_fast()`. Both
 functions implement the same method, but the `HBEST_fast()` function has
-slightly faster implementation. The data generation functions are also
-available to users and details of these functions can be found in the
-vignette.
+slightly faster implementation. Both functions are made available to
+users since `HBEST()` is the code used in the publication Lee et al.
+(2025). The vignette `HBEST_tutorial` contains a simple walk through of
+the `HBEST()` function. The data generation functions are also available
+to users and details of these functions can be found in the vignette.
 
 ## Docker Instructions
 
