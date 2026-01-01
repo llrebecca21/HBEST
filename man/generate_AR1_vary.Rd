@@ -2,14 +2,14 @@
 % Please edit documentation in R/generate_AR1_vary.R
 \name{generate_AR1_vary}
 \alias{generate_AR1_vary}
-\title{Generate \code{R}-Many Conditionally Independent AR(1) Varying Time Series}
+\title{Generate \code{R}-many conditionally independent AR(1) varying time series}
 \usage{
 generate_AR1_vary(n, R = 1, min = 0.45, max = 0.6, burn = 50)
 }
 \arguments{
-\item{n}{An optional numeric scalar (default \code{1000}) that determines the length of the time series generated.}
+\item{n}{A numeric vector that determines the length of the time series generated. Must contain \code{R}-many entries. Time series may be of different lengths.}
 
-\item{R}{An optional numeric scalar (default \code{1}) that determines how many time series to generate. Each time series is stored column wise in output.}
+\item{R}{An optional numeric scalar (default \code{1}) that determines how many time series to generate. Each time series is stored as a column-vector in the list output.}
 
 \item{min}{An optional numeric scalar (default \code{0.45}) that determines the minimum value the AR(1) coefficient could possibly take.}
 
@@ -19,22 +19,73 @@ generate_AR1_vary(n, R = 1, min = 0.45, max = 0.6, burn = 50)
 }
 \value{
 a list object that contains the following fields:
-\itemize{
-\item \code{matrix_timeseries}: a \verb{(n x R)} matrix that contains the slightly varying AR(1) time series.
-\item \code{phi_true}: a \code{R} long vector object that contains the AR(1) coefficients for each time series.
+\tabular{ll}{
+\code{ts_list} \tab returns an \code{R}-long list each containing an \verb{(n[r]} \eqn{\times} \verb{1)} matrix of the generated time series. \cr
+\code{phi_true} \tab returns a \verb{(1} \eqn{\times} \verb{R)} matrix of true generated AR(1) coefficients. \cr
 }
 }
 \description{
-Generates \code{R} time series from an AR(1) varying processes.
+\code{generate_AR1_vary()} generates \code{R}-many time series from an AR(1) varying processes.
 Each time series AR(1) coefficient is uniformly chosen from the range provided by the \code{min} and \code{max} arguments.
 }
 \examples{
-n <- 1000
+## An AR(1) process with coefficient(s) selected from $U(min,max)$
+## with different length time-series
 R <- 5
-min <- 0.45
-max <- 0.6
-burn <- 50
-generate_AR1_vary(n = 1000, R = 5, min = 0.45, max = 0.6, burn = 50)
+n <- c(rep(2000, R - 2), rep(1000, R - 3))
+burn <- 100
+ts <- generate_AR1_vary(
+  n = n,
+  R = 5
+)$ts_list
+## `$ts_list` output generates an R-long list that each
+## contains an (n[r] x 1) matrix
+
+## Plot
+## Create an empty plot
+plot(
+  x = c(),
+  y = c(),
+  xlim = c(0, 2000),
+  ylim = range(ts),
+  ylab = "",
+  xlab = "time"
+)
+for (r in 1:3) {
+  lines(ts[[r]][, 1], col = "blue")
+}
+for (r in 4:R) {
+  lines(ts[[r]][, 1], col = "red")
+}
+
+## An AR(1) process with coefficient(s) selected from $U(min,max)$
+## with same length time-series
+phi <- c(0.5)
+R <- 5
+n <- rep(2000, R)
+burn <- 100
+ts <- generate_AR1_vary(
+  n = n,
+  R = 5
+)$ts_list
+## `$ts_list` output generates an R-long list that each
+## contains an (n[r] x 1) matrix
+
+## Plot
+## Create an empty plot
+plot(
+  x = c(),
+  y = c(),
+  xlim = c(0, 2000),
+  ylim = range(ts),
+  ylab = "",
+  xlab = "time"
+)
+for (r in 1:R) {
+  lines(ts[[r]][, 1], col = "blue")
+}
+
+
 ## Output is a list containing a (1000 x 5) matrix and a 5 long vector
 ## containing the true phi values randomly generated to create the
 ## R many time series.

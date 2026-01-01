@@ -2,42 +2,75 @@
 % Please edit documentation in R/generate_AR2_mixture.R
 \name{generate_AR2_mixture}
 \alias{generate_AR2_mixture}
-\title{Generate \code{R}-Many Conditionally Independent Varying AR(2) Time Series with Angle Representation}
+\title{Generate \code{R}-many conditionally independent varying AR(2) time series with angle representation}
 \usage{
-generate_AR2_mixture(peaks, bandwidths, n_vary, variances = NULL)
+generate_AR2_mixture(peaks, bandwidths, n, variances = NULL)
 }
 \arguments{
-\item{peaks}{a vector of length \code{R} with peak locations of each spectrum.}
+\item{peaks}{A vector of length \code{R} with peak locations of each spectrum.}
 
-\item{bandwidths}{a vector of length \code{n} with the bandwidths of each spectrum.}
+\item{bandwidths}{A vector of length \code{n} with the bandwidths of each spectrum.}
 
-\item{n_vary}{a numeric strictly positive scalar that determines the length of the time series generated.}
+\item{n}{A numeric vector that determines the length of the time series generated. Must contain \code{R}-many entries. Time series may be of different lengths.}
 
-\item{variances}{an optional vector (default is \code{NULL}) of length \code{n} with the variances of the innovations.}
+\item{variances}{An optional vector (default is \code{NULL}) of length \code{n} with the variances of the innovations.}
 }
 \value{
-a list object that contains the following fields:
-\itemize{
-\item \code{matrix_timeseries}: a \verb{(n x R)} matrix that contains the slightly varying AR(2) time series.
-\item \code{phi}: a \verb{(2 x R)} matrix object that contains the AR(2) coefficients generated for each time series.
+A list object that contains the following fields:
+\tabular{ll}{
+\code{ts_list} \tab returns an \code{R}-long list each containing an \verb{(n[r]} \eqn{\times} \verb{1)} matrix of the generated time series. \cr
+\code{phi1_true} \tab returns a \verb{(1} \eqn{\times} \verb{R)} numeric matrix that contains the first AR(2) coefficients generated for each time series. \cr
+\code{phi2_true} \tab returns a \verb{(1} \eqn{\times} \verb{R)} numeric matrix that contains the second AR(2) coefficients generated for each time series. \cr
 }
 }
 \description{
-Generates \code{R} many slightly varying AR(2) time series given a \code{R} long vector of peak locations and and \code{R} long vector of bandwidths
+\code{generate_AR2_mixture()} generates \code{R}-many slightly varying AR(2) time series given an \code{R} long vector of peak locations and and \code{R} long vector of bandwidths.
 }
 \examples{
 R = 20
-peaks1 = runif(R, min = 0.2, max = 0.23)
-bandwidths1 = runif(R, min = .1, max = .2)
-peaks2 = runif(R, min = (pi * (2/5)) - 0.1, max = (pi * (2/5)) + 0.1)
-bandwidths2 = rep(0.15, R)
+n = c(rep(300, R/2), rep(800, R/2))
+
+## Generate peaks and bandwidths:
+peaks1 = stats::runif(R,
+                      min = 0.2,
+                      max = 0.23)
+bandwidths1 = stats::runif(R,
+                           min = .1,
+                           max = .2)
+peaks2 = stats::runif(R,
+                      min = (pi * (2/5)) - 0.1,
+                      max = (pi * (2/5)) + 0.1)
+bandwidths2 = rep(0.15,
+                  R)
 peaks = rbind(peaks1, peaks2)
 bandwidths = rbind(bandwidths1, bandwidths2)
+
+## Call the function to generate time series
 ts = generate_AR2_mixture(peaks = peaks,
  bandwidths = bandwidths,
- n_vary = c(rep(300, 10),
- rep(800, 10)))
-## Returns an R-long list object each with a (n_vary[r] x 1) matrix object,
-## and a (2 x 20) matrix of AR(2) coefficients
+ n = n)$ts_list
+
+## `$ts_list` returns an R-long list object each with a (n_vary[r] x 1) matrix object,
+## `$phi1_true` returns a (1 x 20) matrix of the first AR(2)
+## coefficients, and `$phi2_true` returns a
+## (1 x 20) matrix object of the second AR(2) coefficients.
+
+## Plot
+## Create an empty plot
+plot(
+  x = c(),
+  y = c(),
+  xlim = c(0, 800),
+  ylim = range(ts),
+  ylab = "",
+  xlab = "time"
+)
+for (r in 1:10) {
+  lines(ts[[r]][, 1], col = "blue")
+}
+for (r in 11:R) {
+  lines(ts[[r]][, 1], col = "red")
+}
+
 
 }

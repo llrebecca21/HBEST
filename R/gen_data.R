@@ -18,11 +18,12 @@
 #'   `MA4varyType2` \tab calls the [HBEST::generate_MA4_varyType2()] function which is based on [stats::arima.sim]. \cr
 #' }
 #'
-#' @returns The `gen_data()` function returns the appropriate objects based on the method chosen. See help pages for each function for more details.
+#' @returns returns the appropriate objects based on the method chosen. See help pages for each function for more details.
 #'
 #' @examples
+#' ## Other examples can be found in the vignette `Data_generation_tutorial`
 #' R <- 20
-#' n <- 500
+#' n <- rep(500, R)
 #' burn <- 50
 #'
 #' ## `ARp` method:
@@ -46,9 +47,14 @@
 #'
 #' ## `AR2mix` method:
 #' R <- 20
+#' n <- c(rep(300, 10),
+#'        rep(800, 10)
+#'   )
 #' peaks1 <- runif(R, min = 0.2, max = 0.23)
 #' bandwidths1 <- runif(R, min = .1, max = .2)
-#' peaks2 <- runif(R, min = (pi * (2 / 5)) - 0.1, max = (pi * (2 / 5)) + 0.1)
+#' peaks2 <- runif(R,
+#'                 min = (pi * (2 / 5)) - 0.1,
+#'                 max = (pi * (2 / 5)) + 0.1)
 #' bandwidths2 <- rep(0.15, R)
 #' peaks <- rbind(peaks1, peaks2)
 #' bandwidths <- rbind(bandwidths1, bandwidths2)
@@ -56,10 +62,7 @@
 #'   gen_method = "AR2mix",
 #'   peaks = peaks,
 #'   bandwidths = bandwidths,
-#'   n_vary = c(
-#'     rep(300, 10),
-#'     rep(800, 10)
-#'   )
+#'   n = n
 #' )
 #'
 #' ## `MA4` method:
