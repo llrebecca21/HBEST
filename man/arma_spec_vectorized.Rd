@@ -2,7 +2,7 @@
 % Please edit documentation in R/arma_spec_vectorized.R
 \name{arma_spec_vectorized}
 \alias{arma_spec_vectorized}
-\title{\code{arma_spec_vectorized}: A vectorized version of \code{\link[=arma_spec]{arma_spec()}}}
+\title{A vectorized version of \code{\link[=arma_spec]{arma_spec()}}}
 \usage{
 arma_spec_vectorized(omega, phi = 0, theta = 0)
 }
@@ -14,16 +14,17 @@ arma_spec_vectorized(omega, phi = 0, theta = 0)
 \item{theta}{The vector of MA coefficient(s).}
 }
 \value{
-A vector as long as the \code{omega} vector containing the calculated spectral density.
+A vector as long as the user-specified \code{omega} vector containing the calculated spectral density.
 }
 \description{
-Gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
+\code{arma_spec_vectorized()} Gives the spectral density across a given set of \eqn{\omega}s for a known ARMA process.
 This function is vectorized for faster computation.
+This is an extra function to help users compare spectral density estimates obtained from
+\code{\link[=HBEST]{HBEST()}} or \code{\link[=HBEST_fast]{HBEST_fast()}} against the "truth" when the data generation process is known.
 }
 \examples{
 omega <- seq(0, pi, length.out = 1000)
 phi <- 0.5
 arma_spec_vectorized(omega = omega, phi = phi)
 ## output is a vector of length 1000
-
 }
