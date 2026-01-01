@@ -49,7 +49,7 @@ Assuming the user as already installed Docker on their local computer, one can f
 
 2. In your local terminal, navigate to where the repository folder is saved. i.e., `cd yourfilepath`
 
-3. Run: `docker build -t hbest-rstudio` to build the Docker container locally. This may take a couple of minutes.
+3. Run: `docker build -t hbest-rstudio .` to build the Docker container locally. This may take a couple of minutes.
 
 4. Run the following code below and it is IMPORTANT to change the *changeme* to a password you will remember.
 

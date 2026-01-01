@@ -53,7 +53,7 @@ and other dependent libraries already installed.
 2.  In your local terminal, navigate to where the repository folder is
     saved. i.e., `cd yourfilepath`
 
-3.  Run: `docker build -t hbest-rstudio` to build the Docker container
+3.  Run: `docker build -t hbest-rstudio .` to build the Docker container
     locally. This may take a couple of minutes.
 
 4.  Run the following code below and it is IMPORTANT to change the
