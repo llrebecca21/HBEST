@@ -20,7 +20,7 @@
 #' @returns The function returns a list containing:
 #' \tabular{ll}{
 #'   `ts_list` \tab returns an `R`-long list each containing an `(n[r]` \eqn{\times} `1)` matrix of the generated time series. \cr
-#'   `theta_true` \tab returns a `(4` \eqn{\times} `R)` matrix of true generated MA(4) coefficients. \cr
+#'   `true_theta` \tab returns a `(4` \eqn{\times} `R)` matrix of true generated MA(4) coefficients. \cr
 #' }
 #'
 #' @export
@@ -89,6 +89,6 @@ generate_MA4_varyType2 <- function(n, R = 1, burn = 50, alpha = 0.05) {
   }
   return(list(
     "ts_list" = ts_list,
-    "theta_true" = theta_true
+    "true_theta" = theta_true
   ))
 }

@@ -19,7 +19,7 @@
 #' @returns The function returns a list containing:
 #' \tabular{ll}{
 #'   `ts_list` \tab returns an `R`-long list each containing an `(n[r]` \eqn{\times} `1)` matrix of the generated time series. \cr
-#'   `theta_true` \tab returns a `(4` \eqn{\times} `R)` matrix of true generated MA(4) coefficients. \cr
+#'   `true_theta` \tab returns a `(4` \eqn{\times} `R)` matrix of true generated MA(4) coefficients. \cr
 #'   `alpha` \tab returns the user-provided variation scalar. \cr
 #'   `mu_r_gen` \tab returns the `(4` \eqn{\times} `R)` matrix of the generated standard normal values used to help calculate the new MA(4) coefficients. \cr
 #' }
@@ -82,7 +82,7 @@ generate_MA4_vary = function(n, R = 1, burn = 50, alpha = 0.05){
   }
   return(list(
     "ts_list" = ts_list,
-    "theta_true" = theta_true,
+    "true_theta" = theta_true,
     "alpha" = alpha,
     "mu_r_gen" = mu_r_gen
   ))

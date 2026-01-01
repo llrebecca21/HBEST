@@ -13,7 +13,7 @@
 #' @return a list object that contains the following fields:
 #' \tabular{ll}{
 #'   `ts_list` \tab returns an `R`-long list each containing an `(n[r]` \eqn{\times} `1)` matrix of the generated time series. \cr
-#'   `phi_true` \tab returns a `(1` \eqn{\times} `R)` matrix of true generated AR(1) coefficients. \cr
+#'   `true_phi` \tab returns a `(1` \eqn{\times} `R)` matrix of true generated AR(1) coefficients. \cr
 #' }
 #'
 #'
@@ -95,6 +95,6 @@ generate_AR1_vary <- function(n, R = 1, min = 0.45, max = 0.60, burn = 50) {
   }
   return(list(
     "ts_list" = ts_list,
-    "phi_true" = phi_true
+    "true_phi" = phi_true
   ))
 }

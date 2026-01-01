@@ -19,7 +19,7 @@ generate_MA4_vary(n, R = 1, burn = 50, alpha = 0.05)
 The function returns a list containing:
 \tabular{ll}{
 \code{ts_list} \tab returns an \code{R}-long list each containing an \verb{(n[r]} \eqn{\times} \verb{1)} matrix of the generated time series. \cr
-\code{theta_true} \tab returns a \verb{(4} \eqn{\times} \verb{R)} matrix of true generated MA(4) coefficients. \cr
+\code{true_theta} \tab returns a \verb{(4} \eqn{\times} \verb{R)} matrix of true generated MA(4) coefficients. \cr
 \code{alpha} \tab returns the user-provided variation scalar. \cr
 \code{mu_r_gen} \tab returns the \verb{(4} \eqn{\times} \verb{R)} matrix of the generated standard normal values used to help calculate the new MA(4) coefficients. \cr
 }

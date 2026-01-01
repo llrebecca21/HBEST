@@ -17,7 +17,7 @@ generate_MA4(n, R = 1, burn = 50)
 The function returns a list containing:
 \tabular{ll}{
 \code{ts_list} \tab returns an \code{R}-long list each containing an \verb{(n} \eqn{\times} \verb{1)} matrix of the generated time series. \cr
-\code{theta_true} \tab returns a \verb{(4} \eqn{\times} \verb{R)} matrix of true generated MA(4) coefficients. \cr
+\code{true_theta} \tab returns a \verb{(4} \eqn{\times} \verb{R)} matrix of true generated MA(4) coefficients. \cr
 }
 }
 \description{

@@ -21,7 +21,7 @@ generate_AR1_vary(n, R = 1, min = 0.45, max = 0.6, burn = 50)
 a list object that contains the following fields:
 \tabular{ll}{
 \code{ts_list} \tab returns an \code{R}-long list each containing an \verb{(n[r]} \eqn{\times} \verb{1)} matrix of the generated time series. \cr
-\code{phi_true} \tab returns a \verb{(1} \eqn{\times} \verb{R)} matrix of true generated AR(1) coefficients. \cr
+\code{true_phi} \tab returns a \verb{(1} \eqn{\times} \verb{R)} matrix of true generated AR(1) coefficients. \cr
 }
 }
 \description{
