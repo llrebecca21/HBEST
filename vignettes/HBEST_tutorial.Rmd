@@ -55,7 +55,7 @@ lg_per <- 1 - .80
 sm_length <- 600
 lg_length <- 1200
 
-n_vary <- c(
+n <- c(
   rep(sm_length, round(sm_per * R)),
   rep(lg_length, round(lg_per * R))
 )
@@ -73,7 +73,7 @@ out <- gen_data(
   gen_method = "AR2mix",
   peaks = peaks,
   bandwidths = bandwidths,
-  n_vary = n_vary
+  n = n
 )
 
 # extract out the time-series
