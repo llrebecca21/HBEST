@@ -2,12 +2,12 @@
 % Please edit documentation in R/generate_MA4.R
 \name{generate_MA4}
 \alias{generate_MA4}
-\title{Generate Conditionally Independent \code{R}-Many MA(4) Time Series of the Same Length}
+\title{Generate \code{R}-many conditionally independent MA(4) time series}
 \usage{
-generate_MA4(n = 1000, R = 1, burn = 50)
+generate_MA4(n, R = 1, burn = 50)
 }
 \arguments{
-\item{n}{A scalar indicating the length of all \code{R} time series. (default is \code{1000}).}
+\item{n}{A numeric vector that determines the length of the time series generated. Must contain \code{R}-many entries. Time series may be of different lengths.}
 
 \item{R}{A scalar indicating the number of conditionally independent time series to be generated. (default is \code{1}).}
 
@@ -21,17 +21,35 @@ The function returns a list containing:
 }
 }
 \description{
-The MA(4) coefficients used in the data generation are \verb{(-.3,-.6,-.3,.6)}. This is based on the MA(4) used in \insertCite{granados-garcia_brain_2022;textual}{HBEST}.
+\code{generate_MA4()} generates generates \code{R}-many time series where the MA(4) coefficients used in the data generation are \verb{(-.3,-.6,-.3,.6)}. This is based on the MA(4) used in \insertCite{granados-garcia_brain_2022;textual}{HBEST}.
 }
 \details{
 No variation around the base coefficients is used in this data generation function.
 }
 \examples{
-R = 20
-n = rep(500, R)
-burn = 50
-ts = generate_MA4(n = n, R = R, burn = burn)$ts_list
+R <- 20
+## For time series of different lengths:
+n <- c(rep(500, R / 2), rep(800, R / 2))
+burn <- 50
+ts <- generate_MA4(n = n, R = R, burn = burn)$ts_list
+
 ## Returns an R-long list object each with a (500 x 1) matrix object,
 ## and a (4 x 20) matrix of true MA(4) coefficients - all the same value.
 
+## Plot
+## Create an empty plot
+plot(
+  x = c(),
+  y = c(),
+  xlim = c(0, 800),
+  ylim = range(ts),
+  ylab = "",
+  xlab = "time"
+)
+for (r in 1:10) {
+  lines(ts[[r]][, 1], col = "blue")
+}
+for (r in 11:R) {
+  lines(ts[[r]][, 1], col = "red")
+}
 }
