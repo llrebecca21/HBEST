@@ -6,3 +6,7 @@
 ^LICENSE\.md$
 ^Dockerfile$
 ^\.dockerignore$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
