@@ -1,15 +1,48 @@
-# VCS and IDE
+# -------------------------------
+# Version control and IDE files
+# -------------------------------
 .git
+.gitignore
 .Rproj.user
 .Rhistory
 .RData
+.Ruserdata
 .vscode
 *.Rproj
+.DS_Store
 
-# Built docs and vignettes (if re-built inside container)
+# -------------------------------
+# Built documentation and site output
+# (safe to rebuild inside container)
+# -------------------------------
 inst/doc/
 docs/
 
-# Tests and large artifacts (optional)
+# -------------------------------
+# Tests, data prep, and large artifacts
+# -------------------------------
 tests/*
 data-raw/*
+
+# -------------------------------
+# Environment variables and secrets
+# -------------------------------
+.env
+**/.env
+**/*_key
+**/*_token
+**/id_rsa*
+**/id_ed25519*
+
+# -------------------------------
+# Package management caches
+# -------------------------------
+renv/cache/
+packrat/
+library/
+
+# -------------------------------
+# Miscellaneous
+# -------------------------------
+tmp/
+.cache/
