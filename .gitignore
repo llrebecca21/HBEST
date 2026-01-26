@@ -40,7 +40,10 @@ vignettes/*.pdf
 .Renviron
 
 # pkgdown site
-docs/
+docs/pkgdown.yml
+docs/.pkgdown/
+docs/.DS_Store
+docs/Thumbs.db
 
 # translation temp files
 po/*~
@@ -62,4 +65,4 @@ R/ModelB_Specific_Functions/*
 inst/doc
 /doc/
 /Meta/
-docs
+
