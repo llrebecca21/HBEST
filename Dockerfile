@@ -1,15 +1,15 @@
+
 # -------------------------------------------------------------------
-# HBEST RStudio Server Docker Image
-# Multi-architecture compatible (amd64 + arm64)
+# HBEST RStudio Server Docker Image (multi-arch compatible)
+# Works on macOS (Intel/Apple Silicon) and Windows via Docker Desktop
 # -------------------------------------------------------------------
 
-# Use a pinned, multi-arch RStudio Server base image
 FROM rocker/rstudio:4.5.0
 
 # Avoid interactive prompts during build
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install system dependencies required for R packages and vignettes
+# System dependencies for common R packages and vignette building
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -20,29 +20,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
-# Install R packages needed to install dependencies and build vignettes
-RUN R -e "install.packages( \
-    c('remotes','knitr','rmarkdown'), \
-    repos = 'https://cloud.r-project.org' \
-  )"
+# Base R packages used to install deps and build vignettes
+RUN R -e "install.packages(c('remotes','knitr','rmarkdown'), repos='https://cloud.r-project.org')"
 
-# Set working directory for your package
+# Set working directory and copy your R package source
 WORKDIR /app/HBEST
-
-# Copy the package source into the image
 COPY . /app/HBEST
 
-# Install package dependencies (Imports + Suggests)
-RUN R -e "remotes::install_deps( \
-    dependencies = TRUE, \
-    repos = 'https://cloud.r-project.org' \
-  )"
+# Install package dependencies (Imports + Suggests) from DESCRIPTION
+RUN R -e "remotes::install_deps(dependencies = TRUE, repos='https://cloud.r-project.org')"
 
-# Install the package and build vignettes
+# Install your package and build vignettes (HTML using rmarkdown + pandoc)
 RUN R -e "remotes::install_local('.', build_vignettes = TRUE)"
 
-# IMPORTANT: run RStudio Server as the non-root 'rstudio' user
+# Run RStudio Server as non-root for better security
 USER rstudio
 
-# RStudio Server listens on port 8787
+# RStudio Server port
 EXPOSE 8787
