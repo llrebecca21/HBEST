@@ -1,40 +1,24 @@
-
-# -------------------------------------------------------------------
-# HBEST RStudio Server Docker Image (multi-arch compatible)
-# Works on macOS (Intel/Apple Silicon) and Windows via Docker Desktop
-# -------------------------------------------------------------------
-
+# RStudio Server base (includes RStudio, default port 8787)
 FROM rocker/rstudio:4.5.0
 
-# Avoid interactive prompts during build
-ENV DEBIAN_FRONTEND=noninteractive
+# System libs and pandoc (required for HTML vignette rendering)
+RUN apt-get update && apt-get install -y \
+    libcurl4-openssl-dev libssl-dev libxml2-dev \
+    pandoc git build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# System dependencies for common R packages and vignette building
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    pandoc \
-    git \
-    build-essential \
-    ca-certificates \
-  && rm -rf /var/lib/apt/lists/*
-
-# Base R packages used to install deps and build vignettes
+# Install remotes and vignette packages
 RUN R -e "install.packages(c('remotes','knitr','rmarkdown'), repos='https://cloud.r-project.org')"
 
-# Set working directory and copy your R package source
+# Copy your package into the image
 WORKDIR /app/HBEST
 COPY . /app/HBEST
 
-# Install package dependencies (Imports + Suggests) from DESCRIPTION
+# Install dependencies declared in DESCRIPTION (Imports + Suggests)
 RUN R -e "remotes::install_deps(dependencies = TRUE, repos='https://cloud.r-project.org')"
 
-# Install your package and build vignettes (HTML using rmarkdown + pandoc)
+# Install the package and BUILD VIGNETTES (HTML via rmarkdown + pandoc)
 RUN R -e "remotes::install_local('.', build_vignettes = TRUE)"
 
-# Run RStudio Server as non-root for better security
-USER rstudio
-
-# RStudio Server port
+# Documented port for RStudio
 EXPOSE 8787
