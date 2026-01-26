@@ -1,8 +1,11 @@
+
 # -------------------------------
 # Version control and IDE files
 # -------------------------------
 .git
 .gitignore
+.gitattributes
+.gitmodules
 .Rproj.user
 .Rhistory
 .RData
@@ -12,20 +15,50 @@
 .DS_Store
 
 # -------------------------------
-# Built documentation and site output
-# (safe to rebuild inside container)
+# R build artifacts
+# -------------------------------
+*.tar.gz
+*.Rcheck/
+src/*.o
+src/*.so
+src/*.dll
+
+# -------------------------------
+# Built documentation / sites
+# (GitHub Pages + pkgdown/Jekyll)
 # -------------------------------
 inst/doc/
 docs/
-
+_site/
+site/
+.jekyll-cache/
+.sass-cache/
+.nojekyll
+CNAME
+_config.yml
+Gemfile
+Gemfile.lock
+vendor/
+.pkgdown/
+pkgdown/
+_pkgdown.yml
 # -------------------------------
-# Tests, data prep, and large artifacts
+# Tests and large artifacts
 # -------------------------------
 tests/*
 data-raw/*
 
 # -------------------------------
-# Environment variables and secrets
+# Dependency managers & caches
+# -------------------------------
+renv/cache/
+packrat/
+library/
+.cache/
+tmp/
+
+# -------------------------------
+# Environment files & secrets
 # -------------------------------
 .env
 **/.env
@@ -33,16 +66,4 @@ data-raw/*
 **/*_token
 **/id_rsa*
 **/id_ed25519*
-
-# -------------------------------
-# Package management caches
-# -------------------------------
-renv/cache/
-packrat/
-library/
-
-# -------------------------------
-# Miscellaneous
-# -------------------------------
-tmp/
-.cache/
+``
