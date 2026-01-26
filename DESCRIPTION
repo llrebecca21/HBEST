@@ -1,6 +1,6 @@
 Package: HBEST
 Title: Implementation of Hierarchical Bayesian Estimation of Stationary Time-Series (HBEST)
-Version: 0.0.0.9000
+Version: 0.0.1.00
 Authors@R: 
     person("Rebecca", "Lee", ,"llrebecca21@tamu.edu", role = c("aut", "cre"),
     comment = c(ORCID = "0000-0001-8162-6555"))
