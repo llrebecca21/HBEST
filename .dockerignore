@@ -1,69 +1,34 @@
 
-# -------------------------------
-# Version control and IDE files
-# -------------------------------
+# Version control and CI
 .git
-.gitignore
-.gitattributes
-.gitmodules
+.github
+
+# IDE and OS noise
 .Rproj.user
 .Rhistory
 .RData
-.Ruserdata
 .vscode
 *.Rproj
 .DS_Store
+Thumbs.db
 
-# -------------------------------
-# R build artifacts
-# -------------------------------
-*.tar.gz
-*.Rcheck/
-src/*.o
-src/*.so
-src/*.dll
+# Git / R build configs (not needed at runtime)
+.gitignore
+.Rbuildignore
 
-# -------------------------------
-# Built documentation / sites
-# (GitHub Pages + pkgdown/Jekyll)
-# -------------------------------
+# Prebuilt documentation (vignettes should be built during install)
+doc/
 inst/doc/
 docs/
-_site/
-site/
-.jekyll-cache/
-.sass-cache/
-.nojekyll
-CNAME
-_config.yml
-Gemfile
-Gemfile.lock
-vendor/
-.pkgdown/
-pkgdown/
-_pkgdown.yml
-# -------------------------------
-# Tests and large artifacts
-# -------------------------------
-tests/*
-data-raw/*
 
-# -------------------------------
-# Dependency managers & caches
-# -------------------------------
-renv/cache/
+# Development-only content
+tests/
+data-raw/
+
+# Dependency managers
+renv/
 packrat/
-library/
-.cache/
-tmp/
 
-# -------------------------------
-# Environment files & secrets
-# -------------------------------
-.env
-**/.env
-**/*_key
-**/*_token
-**/id_rsa*
-**/id_ed25519*
-``
+# Build artifacts
+*.tar.gz
+*.zip
