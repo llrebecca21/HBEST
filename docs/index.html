@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">HBEST</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.01</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,9 +57,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 <p><code>HBEST</code> is an <code>R</code> package that implements the nonparametric hierarchical Bayesian spectral analysis method known as HBEST. The details of this method can be found in Lee et al. (2025). A detailed example using the function <code><a href="reference/HBEST.html">HBEST()</a></code> can be found in the vignette.</p>
-<p>The GitHub repository contains a Dockerfile to allow users to run RStudio in a local browser with <code>HBEST</code> already installed.</p>
+<p>A GitHub Pages static site is available to preview the documentation and vignettes: <a href="https://llrebecca21.github.io/HBEST/">GitHub Page</a>.</p>
+<p>The GitHub repository contains a Dockerfile to allow users familiar with Docker to run RStudio in a local browser with <code>HBEST</code> already installed.</p>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="rstudio-installation">RStudio Installation<a class="anchor" aria-label="anchor" href="#rstudio-installation"></a>
 </h2>
 <p>You can install the development version of HBEST from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -71,39 +72,103 @@
 <div class="section level2">
 <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
 </h2>
-<p>This package contains user functions <code><a href="reference/HBEST.html">HBEST()</a></code> and <code><a href="reference/HBEST_fast.html">HBEST_fast()</a></code>. Both functions implement the same method, but the <code><a href="reference/HBEST_fast.html">HBEST_fast()</a></code> function has slightly faster implementation. Both functions are made available to users since <code><a href="reference/HBEST.html">HBEST()</a></code> is the code used in the publication Lee et al. (2025). The vignette <code>HBEST_tutorial</code> contains a simple walk through of the <code><a href="reference/HBEST.html">HBEST()</a></code> function. The data generation functions are also available to users and details of these functions can be found in the vignette.</p>
+<p>This package contains user functions <code><a href="reference/HBEST.html">HBEST()</a></code> and <code><a href="reference/HBEST_fast.html">HBEST_fast()</a></code>. Both functions implement the same method, but the <code><a href="reference/HBEST_fast.html">HBEST_fast()</a></code> function has slightly faster implementation. Both functions are made available to users since <code><a href="reference/HBEST.html">HBEST()</a></code> is the code used in the publication Lee et al. (2025). The vignette <code>HBEST_tutorial</code> contains a simple walk through of the <code><a href="reference/HBEST.html">HBEST()</a></code> function. The data generation functions are also available to users and details of these functions can be found in the vignette <code>Data_generation_tutorial</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="docker-instructions">Docker Instructions<a class="anchor" aria-label="anchor" href="#docker-instructions"></a>
 </h2>
-<p>Assuming the user has already installed Docker/Docker Desktop on their local computer, one can follow these steps to build and run a local Docker Container so that RStudio can be run through a browser with HBEST and other dependent libraries already installed.</p>
+<p>This section will walk through the steps of how to: install Docker Desktop (if user does not already have it installed); download the package repository; build the Docker image locally; run the container; open RStudio in a browser; and access the package and vignettes.</p>
+<p>The steps below are described for MAC and Windows OS. Where steps differ, a note has been made.</p>
+<div class="section level3">
+<h3 id="download-docker-desktop">Download Docker Desktop<a class="anchor" aria-label="anchor" href="#download-docker-desktop"></a>
+</h3>
+<p>If you do not already have Docker Desktop installed on your local computer, you can download the installer at:</p>
+<ul>
+<li><p><a href="https://docs.docker.com/desktop/setup/install/windows-install/" class="external-link">Windows users</a></p></li>
+<li><p><a href="https://docs.docker.com/desktop/setup/install/mac-install/" class="external-link">Mac</a></p></li>
+</ul>
+<p>For Windows users, during installation ensure WSL 2 backend is enabled when prompted.</p>
+<p>Restart your computer if prompted and start Docker Desktop.</p>
+<p>In your terminal (Mac) or PowerShell (Windows) check that docker is installed:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">docker</span> <span class="at">--version</span></span></code></pre></div>
+<p>The links above walk through local installation of Docker Desktop and must be completed prior to the next steps. The creators of this project will not assist in technical issues that may arise with Docker Desktop installation or use.</p>
+</div>
+<div class="section level3">
+<h3 id="download-package-repository-from-github">Download Package Repository from GitHub<a class="anchor" aria-label="anchor" href="#download-package-repository-from-github"></a>
+</h3>
+<p>Assuming the user has already installed Docker/Docker Desktop on their local computer (only needs to be installed once), one can follow these steps to build and run a local Docker Container so that RStudio can be run through a browser with HBEST and other dependent libraries already installed.</p>
 <ol style="list-style-type: decimal">
-<li><p>Download the <strong>entire</strong> zipped repository <code>HBEST</code> from <a href="https://github.com/llrebecca21/HBEST" class="external-link uri">https://github.com/llrebecca21/HBEST</a>, i.e., Code &gt; Download Zip. Save the zipped <code>HBEST</code> folder to someplace you can navigate to easily with terminal commands.</p></li>
-<li><p>In your local terminal, navigate to where the repository folder is saved. i.e., <code>cd yourfilepath</code></p></li>
-<li><p>Run: <code>docker build -t hbest-rstudio .</code> to build the Docker container locally. This may take a couple of minutes.</p></li>
-<li><p>Run the following code below and it is IMPORTANT to change the <em>changeme</em> to a password you will remember.</p></li>
+<li>Download or clone the <strong>entire</strong> zipped repository <code>HBEST</code> from <a href="https://github.com/llrebecca21/HBEST" class="external-link uri">https://github.com/llrebecca21/HBEST</a>, i.e., Code &gt; Download Zip. Save the zipped <code>HBEST</code> folder to someplace you can navigate to easily with terminal commands.</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="dt">\</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">--name</span> hbest-rs <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">-p</span> 8787:8787 <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">-e</span> PASSWORD=<span class="st">'changeme'</span> <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  hbest-rstudio</span></code></pre></div>
+<p>For Windows users you <em>must</em> unzip the folder before moving to the next step.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>In your local terminal or PowerShell, navigate to where the unzipped repository folder is saved. i.e.,</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="bu">cd</span> yourfilepath</span></code></pre></div>
+<p>replace <code>yourfilepath</code> above with your file path.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Check you are in the correct directory.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+<p>You are in the correct directory if you see the items:</p>
+<ul>
+<li>Dockerfile</li>
+<li>DESCRIPTION</li>
+<li>R/</li>
+<li>vignettes/</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="build-the-local-docker-image">Build the local Docker Image<a class="anchor" aria-label="anchor" href="#build-the-local-docker-image"></a>
+</h3>
+<ol start="4" style="list-style-type: decimal">
+<li>Build the Docker image locally:</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> hbest-rstudio .</span></code></pre></div>
+<p>This may take a couple of minutes. This step copies the package source into the container, installs all dependencies, and builds the vignettes.</p>
+<p>The build was successful if you see <code>* DONE (HBEST)</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="run-the-docker-container">Run the Docker Container<a class="anchor" aria-label="anchor" href="#run-the-docker-container"></a>
+</h3>
 <ol start="5" style="list-style-type: decimal">
-<li><p>Open Docker Desktop and find the container running <code>hbest-rs</code>, click the port link <code>8787:8787</code>. It is important that you are using a browser that supports http connections. If the port 8787 is already taken on your local computer, you will need to go into the Dockerfile and modify the last line <code>EXPOSE 8787</code> to another port number.</p></li>
+<li>Run the container:</li>
+</ol>
+<p>Run the following code below. It is IMPORTANT to change the <em>changeme</em> to a password you will remember. If you want to use the Docker container for creating a volume to have files saved after container stops, you will need to adjust the run commands shown below. This is left for the user to investigate.</p>
+<p>The code below will allow the user to have a container that persists (can restart the container again).</p>
+<p>In terminal (Mac) or PowerShell (Windows- remove the <code>\</code> to avoid errors):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span><span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="at">--name</span> hbest-rs <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">-p</span> 8787:8787 <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">-e</span> PASSWORD=changeme <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  hbest-rstudio</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="open-the-connection-to-rstudio">Open the Connection to RStudio<a class="anchor" aria-label="anchor" href="#open-the-connection-to-rstudio"></a>
+</h3>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Open <strong>Docker Desktop</strong> and find the container running <code>hbest-rs</code>, click the port link <code>8787:8787</code>. It is important that you are using a browser that supports http connections. If the port 8787 is already taken on your local computer, you will need to go into the Dockerfile and modify the last line <code>EXPOSE 8787</code> to another port number.</p></li>
 <li><p>Login to RStudio with:</p></li>
 </ol>
 <p><code>username: rstudio</code></p>
 <p><code>password: the password you created when running step 4 above.</code></p>
-<ol start="7" style="list-style-type: decimal">
-<li>Check the package is installed by running:</li>
+<p>You will need to login everytime you run the container.</p>
+<ol start="8" style="list-style-type: decimal">
+<li>Check the package is installed by running the following code in the RStudio session:</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://llrebecca21.github.io/HBEST/">HBEST</a></span><span class="op">)</span></span>
 <span><span class="co"># Call the help page for the HBEST function</span></span>
 <span><span class="op">?</span><span class="fu">HBEST</span><span class="fu">::</span><span class="va"><a href="reference/HBEST.html">HBEST</a></span></span></code></pre></div>
+<p>You can also view vignettes:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"HBEST_tutorial"</span><span class="op">)</span></span>
+<span><span class="co"># or</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"Data_generation_tutorial"</span><span class="op">)</span></span></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-lee_hierarchical_2025" class="csl-entry">
 Lee, Rebecca, Alexander Coulter, Greg J. Siegle, Scott A. Bruce, and Anirban Bhattacharya. 2025. “Hierarchical Bayesian Spectral Analysis of Multiple Stationary Time Series.” arXiv. <a href="https://doi.org/10.48550/ARXIV.2511.19406" class="external-link uri">https://doi.org/10.48550/ARXIV.2511.19406</a>.
+</div>
 </div>
 </div>
 </div>
@@ -128,6 +193,7 @@ Lee, Rebecca, Alexander Coulter, Greg J. Siegle, Scott A. Bruce, and Anirban Bha
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Rebecca Lee <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-8162-6555" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
