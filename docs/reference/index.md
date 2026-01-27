@@ -15,7 +15,7 @@
   :
 
   A vectorized version of
-  [`arma_spec()`](https://rdrr.io/pkg/HBEST/man/arma_spec.html)
+  [`arma_spec()`](https://llrebecca21.github.io/HBEST/reference/arma_spec.md)
 
 - [`gen_data()`](https://llrebecca21.github.io/HBEST/reference/gen_data.md)
   : Time-series data generation wrapper function

@@ -39,12 +39,12 @@ generate_MA4_vary(n, R = 1, burn = 50, alpha = 0.05)
 
 The function returns a list containing:
 
-|  |  |
-|----|----|
-| `ts_list` | returns an `R`-long list each containing an `(n[r]` \\\times\\ `1)` matrix of the generated time series. |
-| `true_theta` | returns a `(4` \\\times\\ `R)` matrix of true generated MA(4) coefficients. |
-| `alpha` | returns the user-provided variation scalar. |
-| `mu_r_gen` | returns the `(4` \\\times\\ `R)` matrix of the generated standard normal values used to help calculate the new MA(4) coefficients. |
+|              |                                                                                                                                    |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------|
+| `ts_list`    | returns an `R`-long list each containing an `(n[r]` \\\times\\ `1)` matrix of the generated time series.                           |
+| `true_theta` | returns a `(4` \\\times\\ `R)` matrix of true generated MA(4) coefficients.                                                        |
+| `alpha`      | returns the user-provided variation scalar.                                                                                        |
+| `mu_r_gen`   | returns the `(4` \\\times\\ `R)` matrix of the generated standard normal values used to help calculate the new MA(4) coefficients. |
 
 ## Details
 

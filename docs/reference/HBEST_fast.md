@@ -107,15 +107,15 @@ HBEST_fast(
 
 A list object with components:
 
-|  |  |
-|----|----|
-| `beta_loc_est` | returns a `(iter - burnin` \\\times\\ `B+1` \\\times\\ `R)` array of \\\beta^{loc}\_{br}\\ estimates. |
-| `beta_glob_est` | returns a `(iter - burnin` \\\times\\ `B+1)` array of \\\beta^{glob}\_{b}\\ estimates. |
-| `zetasquared_est` | returns a `(iter - burnin` \\\times\\ `R)` array of \\\zeta^{2}\_{r}\\ estimates. |
-| `tausquared_est` | returns a `(iter - burnin` \\\times\\ `1)` array of \\\tau^{2}\\ estimates. |
-| `perio_list` | returns an `R` list of column matrices each storing a truncated/half periodogram. |
-| `omega` | returns an `R` list of column matrices each storing \\\omega\_{j}\\ see paper in references for details. |
-| `D` | returns a `B` vector that stores the prior variance for \\\beta\_{1}\\ through \\\beta\_{B}\\. |
+|                   |                                                                                                          |
+|-------------------|----------------------------------------------------------------------------------------------------------|
+| `beta_loc_est`    | returns a `(iter - burnin` \\\times\\ `B+1` \\\times\\ `R)` array of \\\beta^{loc}\_{br}\\ estimates.    |
+| `beta_glob_est`   | returns a `(iter - burnin` \\\times\\ `B+1)` array of \\\beta^{glob}\_{b}\\ estimates.                   |
+| `zetasquared_est` | returns a `(iter - burnin` \\\times\\ `R)` array of \\\zeta^{2}\_{r}\\ estimates.                        |
+| `tausquared_est`  | returns a `(iter - burnin` \\\times\\ `1)` array of \\\tau^{2}\\ estimates.                              |
+| `perio_list`      | returns an `R` list of column matrices each storing a truncated/half periodogram.                        |
+| `omega`           | returns an `R` list of column matrices each storing \\\omega\_{j}\\ see paper in references for details. |
+| `D`               | returns a `B` vector that stores the prior variance for \\\beta\_{1}\\ through \\\beta\_{B}\\.           |
 
 ## References
 

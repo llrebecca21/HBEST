@@ -35,10 +35,10 @@ generate_AR2_mixture(peaks, bandwidths, n, variances = NULL)
 
 A list object that contains the following fields:
 
-|  |  |
-|----|----|
-| `ts_list` | returns an `R`-long list each containing an `(n[r]` \\\times\\ `1)` matrix of the generated time series. |
-| `phi1_true` | returns a `(1` \\\times\\ `R)` numeric matrix that contains the first AR(2) coefficients generated for each time series. |
+|             |                                                                                                                           |
+|-------------|---------------------------------------------------------------------------------------------------------------------------|
+| `ts_list`   | returns an `R`-long list each containing an `(n[r]` \\\times\\ `1)` matrix of the generated time series.                  |
+| `phi1_true` | returns a `(1` \\\times\\ `R)` numeric matrix that contains the first AR(2) coefficients generated for each time series.  |
 | `phi2_true` | returns a `(1` \\\times\\ `R)` numeric matrix that contains the second AR(2) coefficients generated for each time series. |
 
 ## Examples

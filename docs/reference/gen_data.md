@@ -32,14 +32,14 @@ pages for each function for more details.
 
 Available data generation methods include:
 
-|  |  |
-|----|----|
-| `ARp` | calls the [`generate_AR()`](https://llrebecca21.github.io/HBEST/reference/generate_AR.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html). |
-| `AR1vary` | calls the [`generate_AR1_vary()`](https://llrebecca21.github.io/HBEST/reference/generate_AR1_vary.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html). |
-| `AR2mix` | calls the [`generate_AR2_mixture()`](https://llrebecca21.github.io/HBEST/reference/generate_AR2_mixture.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html) and (Granados-Garcia et al. 2022) . |
-| `MA4` | calls the [`generate_MA4()`](https://llrebecca21.github.io/HBEST/reference/generate_MA4.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html). |
-| `MA4vary` | calls the [`generate_MA4_vary()`](https://llrebecca21.github.io/HBEST/reference/generate_MA4_vary.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html). |
-| `MA4varyType2` | calls the [`generate_MA4_varyType2()`](https://llrebecca21.github.io/HBEST/reference/generate_MA4_varyType2.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html). |
+|                |                                                                                                                                                                                                                                       |
+|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ARp`          | calls the [`generate_AR()`](https://llrebecca21.github.io/HBEST/reference/generate_AR.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html).                                                      |
+| `AR1vary`      | calls the [`generate_AR1_vary()`](https://llrebecca21.github.io/HBEST/reference/generate_AR1_vary.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html).                                          |
+| `AR2mix`       | calls the [`generate_AR2_mixture()`](https://llrebecca21.github.io/HBEST/reference/generate_AR2_mixture.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html) and (Granados-Garcia et al. 2022) . |
+| `MA4`          | calls the [`generate_MA4()`](https://llrebecca21.github.io/HBEST/reference/generate_MA4.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html).                                                    |
+| `MA4vary`      | calls the [`generate_MA4_vary()`](https://llrebecca21.github.io/HBEST/reference/generate_MA4_vary.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html).                                          |
+| `MA4varyType2` | calls the [`generate_MA4_varyType2()`](https://llrebecca21.github.io/HBEST/reference/generate_MA4_varyType2.md) function which is based on [stats::arima.sim](https://rdrr.io/r/stats/arima.sim.html).                                |
 
 ## Examples
 

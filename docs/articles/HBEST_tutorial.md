@@ -33,9 +33,9 @@ to highlight the flexibility of the model.
 
 Include section on how the Mixture AR(2) data is generated.
 
-Let us generate $`R = 20`$ many conditionally independent time series.
-In this example we set $`80\%`$ of the `R`-many time series to be of
-length $`600`$; and the remaining $`20\%`$ to be of length $`1200`$.
+Let us generate $R = 20$ many conditionally independent time series. In
+this example we set $80\%$ of the `R`-many time series to be of length
+$600$; and the remaining $20\%$ to be of length $1200$.
 
 ``` r
 set.seed(101)
@@ -121,9 +121,9 @@ for(r in 16:R){
 In this section we walkthrough how to use the
 [`HBEST()`](https://llrebecca21.github.io/HBEST/reference/HBEST.md)
 function with the generated data above; how to calculate the estimate(s)
-of $`\beta_{rb}`$ using the samples for $`\beta^{glob}_{b}`$ and
-$`\beta^{loc}_{rb}`$; and how to calculate the estimates for
-$`g^{glob}(\omega), g^{loc}_{r}(\omega), g_{rb}(\omega)`$.
+of $\beta_{rb}$ using the samples for $\beta_{b}^{glob}$ and
+$\beta_{rb}^{loc}$; and how to calculate the estimates for
+$g^{glob}(\omega),g_{r}^{loc}(\omega),g_{rb}(\omega)$.
 
 [`HBEST()`](https://llrebecca21.github.io/HBEST/reference/HBEST.md) and
 [`HBEST_fast()`](https://llrebecca21.github.io/HBEST/reference/HBEST_fast.md)
@@ -144,25 +144,25 @@ The arguments required to run either function are:
   `tausquared` that controls the global smoothing effect.
 - `burnin` An integer specifying the burn-in to be removed at the end of
   the sampling algorithm.
-- `zeta_min` A scalar controlling the smallest value $`\zeta`$ can take.
+- `zeta_min` A scalar controlling the smallest value $\zeta$ can take.
   So, `zeta_min`^2 is the smallest value `zetasquared` can take.
-- `zeta_max` A scalar controlling the largest value $`\zeta`$ can take.
+- `zeta_max` A scalar controlling the largest value $\zeta$ can take.
   So, `zeta_max`^2 is the largest value that `zetasquared` can take.
-- `tau_min` A scalar controlling the smallest value $`\tau`$ can take.
-  So, `tau_min`^2 is the smallest value `tausquared` can take.
-- `tau_max` A scalar controlling the largest value $`\tau`$ can take.
-  So, `tau_max`^2 is the largest value `tausquared` can take.
+- `tau_min` A scalar controlling the smallest value $\tau$ can take. So,
+  `tau_min`^2 is the smallest value `tausquared` can take.
+- `tau_max` A scalar controlling the largest value $\tau$ can take. So,
+  `tau_max`^2 is the largest value `tausquared` can take.
 - `num_gpts` A scalar controlling the denseness of the grid during the
   sampling of both `tausquared` and `zetasquared`.
 - `nu_tau` A scalar indicating the degrees of freedom for the prior on
-  $`\tau`$.
+  $\tau$.
 - `nu_zeta` A scalar indicating the degrees of freedom for the prior on
-  $`\zeta`$.
+  $\zeta$.
 - `sigmasquared_glob` A scalar…
 - `sigmasquared_loc` A scalar…
 
 For this example, we choose the following settings for hyperparameters
-and initialization of $`\tau^2`$.
+and initialization of $\tau^{2}$.
 
 ``` r
 
@@ -205,7 +205,7 @@ results <- HBEST::HBEST(
 
 #### Calculate Estimates of log-SDF
 
-To construct the estimates of $`\beta_{rb}`$ and $`g_{rb}(\omega)`$:
+To construct the estimates of $\beta_{rb}$ and $g_{rb}(\omega)$:
 
 ``` r
 
@@ -364,8 +364,8 @@ for(r in 1:R){
 }
 ```
 
-For simplicity of notation, the $`i`$th iteration of the estimate:
-$`\pmb{\beta}^{loc}_{r}`$ is written as $`\pmb{e}_{i}^{(r)}`$ in the
+For simplicity of notation, the $i$th iteration of the estimate:
+${\mathbf{β}}_{r}^{loc}$ is written as $\mathbf{e}_{i}^{(r)}$ in the
 sections that follow
 
 \$\$ h_i^{(r)}(\omega) = \pmb{\psi}(\omega)^T \pmb{e}\_i^{(r)}\\ \$\$
@@ -412,17 +412,11 @@ h_i^{(r)}(\omega) = \frac{1}{I} \sum\_{i=1}^{I} \pmb{\psi}(\omega)^T
 \sum\_{i=1}^{I} \pmb{e}\_i^{(r)}\right) = \pmb{\psi}(\omega)^T
 \bar{\pmb{e}}^{(r)}\\ \$\$
 
-``` math
-
-\bar{\bar{h}}(\omega) = \frac{1}{R}\sum_{r=1}^{R} \bar{h}^{(r)}(\omega)
-```
+$$\bar{\bar{h}}(\omega) = \frac{1}{R}\sum\limits_{r = 1}^{R}{\bar{h}}^{(r)}(\omega)$$
 
 Sample standard deviation is over the replicates
 
-``` math
-
-\widehat{\mathcal{s}}_{\text{rep}}(\omega) = \sqrt{\frac{1}{R-1} \sum_{r = 1}^{R} \left( \bar{h}^{(r)}(\omega) - \bar{\bar{h}}(\omega)\right)^2}  
-```
+$${\widehat{\mathcal{s}}}_{\text{rep}}(\omega) = \sqrt{\frac{1}{R - 1}\sum\limits_{r = 1}^{R}\left( {\bar{h}}^{(r)}(\omega) - \bar{\bar{h}}(\omega) \right)^{2}}$$
 
 ``` r
 
@@ -464,10 +458,7 @@ Sample standard deviation is over the iterations.
 
 \$\$ S^{(r)}(\omega) = \sqrt{\text{Var}(h^{(r)}(\omega)\mid -)}\\ \$\$
 
-``` math
-
-\widehat{S}^{(r)}(\omega) = \sqrt{1/(I-1) \sum_{i = 1}^{I} ( h_i^{(r)}(\omega) - \bar{h}^{(r)}(\omega))^2}  
-```
+$${\widehat{S}}^{(r)}(\omega) = \sqrt{1/(I - 1)\sum\limits_{i = 1}^{I}\left( h_{i}^{(r)}(\omega) - {\bar{h}}^{(r)}(\omega) \right)^{2}}$$
 
 ``` r
 par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
@@ -496,10 +487,7 @@ par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
 
 ##### Avgerage Posterior SD of Estimated Local Component of the log-SDF
 
-``` math
-
-\bar{S}(\omega)= \frac{1}{R}\sum_{r=1}^{R}\widehat{S}^{(r)}(\omega) 
-```
+$$\bar{S}(\omega) = \frac{1}{R}\sum\limits_{r = 1}^{R}{\widehat{S}}^{(r)}(\omega)$$
 
 ``` r
 par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
@@ -528,13 +516,10 @@ par(mfrow = c(1,1), bg = "white", mar = c(4,4,.5,.5))
 
 ##### Average L2 norm of local log-SDF component
 
-For each iteration calculating what the L2 norm of the $`\beta^{loc}_r`$
+For each iteration calculating what the L2 norm of the $\beta_{r}^{loc}$
 piece is.
 
-``` math
-
-L_i^{(r)} = \sqrt{\frac{1}{2\pi}\int_{0}^{2\pi} (\pmb{\psi}(\omega)^T \pmb{e}_i^{(r)})^2 d\omega}
-```
+$$L_{i}^{(r)} = \sqrt{\frac{1}{2\pi}\int_{0}^{2\pi}\left( {\mathbf{ψ}}(\omega)^{T}\mathbf{e}_{i}^{(r)} \right)^{2}d\omega}$$
 
 ``` r
 g_hat2 = function(omega, e){
@@ -553,7 +538,6 @@ locnorm_hat = apply(loc_array , c(1,3), FUN = function(e){integrate(g_hat2, lowe
 
 ``` r
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 4.5.2
 
 df = data.frame("L" = c(sqrt(locnorm_hat)))
 ggplot2::ggplot(data = df, aes(y = L))+ 

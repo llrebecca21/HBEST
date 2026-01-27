@@ -44,10 +44,10 @@ generate_AR1_vary(n, R = 1, min = 0.45, max = 0.6, burn = 50)
 
 a list object that contains the following fields:
 
-|  |  |
-|----|----|
-| `ts_list` | returns an `R`-long list each containing an `(n[r]` \\\times\\ `1)` matrix of the generated time series. |
-| `true_phi` | returns a `(1` \\\times\\ `R)` matrix of true generated AR(1) coefficients. |
+|            |                                                                                                          |
+|------------|----------------------------------------------------------------------------------------------------------|
+| `ts_list`  | returns an `R`-long list each containing an `(n[r]` \\\times\\ `1)` matrix of the generated time series. |
+| `true_phi` | returns a `(1` \\\times\\ `R)` matrix of true generated AR(1) coefficients.                              |
 
 ## Examples
 
