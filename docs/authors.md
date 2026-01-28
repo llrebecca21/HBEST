@@ -9,6 +9,7 @@
   [](https://orcid.org/0009-0001-9116-6588)
 
 - **Scott Bruce**. Thesis advisor.
+  [](https://orcid.org/0000-0002-7904-4211)
 
 - **Anirban Bhattacharya**. Thesis advisor.
 
