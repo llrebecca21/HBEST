@@ -17,13 +17,13 @@
 ## Citation
 
 Lee R (2026). *HBEST: Implementation of Hierarchical Bayesian Estimation
-of Stationary Time-Series (HBEST)*. R package version 0.0.1.01,
+of Stationary Time-Series (HBEST)*. R package version 0.0.1.02,
 <https://llrebecca21.github.io/HBEST/>.
 
     @Manual{,
       title = {HBEST: Implementation of Hierarchical Bayesian Estimation of Stationary Time-Series (HBEST)},
       author = {Rebecca Lee},
       year = {2026},
-      note = {R package version 0.0.1.01},
+      note = {R package version 0.0.1.02},
       url = {https://llrebecca21.github.io/HBEST/},
     }
