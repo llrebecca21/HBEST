@@ -1,5 +1,7 @@
 # HBEST
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18489411.svg)](https://doi.org/10.5281/zenodo.18489411)
+
 `HBEST` is an `R` package that implements the nonparametric hierarchical
 Bayesian spectral analysis method known as HBEST. The details of this
 method can be found in Lee et al. (2025). A detailed example using the
